@@ -1,35 +1,21 @@
-p8105_final
+p8105_final- Team registration and proposal
 ================
-Mary Williams
+Mary Williams, Sarahy Martinez, Tanmayi Amanchi, Kaleb Frierson
 2024-10-28
 
-## R Markdown
+## The group members (names and UNIs)
 
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
+Mary Williams, mnw2132 Sarahy Martinez, sjm2284 Tanmayi Amanchi, taa2158
+Kaleb Frierson, kjf2152
 
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+## The tentative project title
 
-``` r
-summary(cars)
-```
+## The motivation for this project
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+## The intended final products
 
-## Including Plots
+## The anticipated data sources
 
-You can also embed plots, for example:
+## The planned analyses / visualizations / coding challenges
 
-![](p8105_final_files/figure-gfm/pressure-1.png)<!-- -->
-
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+## The planned timeline
