@@ -13,7 +13,7 @@ library(rvest)
 ```
 
 ```{r}
-
+raw_lyme = read_csv("nyc_lyme.csv")
 
 ```
 
