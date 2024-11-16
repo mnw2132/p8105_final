@@ -1,0 +1,19 @@
+---
+title: "Analytic Dataset"
+author: "Kaleb J. Frierson"
+date: "2024-11-16"
+output: html_document
+---
+
+This document is to help decide on an analytic dataset. 
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+```{r}
+
+
+```
+
