@@ -376,8 +376,12 @@ display: none;
 ## The following object is masked from &#39;package:readr&#39;:
 ## 
 ##     guess_encoding</code></pre>
-<pre class="r"><code>library(readr)</code></pre>
-<pre class="r"><code>raw_lyme = read_csv(&quot;./nyc_lyme.csv&quot;)</code></pre>
+<pre class="r"><code>library(sf)</code></pre>
+<pre><code>## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE</code></pre>
+<pre class="r"><code>raw_lyme = read_csv(&quot;./nyc_lyme.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  select( -crude_rate_per_1_000_live_births,-crude_rate_per_100_000_population,-age_adjusted_rate_per_100_000_population, -disease) %&gt;% 
+  filter(yearnum %in% 2015:2022) </code></pre>
 <pre><code>## Rows: 463 Columns: 9
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -388,7 +392,8 @@ display: none;
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;)</code></pre>
+<pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
+  janitor::clean_names()</code></pre>
 <pre><code>## Rows: 636 Columns: 16
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -397,6 +402,15 @@ display: none;
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>ny_county =  st_read(&quot;./Counties.shp&quot;) </code></pre>
+<pre><code>## Reading layer `Counties&#39; from data source 
+##   `C:\Users\sarah\OneDrive\Documents\Data Science\p8105_final\Data Preparation\Counties.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## Projected CRS: NAD83 / UTM zone 18N</code></pre>
 
 
 

@@ -10,15 +10,19 @@ This document is to help decide on an analytic dataset.
 ```{r}
 library(tidyverse)
 library(rvest)
-library(readr)
+library(sf)
 ```
 
 ```{r}
-raw_lyme = read_csv("./nyc_lyme.csv")
+raw_lyme = read_csv("./nyc_lyme.csv") %>% 
+  janitor::clean_names() %>% 
+  select( -crude_rate_per_1_000_live_births,-crude_rate_per_100_000_population,-age_adjusted_rate_per_100_000_population, -disease) %>% 
+  filter(yearnum %in% 2015:2022) 
 
-tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv")
+tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
+  janitor::clean_names()
 
-
+ny_county =  st_read("./Counties.shp") 
 
 ```
 
