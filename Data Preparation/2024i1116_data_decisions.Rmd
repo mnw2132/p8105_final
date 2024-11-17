@@ -11,31 +11,14 @@ This document is to help decide on an analytic dataset.
 library(tidyverse)
 library(rvest)
 library(sf)
-```
+library(purrr)
+``` 
 
 ```{r}
-raw_lyme = read_csv("./nyc_lyme.csv") %>% 
+nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>% 
   janitor::clean_names() %>% 
-  select( -crude_rate_per_1_000_live_births,-crude_rate_per_100_000_population,-age_adjusted_rate_per_100_000_population, -disease, -dim1valid) %>% 
-  filter(yearnum %in% 2015:2022) %>% 
-  pivot_wider(
-    names_from = "dim1name",
-    values_from = "dim1value",
-    values_fn = list
-  ) %>% 
-  unnest(everything()) %>% 
- mutate(
-   Borough = fct_relevel(Borough, "Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"),
-   Age_Group = fct_relevel(`Age group`,"<1 year", "1-4 years", "5-14 years", " 15-24 years", "25-44 years", "45-64 years", "65+ years"),
-Neighborhood_Poverty = fct_relevel(`Neighborhood poverty`, "Low poverty (wealthiest)", "Medium poverty", "High poverty"), Sex = fct_relevel(Sex, "Male", "Female", "Unknown"),
-Citywide = ifelse(`Citywide` == "Citywide", "Citywide", NA_character_) ) %>% 
-select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, Citywide) %>% 
-  rename( Year = yearnum ) %>% 
-  janitor::clean_names()
-
-
-
-# pivot again to put years at the columns and borough at the x's 
+  select(county_name, event_count,percent_rate ) %>% 
+  rename(NAME = "county_name")
 
 ```
 
@@ -44,6 +27,7 @@ Tidy deer tick data
 ```{r}
 tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
   janitor::clean_names() %>% 
+  filter(year %in% 2019:2021 ) %>% 
   rename(NAME = "county")
 
 ```

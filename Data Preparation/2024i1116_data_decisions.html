@@ -378,37 +378,24 @@ display: none;
 ##     guess_encoding</code></pre>
 <pre class="r"><code>library(sf)</code></pre>
 <pre><code>## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE</code></pre>
-<pre class="r"><code>raw_lyme = read_csv(&quot;./nyc_lyme.csv&quot;) %&gt;% 
+<pre class="r"><code>library(purrr)</code></pre>
+<pre class="r"><code>nineteen_twentyone_county_lyme = read_csv(&quot;new_york_county_lyme.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 
-  select( -crude_rate_per_1_000_live_births,-crude_rate_per_100_000_population,-age_adjusted_rate_per_100_000_population, -disease, -dim1valid) %&gt;% 
-  filter(yearnum %in% 2015:2022) %&gt;% 
-  pivot_wider(
-    names_from = &quot;dim1name&quot;,
-    values_from = &quot;dim1value&quot;,
-    values_fn = list
-  ) %&gt;% 
-  unnest(everything()) %&gt;% 
- mutate(
-   Borough = fct_relevel(Borough, &quot;Bronx&quot;, &quot;Brooklyn&quot;, &quot;Manhattan&quot;, &quot;Queens&quot;, &quot;Staten Island&quot;),
-   Age_Group = fct_relevel(`Age group`,&quot;&lt;1 year&quot;, &quot;1-4 years&quot;, &quot;5-14 years&quot;, &quot;15-24 years&quot;, &quot;25-44 years&quot;, &quot;45-64 years&quot;, &quot;65+ years&quot;),
-Neighborhood_Poverty = fct_relevel(`Neighborhood poverty`, &quot;Low poverty (wealthiest)&quot;, &quot;Medium poverty&quot;, &quot;High poverty&quot;), Sex = fct_relevel(Sex, &quot;Male&quot;, &quot;Female&quot;, &quot;Unknown&quot;),
-Citywide = ifelse(`Citywide` == &quot;Citywide&quot;, &quot;Citywide&quot;, NA_character_) ) %&gt;% 
-select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, Citywide) %&gt;% 
-  rename( Year = yearnum ) %&gt;% 
-  janitor::clean_names()</code></pre>
-<pre><code>## Rows: 463 Columns: 9
+  select(county_name, event_count,percent_rate ) %&gt;% 
+  rename(NAME = &quot;county_name&quot;)</code></pre>
+<pre><code>## Rows: 62 Columns: 17
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (3): disease, Dim1Name, Dim1Value
-## dbl (4): Yearnum, Dim1Valid, Crude rate per 100,000 population, Age-adjusted...
-## num (1): Reported Cases
-## lgl (1): Crude rate per 1,000 live births
+## chr (10): County Name, Health Topic, Indicator Number, Indicator, Measure Un...
+## dbl  (5): Health Topic Number, Event Count, Average Number of Denominator, P...
+## lgl  (2): Lower Limit of 95% CI, Upper Limit of 95% CI
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Tidy deer tick data</p>
 <pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 
+  filter(year %in% 2019:2021 ) %&gt;% 
   rename(NAME = &quot;county&quot;)</code></pre>
 <pre><code>## Rows: 636 Columns: 16
 ## ── Column specification ────────────────────────────────────────────────────────
