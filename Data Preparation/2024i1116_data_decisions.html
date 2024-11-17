@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Kaleb J. Frierson" />
+<meta name="author" content="Sarahy Martinez" />
 
 <meta name="date" content="2024-11-16" />
 
@@ -351,7 +351,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Analytic Dataset</h1>
-<h4 class="author">Kaleb J. Frierson</h4>
+<h4 class="author">Sarahy Martinez</h4>
 <h4 class="date">2024-11-16</h4>
 
 </div>
@@ -390,7 +390,7 @@ display: none;
   unnest(everything()) %&gt;% 
  mutate(
    Borough = fct_relevel(Borough, &quot;Bronx&quot;, &quot;Brooklyn&quot;, &quot;Manhattan&quot;, &quot;Queens&quot;, &quot;Staten Island&quot;),
-   Age_Group = fct_relevel(`Age group`,&quot;&lt;1 year&quot;, &quot;1-4 years&quot;, &quot;5-14 years&quot;, &quot; 15-24 years&quot;, &quot;25-44 years&quot;, &quot;45-64 years&quot;, &quot;65+ years&quot;),
+   Age_Group = fct_relevel(`Age group`,&quot;&lt;1 year&quot;, &quot;1-4 years&quot;, &quot;5-14 years&quot;, &quot;15-24 years&quot;, &quot;25-44 years&quot;, &quot;45-64 years&quot;, &quot;65+ years&quot;),
 Neighborhood_Poverty = fct_relevel(`Neighborhood poverty`, &quot;Low poverty (wealthiest)&quot;, &quot;Medium poverty&quot;, &quot;High poverty&quot;), Sex = fct_relevel(Sex, &quot;Male&quot;, &quot;Female&quot;, &quot;Unknown&quot;),
 Citywide = ifelse(`Citywide` == &quot;Citywide&quot;, &quot;Citywide&quot;, NA_character_) ) %&gt;% 
 select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, Citywide) %&gt;% 
@@ -406,10 +406,6 @@ select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, C
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `Age_Group = fct_relevel(...)`.
-## Caused by warning:
-## ! 1 unknown level in `f`: 15-24 years</code></pre>
 <p>Tidy deer tick data</p>
 <pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 

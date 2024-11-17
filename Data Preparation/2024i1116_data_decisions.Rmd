@@ -1,6 +1,6 @@
 ---
 title: "Analytic Dataset"
-author: "Kaleb J. Frierson"
+author: "Sarahy Martinez"
 date: "2024-11-16"
 output: html_document
 ---
@@ -26,7 +26,7 @@ raw_lyme = read_csv("./nyc_lyme.csv") %>%
   unnest(everything()) %>% 
  mutate(
    Borough = fct_relevel(Borough, "Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"),
-   Age_Group = fct_relevel(`Age group`,"<1 year", "1-4 years", "5-14 years", " 15-24 years", "25-44 years", "45-64 years", "65+ years"),
+   Age_Group = fct_relevel(`Age group`,"<1 year", "1-4 years", "5-14 years", "15-24 years", "25-44 years", "45-64 years", "65+ years"),
 Neighborhood_Poverty = fct_relevel(`Neighborhood poverty`, "Low poverty (wealthiest)", "Medium poverty", "High poverty"), Sex = fct_relevel(Sex, "Male", "Female", "Unknown"),
 Citywide = ifelse(`Citywide` == "Citywide", "Citywide", NA_character_) ) %>% 
 select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, Citywide) %>% 
