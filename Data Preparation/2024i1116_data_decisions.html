@@ -376,7 +376,8 @@ display: none;
 ## The following object is masked from &#39;package:readr&#39;:
 ## 
 ##     guess_encoding</code></pre>
-<pre class="r"><code>raw_lyme = read_csv(&quot;nyc_lyme.csv&quot;)</code></pre>
+<pre class="r"><code>library(readr)</code></pre>
+<pre class="r"><code>raw_lyme = read_csv(&quot;./nyc_lyme.csv&quot;)</code></pre>
 <pre><code>## Rows: 463 Columns: 9
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -384,6 +385,15 @@ display: none;
 ## dbl (4): Yearnum, Dim1Valid, Crude rate per 100,000 population, Age-adjusted...
 ## num (1): Reported Cases
 ## lgl (1): Crude rate per 1,000 live births
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;)</code></pre>
+<pre><code>## Rows: 636 Columns: 16
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (2): County, County Centroid
+## dbl (14): Year, Total Sites Visited, Total Ticks Collected, Tick Population ...
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
