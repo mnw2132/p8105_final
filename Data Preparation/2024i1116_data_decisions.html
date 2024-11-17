@@ -387,12 +387,15 @@ display: none;
     values_from = &quot;dim1value&quot;,
     values_fn = list
   ) %&gt;% 
-  unnest(cols = c(Borough, `Age group`, `Neighborhood poverty`, Sex, Citywide)) %&gt;%
+  unnest(everything()) %&gt;% 
  mutate(
    Borough = fct_relevel(Borough, &quot;Bronx&quot;, &quot;Brooklyn&quot;, &quot;Manhattan&quot;, &quot;Queens&quot;, &quot;Staten Island&quot;),
    Age_Group = fct_relevel(`Age group`,&quot;&lt;1 year&quot;, &quot;1-4 years&quot;, &quot;5-14 years&quot;, &quot; 15-24 years&quot;, &quot;25-44 years&quot;, &quot;45-64 years&quot;, &quot;65+ years&quot;),
 Neighborhood_Poverty = fct_relevel(`Neighborhood poverty`, &quot;Low poverty (wealthiest)&quot;, &quot;Medium poverty&quot;, &quot;High poverty&quot;), Sex = fct_relevel(Sex, &quot;Male&quot;, &quot;Female&quot;, &quot;Unknown&quot;),
-Citywide = ifelse(`Citywide` == &quot;Citywide&quot;, &quot;Citywide&quot;, NA_character_) )</code></pre>
+Citywide = ifelse(`Citywide` == &quot;Citywide&quot;, &quot;Citywide&quot;, NA_character_) ) %&gt;% 
+select(yearnum, reported_cases, Borough, Age_Group, Neighborhood_Poverty, Sex, Citywide) %&gt;% 
+  rename( Year = yearnum ) %&gt;% 
+  janitor::clean_names()</code></pre>
 <pre><code>## Rows: 463 Columns: 9
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
