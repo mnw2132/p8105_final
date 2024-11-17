@@ -396,7 +396,8 @@ display: none;
 <pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 
   filter(year %in% 2019:2021 ) %&gt;% 
-  rename(NAME = &quot;county&quot;)</code></pre>
+  rename(NAME = &quot;county&quot;) %&gt;% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts)</code></pre>
 <pre><code>## Rows: 636 Columns: 16
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -415,6 +416,7 @@ display: none;
 ## Dimension:     XY
 ## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
 ## Projected CRS: NAD83 / UTM zone 18N</code></pre>
+<p>Merging the datasets</p>
 
 
 

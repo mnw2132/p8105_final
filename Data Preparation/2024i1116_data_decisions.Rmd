@@ -25,10 +25,12 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%
 
 Tidy deer tick data 
 ```{r}
+
 tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
   janitor::clean_names() %>% 
   filter(year %in% 2019:2021 ) %>% 
-  rename(NAME = "county")
+  rename(NAME = "county") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts)
 
 ```
 
@@ -36,6 +38,12 @@ Read in shp file for NY counties
 
 ```{r}
 ny_county =  st_read("./Counties.shp") 
+
+```
+
+Merging the datasets 
+
+```{r}
 
 ```
 
