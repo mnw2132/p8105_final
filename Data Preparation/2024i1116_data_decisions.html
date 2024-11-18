@@ -382,7 +382,8 @@ display: none;
 <pre class="r"><code>nineteen_twentyone_county_lyme = read_csv(&quot;new_york_county_lyme.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;% 
   select(county_name, event_count,percent_rate ) %&gt;% 
-  rename(NAME = &quot;county_name&quot;)</code></pre>
+  rename(NAME = &quot;county_name&quot;) %&gt;% 
+  mutate( data = &quot;lyme&quot;)</code></pre>
 <pre><code>## Rows: 62 Columns: 17
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -397,7 +398,8 @@ display: none;
   janitor::clean_names() %&gt;% 
   filter(year %in% 2019:2021 ) %&gt;% 
   rename(NAME = &quot;county&quot;) %&gt;% 
-  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts)</code></pre>
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year) %&gt;% 
+mutate(data = &quot;ticks&quot;)</code></pre>
 <pre><code>## Rows: 636 Columns: 16
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -416,7 +418,13 @@ display: none;
 ## Dimension:     XY
 ## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
 ## Projected CRS: NAD83 / UTM zone 18N</code></pre>
-<p>Merging the datasets</p>
+<p>Merging the data sets</p>
+<pre class="r"><code># merging the excel sheets first 
+
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = &quot;NAME&quot;) %&gt;% 
+  select(-data.x, -data.y)
+
+# now merging the shape file with exel file </code></pre>
 
 
 

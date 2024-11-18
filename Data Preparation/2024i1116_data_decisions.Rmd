@@ -18,7 +18,8 @@ library(purrr)
 nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>% 
   janitor::clean_names() %>% 
   select(county_name, event_count,percent_rate ) %>% 
-  rename(NAME = "county_name")
+  rename(NAME = "county_name") %>% 
+  mutate( data = "lyme")
 
 ```
 
@@ -30,7 +31,8 @@ tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excl
   janitor::clean_names() %>% 
   filter(year %in% 2019:2021 ) %>% 
   rename(NAME = "county") %>% 
-  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts)
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year) %>% 
+mutate(data = "ticks")
 
 ```
 
@@ -41,9 +43,16 @@ ny_county =  st_read("./Counties.shp")
 
 ```
 
-Merging the datasets 
+Merging the data sets 
 
 ```{r}
+
+# merging the excel sheets first 
+
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
+  select(-data.x, -data.y)
+
+# now merging the shape file with exel file 
 
 ```
 
