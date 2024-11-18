@@ -2,10 +2,10 @@
 title: "Analytic Dataset"
 author: "Sarahy Martinez"
 date: "2024-11-16"
-output: html_document
+output: github_document
 ---
 
-This document is to help decide on an analytic dataset. 
+This document for cleaning and tidying the data.
 
 ```{r}
 library(tidyverse)
@@ -52,7 +52,11 @@ Merging the data sets
 NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
   select(-data.x, -data.y)
 
-# now merging the shape file with exel file 
+# now merging the shape file with excel file 
 
+NY_lyme_tick_county = NY_lyme_tick %>%
+  left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names()
+# didn't delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
 ```
 
