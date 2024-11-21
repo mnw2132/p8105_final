@@ -15,11 +15,14 @@ library(purrr)
 ``` 
 
 ```{r, message=FALSE}
-nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>% 
-  janitor::clean_names() %>% 
-  select(county_name, event_count,percent_rate ) %>% 
-  rename(NAME = "county_name") %>% 
-  mutate( data = "lyme")
+nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read in the NYC lyme data
+  janitor::clean_names() %>%  #clean the names 
+  select(county_name, event_count,percent_rate ) %>%  # select variables of interest 
+  rename(NAME = "county_name", 
+         lyme_count = "event_count",
+         lyme_rate = "percent_rate"
+         ) %>%  # renaming so we can have a common variable when merging 
+  mutate( data = "lyme") # created a new variable so double check that merging was accurate
 
 print(nineteen_twentyone_county_lyme)
 
@@ -30,11 +33,12 @@ Tidy deer tick data
 ```{r, message=FALSE}
 
 tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
-  janitor::clean_names() %>% 
-  filter(year %in% 2019:2021 ) %>% 
-  rename(NAME = "county") %>% 
-  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year) %>% 
-mutate(data = "ticks")
+  janitor::clean_names() %>% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %>%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = "county") %>% # renaming for common identifier
+  rename(ticks_tested = "total_tested") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>%  # selecting and removing variables of interest , 
+mutate(data = "ticks")  # adding a variable to identify merging 
 
 
 print(tick_surveillance)
@@ -44,8 +48,8 @@ print(tick_surveillance)
 Read in shp file for NY counties 
 
 ```{r, message=FALSE}
-ny_county =  st_read("./Counties.shp") 
-
+ny_county =  st_read("./Counties.shp")  # read in the county shapefile 
+ 
 print(ny_county)
 
 ```
@@ -70,3 +74,5 @@ NY_lyme_tick_county = NY_lyme_tick %>%
 print(NY_lyme_tick_county)
 ```
 
+# Description of data
+The data set includes `r nrow(NY_lyme_tick_county)` observations and `r nrow(NY_lyme_tick_county)` variables. Of the variables, all are `numeric` except for those that are characters (name, county_centroid, swis, nysp_zone, dos_ll, nyc) and multipolygon (geometry). These contain information about tick surveillance within New York counties, including the number of ticks collected, the number tested for Lyme disease, and the tick population density. The dataset also includes demographic and spatial data of human populations within each county. The information can help identify the high-risk areas and guide public health interventions. 
