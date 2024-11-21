@@ -258,3 +258,5 @@ tested for Lyme disease, and the tick population density. The dataset
 also includes demographic and spatial data of human populations within
 each county. The information can help identify the high-risk areas and
 guide public health interventions.
+
+system(“rm .DS_Store”)
