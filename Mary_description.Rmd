@@ -23,7 +23,6 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%
   mutate( data = "lyme")
 
 print(nineteen_twentyone_county_lyme)
-
 ```
 
 
@@ -34,12 +33,11 @@ tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excl
   janitor::clean_names() %>% 
   filter(year %in% 2019:2021 ) %>% 
   rename(NAME = "county") %>% 
-  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>% 
 mutate(data = "ticks")
 
 
 print(tick_surveillance)
-
 ```
 
 Read in shp file for NY counties 
@@ -49,7 +47,6 @@ ny_county =  st_read("./Counties.shp")  %>%
   select(-DOS_LL, -DOSLL_DATE)
 
 print(ny_county)
-
 ```
 
 Merging the data sets 

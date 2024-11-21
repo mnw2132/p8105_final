@@ -43,26 +43,26 @@ tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excl
   janitor::clean_names() %>% 
   filter(year %in% 2019:2021 ) %>% 
   rename(NAME = "county") %>% 
-  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>% 
 mutate(data = "ticks")
 
 
 print(tick_surveillance)
 ```
 
-    ## # A tibble: 138 × 7
-    ##    NAME       total_ticks_collected tick_population_density total_tested
-    ##    <chr>                      <dbl>                   <dbl>        <dbl>
-    ##  1 Albany                       366                    85.8          168
-    ##  2 Chautauqua                   199                    36.7          107
-    ##  3 Dutchess                     438                    66.8           51
-    ##  4 Warren                        88                    13.8           87
-    ##  5 Albany                       114                    37.2          103
-    ##  6 Chemung                      271                   257.            50
-    ##  7 Delaware                      75                    21.9           69
-    ##  8 Tompkins                     131                    52.4           44
-    ##  9 Oneida                       157                    78.5           50
-    ## 10 Seneca                        51                    35.5           50
+    ## # A tibble: 138 × 8
+    ##     year NAME       total_ticks_collected tick_population_density total_tested
+    ##    <dbl> <chr>                      <dbl>                   <dbl>        <dbl>
+    ##  1  2021 Albany                       366                    85.8          168
+    ##  2  2021 Chautauqua                   199                    36.7          107
+    ##  3  2021 Dutchess                     438                    66.8           51
+    ##  4  2021 Warren                        88                    13.8           87
+    ##  5  2020 Albany                       114                    37.2          103
+    ##  6  2020 Chemung                      271                   257.            50
+    ##  7  2020 Delaware                      75                    21.9           69
+    ##  8  2020 Tompkins                     131                    52.4           44
+    ##  9  2020 Oneida                       157                    78.5           50
+    ## 10  2020 Seneca                        51                    35.5           50
     ## # ℹ 128 more rows
     ## # ℹ 3 more variables: b_burgdorferi_percent <dbl>, county_centroid <chr>,
     ## #   data <chr>
@@ -138,19 +138,19 @@ NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by =
 print(NY_lyme_tick)
 ```
 
-    ## # A tibble: 147 × 8
-    ##    NAME       total_ticks_collected tick_population_density total_tested
-    ##    <chr>                      <dbl>                   <dbl>        <dbl>
-    ##  1 Albany                       366                    85.8          168
-    ##  2 Chautauqua                   199                    36.7          107
-    ##  3 Dutchess                     438                    66.8           51
-    ##  4 Warren                        88                    13.8           87
-    ##  5 Albany                       114                    37.2          103
-    ##  6 Chemung                      271                   257.            50
-    ##  7 Delaware                      75                    21.9           69
-    ##  8 Tompkins                     131                    52.4           44
-    ##  9 Oneida                       157                    78.5           50
-    ## 10 Seneca                        51                    35.5           50
+    ## # A tibble: 147 × 9
+    ##     year NAME       total_ticks_collected tick_population_density total_tested
+    ##    <dbl> <chr>                      <dbl>                   <dbl>        <dbl>
+    ##  1  2021 Albany                       366                    85.8          168
+    ##  2  2021 Chautauqua                   199                    36.7          107
+    ##  3  2021 Dutchess                     438                    66.8           51
+    ##  4  2021 Warren                        88                    13.8           87
+    ##  5  2020 Albany                       114                    37.2          103
+    ##  6  2020 Chemung                      271                   257.            50
+    ##  7  2020 Delaware                      75                    21.9           69
+    ##  8  2020 Tompkins                     131                    52.4           44
+    ##  9  2020 Oneida                       157                    78.5           50
+    ## 10  2020 Seneca                        51                    35.5           50
     ## # ℹ 137 more rows
     ## # ℹ 4 more variables: b_burgdorferi_percent <dbl>, county_centroid <chr>,
     ## #   event_count <dbl>, percent_rate <dbl>
@@ -166,19 +166,19 @@ NY_lyme_tick_county = NY_lyme_tick %>%
 print(NY_lyme_tick_county)
 ```
 
-    ## # A tibble: 147 × 23
-    ##    name       total_ticks_collected tick_population_density total_tested
-    ##    <chr>                      <dbl>                   <dbl>        <dbl>
-    ##  1 Albany                       366                    85.8          168
-    ##  2 Chautauqua                   199                    36.7          107
-    ##  3 Dutchess                     438                    66.8           51
-    ##  4 Warren                        88                    13.8           87
-    ##  5 Albany                       114                    37.2          103
-    ##  6 Chemung                      271                   257.            50
-    ##  7 Delaware                      75                    21.9           69
-    ##  8 Tompkins                     131                    52.4           44
-    ##  9 Oneida                       157                    78.5           50
-    ## 10 Seneca                        51                    35.5           50
+    ## # A tibble: 147 × 24
+    ##     year name       total_ticks_collected tick_population_density total_tested
+    ##    <dbl> <chr>                      <dbl>                   <dbl>        <dbl>
+    ##  1  2021 Albany                       366                    85.8          168
+    ##  2  2021 Chautauqua                   199                    36.7          107
+    ##  3  2021 Dutchess                     438                    66.8           51
+    ##  4  2021 Warren                        88                    13.8           87
+    ##  5  2020 Albany                       114                    37.2          103
+    ##  6  2020 Chemung                      271                   257.            50
+    ##  7  2020 Delaware                      75                    21.9           69
+    ##  8  2020 Tompkins                     131                    52.4           44
+    ##  9  2020 Oneida                       157                    78.5           50
+    ## 10  2020 Seneca                        51                    35.5           50
     ## # ℹ 137 more rows
     ## # ℹ 19 more variables: b_burgdorferi_percent <dbl>, county_centroid <chr>,
     ## #   event_count <dbl>, percent_rate <dbl>, abbrev <chr>, gnis_id <chr>,
@@ -190,54 +190,62 @@ print(NY_lyme_tick_county)
 summary(NY_lyme_tick_county)
 ```
 
-    ##      name           total_ticks_collected tick_population_density
-    ##  Length:147         Min.   :   1.0        Min.   :  0.25         
-    ##  Class :character   1st Qu.:  82.0        1st Qu.: 27.94         
-    ##  Mode  :character   Median : 129.0        Median : 45.17         
-    ##                     Mean   : 220.5        Mean   : 56.61         
-    ##                     3rd Qu.: 226.0        3rd Qu.: 76.07         
-    ##                     Max.   :1893.0        Max.   :256.90         
-    ##                     NA's   :9             NA's   :9              
-    ##   total_tested    b_burgdorferi_percent county_centroid     event_count     
-    ##  Min.   :  1.00   Min.   : 0.00         Length:147         Min.   :   3.00  
-    ##  1st Qu.: 50.00   1st Qu.:48.00         Class :character   1st Qu.:  95.75  
-    ##  Median : 50.50   Median :54.15         Mode  :character   Median : 242.00  
-    ##  Mean   : 96.04   Mean   :53.72                            Mean   : 348.34  
-    ##  3rd Qu.:114.25   3rd Qu.:60.98                            3rd Qu.: 493.00  
-    ##  Max.   :500.00   Max.   :80.00                            Max.   :1269.00  
-    ##  NA's   :9        NA's   :9                                NA's   :3        
-    ##   percent_rate       abbrev            gnis_id           fips_code        
-    ##  Min.   :  1.60   Length:147         Length:147         Length:147        
-    ##  1st Qu.: 25.30   Class :character   Class :character   Class :character  
-    ##  Median : 60.30   Mode  :character   Mode  :character   Mode  :character  
-    ##  Mean   : 93.86                                                           
-    ##  3rd Qu.:130.30                                                           
-    ##  Max.   :446.80                                                           
-    ##  NA's   :3                                                                
-    ##      swis            nysp_zone            pop1990           pop2000       
-    ##  Length:147         Length:147         Min.   :   5279   Min.   :   5379  
-    ##  Class :character   Class :character   1st Qu.:  51981   1st Qu.:  51401  
-    ##  Mode  :character   Mode  :character   Median :  89123   Median :  93765  
-    ##                                        Mean   : 239097   Mean   : 249278  
-    ##                                        3rd Qu.: 220756   3rd Qu.: 219846  
-    ##                                        Max.   :2300664   Max.   :2465326  
-    ##                                        NA's   :2         NA's   :2        
-    ##     pop2010           pop2020            nyc              calc_sq_mi     
-    ##  Min.   :   4836   Min.   :   5107   Length:147         Min.   :  33.73  
-    ##  1st Qu.:  51599   1st Qu.:  49532   Class :character   1st Qu.: 532.79  
-    ##  Median :  93772   Median :  91283   Mode  :character   Median : 837.15  
-    ##  Mean   : 255168   Mean   : 263303                      Mean   : 937.57  
-    ##  3rd Qu.: 219607   3rd Qu.: 232125                      3rd Qu.:1257.21  
-    ##  Max.   :2504700   Max.   :2736074                      Max.   :2818.74  
-    ##  NA's   :2         NA's   :2                            NA's   :2        
-    ##     datemod             shape_leng       shape_area                 geometry  
-    ##  Min.   :2017-10-25   Min.   : 57254   Min.   :8.735e+07   MULTIPOLYGON :147  
-    ##  1st Qu.:2018-02-12   1st Qu.:176097   1st Qu.:1.380e+09   epsg:26918   :  0  
-    ##  Median :2018-11-01   Median :235243   Median :2.168e+09   +proj=utm ...:  0  
-    ##  Mean   :2018-11-07   Mean   :230237   Mean   :2.428e+09                      
-    ##  3rd Qu.:2019-04-26   3rd Qu.:280626   3rd Qu.:3.256e+09                      
-    ##  Max.   :2020-05-19   Max.   :390792   Max.   :7.301e+09                      
-    ##  NA's   :7            NA's   :2        NA's   :2
+    ##       year          name           total_ticks_collected
+    ##  Min.   :2019   Length:147         Min.   :   1.0       
+    ##  1st Qu.:2019   Class :character   1st Qu.:  82.0       
+    ##  Median :2020   Mode  :character   Median : 129.0       
+    ##  Mean   :2020                      Mean   : 220.5       
+    ##  3rd Qu.:2021                      3rd Qu.: 226.0       
+    ##  Max.   :2021                      Max.   :1893.0       
+    ##  NA's   :9                         NA's   :9            
+    ##  tick_population_density  total_tested    b_burgdorferi_percent
+    ##  Min.   :  0.25          Min.   :  1.00   Min.   : 0.00        
+    ##  1st Qu.: 27.94          1st Qu.: 50.00   1st Qu.:48.00        
+    ##  Median : 45.17          Median : 50.50   Median :54.15        
+    ##  Mean   : 56.61          Mean   : 96.04   Mean   :53.72        
+    ##  3rd Qu.: 76.07          3rd Qu.:114.25   3rd Qu.:60.98        
+    ##  Max.   :256.90          Max.   :500.00   Max.   :80.00        
+    ##  NA's   :9               NA's   :9        NA's   :9            
+    ##  county_centroid     event_count       percent_rate       abbrev         
+    ##  Length:147         Min.   :   3.00   Min.   :  1.60   Length:147        
+    ##  Class :character   1st Qu.:  95.75   1st Qu.: 25.30   Class :character  
+    ##  Mode  :character   Median : 242.00   Median : 60.30   Mode  :character  
+    ##                     Mean   : 348.34   Mean   : 93.86                     
+    ##                     3rd Qu.: 493.00   3rd Qu.:130.30                     
+    ##                     Max.   :1269.00   Max.   :446.80                     
+    ##                     NA's   :3         NA's   :3                          
+    ##    gnis_id           fips_code             swis            nysp_zone        
+    ##  Length:147         Length:147         Length:147         Length:147        
+    ##  Class :character   Class :character   Class :character   Class :character  
+    ##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+    ##                                                                             
+    ##                                                                             
+    ##                                                                             
+    ##                                                                             
+    ##     pop1990           pop2000           pop2010           pop2020       
+    ##  Min.   :   5279   Min.   :   5379   Min.   :   4836   Min.   :   5107  
+    ##  1st Qu.:  51981   1st Qu.:  51401   1st Qu.:  51599   1st Qu.:  49532  
+    ##  Median :  89123   Median :  93765   Median :  93772   Median :  91283  
+    ##  Mean   : 239097   Mean   : 249278   Mean   : 255168   Mean   : 263303  
+    ##  3rd Qu.: 220756   3rd Qu.: 219846   3rd Qu.: 219607   3rd Qu.: 232125  
+    ##  Max.   :2300664   Max.   :2465326   Max.   :2504700   Max.   :2736074  
+    ##  NA's   :2         NA's   :2         NA's   :2         NA's   :2        
+    ##      nyc              calc_sq_mi         datemod             shape_leng    
+    ##  Length:147         Min.   :  33.73   Min.   :2017-10-25   Min.   : 57254  
+    ##  Class :character   1st Qu.: 532.79   1st Qu.:2018-02-12   1st Qu.:176097  
+    ##  Mode  :character   Median : 837.15   Median :2018-11-01   Median :235243  
+    ##                     Mean   : 937.57   Mean   :2018-11-07   Mean   :230237  
+    ##                     3rd Qu.:1257.21   3rd Qu.:2019-04-26   3rd Qu.:280626  
+    ##                     Max.   :2818.74   Max.   :2020-05-19   Max.   :390792  
+    ##                     NA's   :2         NA's   :7            NA's   :2       
+    ##    shape_area                 geometry  
+    ##  Min.   :8.735e+07   MULTIPOLYGON :147  
+    ##  1st Qu.:1.380e+09   epsg:26918   :  0  
+    ##  Median :2.168e+09   +proj=utm ...:  0  
+    ##  Mean   :2.428e+09                      
+    ##  3rd Qu.:3.256e+09                      
+    ##  Max.   :7.301e+09                      
+    ##  NA's   :2
 
 # Description of data
 
