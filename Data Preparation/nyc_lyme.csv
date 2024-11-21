@@ -1,0 +1,464 @@
+﻿Yearnum,disease,Dim1Name,Dim1Valid,Dim1Value,Reported Cases,"Crude rate per 1,000 live births","Crude rate per 100,000 population","Age-adjusted rate per 100,000 population"
+2000,Lyme disease,Borough,1,Bronx,18,,1.3,1.3
+2000,Lyme disease,Borough,2,Brooklyn,32,,1.3,1.3
+2000,Lyme disease,Borough,3,Manhattan,137,,8.9,8.8
+2000,Lyme disease,Borough,4,Queens,25,,1.1,1.1
+2000,Lyme disease,Borough,5,Staten Island,19,,4.3,4
+2000,Lyme disease,Borough,9,Unknown,0,,,
+2000,Lyme disease,Age group,1,<1 year,0,,0,
+2000,Lyme disease,Age group,2,1-4 years,6,,1.4,
+2000,Lyme disease,Age group,3,5-14 years,24,,2.2,
+2000,Lyme disease,Age group,4,15-24 years,24,,2.2,
+2000,Lyme disease,Age group,5,25-44 years,73,,2.8,
+2000,Lyme disease,Age group,6,45-64 years,71,,4.2,
+2000,Lyme disease,Age group,7,65+ years ,30,,3.2,
+2000,Lyme disease,Age group,9,Unknown,3,,,
+2000,Lyme disease,Citywide,1,Citywide,231,,2.9,2.9
+2000,Lyme disease,Neighborhood poverty,9,Unknown,231,,,
+2000,Lyme disease,Sex,1,Male,110,,2.9,2.9
+2000,Lyme disease,Sex,2,Female,118,,2.8,2.7
+2000,Lyme disease,Sex,9,Unknown,3,,,
+2001,Lyme disease,Borough,1,Bronx,20,,1.5,1.5
+2001,Lyme disease,Borough,2,Brooklyn,37,,1.5,1.5
+2001,Lyme disease,Borough,3,Manhattan,126,,8.1,7.9
+2001,Lyme disease,Borough,4,Queens,32,,1.4,1.4
+2001,Lyme disease,Borough,5,Staten Island,12,,2.7,2.5
+2001,Lyme disease,Borough,9,Unknown,0,,,
+2001,Lyme disease,Age group,1,<1 year,0,,0,
+2001,Lyme disease,Age group,2,1-4 years,9,,2.2,
+2001,Lyme disease,Age group,3,5-14 years,23,,2.1,
+2001,Lyme disease,Age group,4,15-24 years,17,,1.5,
+2001,Lyme disease,Age group,5,25-44 years,73,,2.8,
+2001,Lyme disease,Age group,6,45-64 years,72,,4.1,
+2001,Lyme disease,Age group,7,65+ years ,29,,3.1,
+2001,Lyme disease,Age group,9,Unknown,4,,,
+2001,Lyme disease,Citywide,1,Citywide,227,,2.8,2.8
+2001,Lyme disease,Neighborhood poverty,9,Unknown,227,,,
+2001,Lyme disease,Sex,1,Male,116,,3,3
+2001,Lyme disease,Sex,2,Female,109,,2.6,2.5
+2001,Lyme disease,Sex,9,Unknown,2,,,
+2002,Lyme disease,Borough,1,Bronx,26,,1.9,1.9
+2002,Lyme disease,Borough,2,Brooklyn,52,,2.1,2.1
+2002,Lyme disease,Borough,3,Manhattan,143,,9.2,9.2
+2002,Lyme disease,Borough,4,Queens,34,,1.5,1.5
+2002,Lyme disease,Borough,5,Staten Island,23,,5.1,5
+2002,Lyme disease,Borough,9,Unknown,0,,,
+2002,Lyme disease,Age group,1,<1 year,1,,0.9,
+2002,Lyme disease,Age group,2,1-4 years,9,,2.2,
+2002,Lyme disease,Age group,3,5-14 years,33,,3.1,
+2002,Lyme disease,Age group,4,15-24 years,23,,2.1,
+2002,Lyme disease,Age group,5,25-44 years,90,,3.4,
+2002,Lyme disease,Age group,6,45-64 years,97,,5.4,
+2002,Lyme disease,Age group,7,65+ years ,22,,2.3,
+2002,Lyme disease,Age group,9,Unknown,3,,,
+2002,Lyme disease,Citywide,1,Citywide,278,,3.4,3.4
+2002,Lyme disease,Neighborhood poverty,9,Unknown,278,,,
+2002,Lyme disease,Sex,1,Male,130,,3.4,3.4
+2002,Lyme disease,Sex,2,Female,142,,3.3,3.2
+2002,Lyme disease,Sex,9,Unknown,6,,,
+2003,Lyme disease,Borough,1,Bronx,21,,1.5,1.5
+2003,Lyme disease,Borough,2,Brooklyn,44,,1.8,1.7
+2003,Lyme disease,Borough,3,Manhattan,104,,6.7,6.8
+2003,Lyme disease,Borough,4,Queens,40,,1.8,1.8
+2003,Lyme disease,Borough,5,Staten Island,11,,2.4,2.3
+2003,Lyme disease,Borough,9,Unknown,0,,,
+2003,Lyme disease,Age group,1,<1 year,0,,0,
+2003,Lyme disease,Age group,2,1-4 years,6,,1.4,
+2003,Lyme disease,Age group,3,5-14 years,29,,2.8,
+2003,Lyme disease,Age group,4,15-24 years,16,,1.4,
+2003,Lyme disease,Age group,5,25-44 years,61,,2.3,
+2003,Lyme disease,Age group,6,45-64 years,72,,4,
+2003,Lyme disease,Age group,7,65+ years ,32,,3.3,
+2003,Lyme disease,Age group,9,Unknown,4,,,
+2003,Lyme disease,Citywide,1,Citywide,220,,2.7,2.7
+2003,Lyme disease,Neighborhood poverty,9,Unknown,220,,,
+2003,Lyme disease,Sex,1,Male,114,,3,3
+2003,Lyme disease,Sex,2,Female,105,,2.5,2.4
+2003,Lyme disease,Sex,9,Unknown,1,,,
+2004,Lyme disease,Borough,1,Bronx,29,,2.1,2.2
+2004,Lyme disease,Borough,2,Brooklyn,57,,2.3,2.3
+2004,Lyme disease,Borough,3,Manhattan,185,,11.8,11.1
+2004,Lyme disease,Borough,4,Queens,42,,1.9,1.9
+2004,Lyme disease,Borough,5,Staten Island,35,,7.7,7.6
+2004,Lyme disease,Borough,9,Unknown,0,,,
+2004,Lyme disease,Age group,1,<1 year,0,,0,
+2004,Lyme disease,Age group,2,1-4 years,8,,1.9,
+2004,Lyme disease,Age group,3,5-14 years,37,,3.6,
+2004,Lyme disease,Age group,4,15-24 years,31,,2.8,
+2004,Lyme disease,Age group,5,25-44 years,104,,4,
+2004,Lyme disease,Age group,6,45-64 years,118,,6.4,
+2004,Lyme disease,Age group,7,65+ years ,45,,4.7,
+2004,Lyme disease,Age group,9,Unknown,5,,,
+2004,Lyme disease,Citywide,1,Citywide,348,,4.3,4.2
+2004,Lyme disease,Neighborhood poverty,9,Unknown,348,,,
+2004,Lyme disease,Sex,1,Male,158,,4.1,4.1
+2004,Lyme disease,Sex,2,Female,185,,4.4,4.2
+2004,Lyme disease,Sex,9,Unknown,5,,,
+2005,Lyme disease,Borough,1,Bronx,23,,1.7,1.7
+2005,Lyme disease,Borough,2,Brooklyn,69,,2.8,2.8
+2005,Lyme disease,Borough,3,Manhattan,200,,12.7,12.2
+2005,Lyme disease,Borough,4,Queens,45,,2.1,2
+2005,Lyme disease,Borough,5,Staten Island,30,,6.6,6.5
+2005,Lyme disease,Borough,9,Unknown,0,,,
+2005,Lyme disease,Age group,1,<1 year,0,,0,
+2005,Lyme disease,Age group,2,1-4 years,6,,1.4,
+2005,Lyme disease,Age group,3,5-14 years,42,,4.3,
+2005,Lyme disease,Age group,4,15-24 years,16,,1.4,
+2005,Lyme disease,Age group,5,25-44 years,132,,5.1,
+2005,Lyme disease,Age group,6,45-64 years,129,,6.9,
+2005,Lyme disease,Age group,7,65+ years ,41,,4.2,
+2005,Lyme disease,Age group,9,Unknown,1,,,
+2005,Lyme disease,Citywide,1,Citywide,367,,4.6,4.5
+2005,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),159,,,
+2005,Lyme disease,Neighborhood poverty,2,Medium poverty,110,,,
+2005,Lyme disease,Neighborhood poverty,3,High poverty,62,,,
+2005,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),23,,,
+2005,Lyme disease,Neighborhood poverty,9,Unknown,13,,,
+2005,Lyme disease,Sex,1,Male,204,,5.3,5.4
+2005,Lyme disease,Sex,2,Female,161,,3.8,3.7
+2005,Lyme disease,Sex,9,Unknown,2,,,
+2006,Lyme disease,Borough,1,Bronx,19,,1.4,1.4
+2006,Lyme disease,Borough,2,Brooklyn,79,,3.2,3.2
+2006,Lyme disease,Borough,3,Manhattan,174,,11,10.8
+2006,Lyme disease,Borough,4,Queens,23,,1.1,1
+2006,Lyme disease,Borough,5,Staten Island,17,,3.7,3.6
+2006,Lyme disease,Borough,9,Unknown,0,,,
+2006,Lyme disease,Age group,1,<1 year,1,,0.9,
+2006,Lyme disease,Age group,2,1-4 years,3,,0.7,
+2006,Lyme disease,Age group,3,5-14 years,30,,3.1,
+2006,Lyme disease,Age group,4,15-24 years,21,,1.9,
+2006,Lyme disease,Age group,5,25-44 years,102,,4,
+2006,Lyme disease,Age group,6,45-64 years,121,,6.4,
+2006,Lyme disease,Age group,7,65+ years ,32,,3.3,
+2006,Lyme disease,Age group,9,Unknown,2,,,
+2006,Lyme disease,Citywide,1,Citywide,312,,3.9,3.8
+2006,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),135,,8.2,7.7
+2006,Lyme disease,Neighborhood poverty,2,Medium poverty,115,,3.9,3.7
+2006,Lyme disease,Neighborhood poverty,3,High poverty,38,,2,2
+2006,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),23,,1.5,1.5
+2006,Lyme disease,Neighborhood poverty,9,Unknown,1,,,
+2006,Lyme disease,Sex,1,Male,181,,4.8,4.7
+2006,Lyme disease,Sex,2,Female,131,,3.1,3
+2006,Lyme disease,Sex,9,Unknown,0,,,
+2007,Lyme disease,Borough,1,Bronx,33,,2.4,2.4
+2007,Lyme disease,Borough,2,Brooklyn,83,,3.4,3.3
+2007,Lyme disease,Borough,3,Manhattan,223,,14.1,14
+2007,Lyme disease,Borough,4,Queens,53,,2.4,2.3
+2007,Lyme disease,Borough,5,Staten Island,29,,6.3,6.2
+2007,Lyme disease,Borough,9,Unknown,0,,,
+2007,Lyme disease,Age group,1,<1 year,0,,0,
+2007,Lyme disease,Age group,2,1-4 years,8,,2,
+2007,Lyme disease,Age group,3,5-14 years,35,,3.7,
+2007,Lyme disease,Age group,4,15-24 years,38,,3.3,
+2007,Lyme disease,Age group,5,25-44 years,141,,5.5,
+2007,Lyme disease,Age group,6,45-64 years,129,,6.7,
+2007,Lyme disease,Age group,7,65+ years ,69,,7.1,
+2007,Lyme disease,Age group,9,Unknown,1,,,
+2007,Lyme disease,Citywide,1,Citywide,421,,5.2,5.1
+2007,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),163,,9.9,9.3
+2007,Lyme disease,Neighborhood poverty,2,Medium poverty,163,,5.5,5.3
+2007,Lyme disease,Neighborhood poverty,3,High poverty,67,,3.5,3.4
+2007,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),25,,1.7,1.7
+2007,Lyme disease,Neighborhood poverty,9,Unknown,3,,,
+2007,Lyme disease,Sex,1,Male,201,,5.3,5.3
+2007,Lyme disease,Sex,2,Female,220,,5.2,5
+2007,Lyme disease,Sex,9,Unknown,0,,,
+2008,Lyme disease,Borough,1,Bronx,75,,5.5,5.7
+2008,Lyme disease,Borough,2,Brooklyn,179,,7.2,7
+2008,Lyme disease,Borough,3,Manhattan,417,,26.3,25.7
+2008,Lyme disease,Borough,4,Queens,105,,4.8,4.6
+2008,Lyme disease,Borough,5,Staten Island,53,,11.4,11.4
+2008,Lyme disease,Borough,9,Unknown,2,,,
+2008,Lyme disease,Age group,1,<1 year,1,,0.9,
+2008,Lyme disease,Age group,2,1-4 years,17,,4.2,
+2008,Lyme disease,Age group,3,5-14 years,75,,7.9,
+2008,Lyme disease,Age group,4,15-24 years,88,,7.6,
+2008,Lyme disease,Age group,5,25-44 years,284,,11.1,
+2008,Lyme disease,Age group,6,45-64 years,247,,12.6,
+2008,Lyme disease,Age group,7,65+ years ,111,,11.3,
+2008,Lyme disease,Age group,9,Unknown,8,,,
+2008,Lyme disease,Citywide,1,Citywide,831,,10.2,10
+2008,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),316,,19.1,18.4
+2008,Lyme disease,Neighborhood poverty,2,Medium poverty,325,,10.8,10.4
+2008,Lyme disease,Neighborhood poverty,3,High poverty,125,,6.4,6.2
+2008,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),61,,4,4.1
+2008,Lyme disease,Neighborhood poverty,9,Unknown,4,,,
+2008,Lyme disease,Sex,1,Male,420,,10.9,10.9
+2008,Lyme disease,Sex,2,Female,406,,9.5,9.2
+2008,Lyme disease,Sex,9,Unknown,5,,,
+2009,Lyme disease,Borough,1,Bronx,76,,5.5,5.6
+2009,Lyme disease,Borough,2,Brooklyn,259,,10.2,10.1
+2009,Lyme disease,Borough,3,Manhattan,536,,33.9,32.7
+2009,Lyme disease,Borough,4,Queens,136,,6.1,5.9
+2009,Lyme disease,Borough,5,Staten Island,60,,12.8,13
+2009,Lyme disease,Borough,9,Unknown,2,,,
+2009,Lyme disease,Age group,1,<1 year,0,,0,
+2009,Lyme disease,Age group,2,1-4 years,20,,4.9,
+2009,Lyme disease,Age group,3,5-14 years,99,,10.4,
+2009,Lyme disease,Age group,4,15-24 years,110,,9.3,
+2009,Lyme disease,Age group,5,25-44 years,391,,15.2,
+2009,Lyme disease,Age group,6,45-64 years,326,,16.4,
+2009,Lyme disease,Age group,7,65+ years ,120,,12.1,
+2009,Lyme disease,Age group,9,Unknown,3,,,
+2009,Lyme disease,Citywide,1,Citywide,"1,069",,13,12.8
+2009,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),395,,23.7,22.8
+2009,Lyme disease,Neighborhood poverty,2,Medium poverty,412,,13.6,13.1
+2009,Lyme disease,Neighborhood poverty,3,High poverty,185,,9.5,9.3
+2009,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),72,,4.7,4.6
+2009,Lyme disease,Neighborhood poverty,9,Unknown,5,,,
+2009,Lyme disease,Sex,1,Male,525,,13.5,13.4
+2009,Lyme disease,Sex,2,Female,530,,12.3,12
+2009,Lyme disease,Sex,9,Unknown,14,,,
+2010,Lyme disease,Borough,1,Bronx,57,,4.1,4
+2010,Lyme disease,Borough,2,Brooklyn,157,,6.1,6.2
+2010,Lyme disease,Borough,3,Manhattan,364,,22.9,22.7
+2010,Lyme disease,Borough,4,Queens,119,,5.3,5.1
+2010,Lyme disease,Borough,5,Staten Island,34,,7.2,7.2
+2010,Lyme disease,Borough,9,Unknown,0,,,
+2010,Lyme disease,Age group,1,<1 year,1,,0.9,
+2010,Lyme disease,Age group,2,1-4 years,20,,4.9,
+2010,Lyme disease,Age group,3,5-14 years,71,,7.5,
+2010,Lyme disease,Age group,4,15-24 years,90,,7.6,
+2010,Lyme disease,Age group,5,25-44 years,262,,10.2,
+2010,Lyme disease,Age group,6,45-64 years,211,,10.4,
+2010,Lyme disease,Age group,7,65+ years ,73,,7.2,
+2010,Lyme disease,Age group,9,Unknown,3,,,
+2010,Lyme disease,Citywide,1,Citywide,731,,8.9,8.7
+2010,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),296,,18.1,17.8
+2010,Lyme disease,Neighborhood poverty,2,Medium poverty,253,,8.6,8.3
+2010,Lyme disease,Neighborhood poverty,3,High poverty,126,,6,6
+2010,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),52,,3.3,3.2
+2010,Lyme disease,Neighborhood poverty,9,Unknown,4,,,
+2010,Lyme disease,Sex,1,Male,378,,9.6,9.5
+2010,Lyme disease,Sex,2,Female,348,,8,7.9
+2010,Lyme disease,Sex,9,Unknown,5,,,
+2011,Lyme disease,Borough,1,Bronx,40,,2.9,2.9
+2011,Lyme disease,Borough,2,Brooklyn,181,,7.1,7.2
+2011,Lyme disease,Borough,3,Manhattan,352,,21.9,21.6
+2011,Lyme disease,Borough,4,Queens,117,,5.2,5.1
+2011,Lyme disease,Borough,5,Staten Island,45,,9.6,9.5
+2011,Lyme disease,Borough,9,Unknown,1,,,
+2011,Lyme disease,Age group,1,<1 year,1,,0.9,
+2011,Lyme disease,Age group,2,1-4 years,29,,6.8,
+2011,Lyme disease,Age group,3,5-14 years,87,,9.2,
+2011,Lyme disease,Age group,4,15-24 years,71,,6.2,
+2011,Lyme disease,Age group,5,25-44 years,255,,9.9,
+2011,Lyme disease,Age group,6,45-64 years,199,,9.8,
+2011,Lyme disease,Age group,7,65+ years ,92,,9,
+2011,Lyme disease,Age group,9,Unknown,2,,,
+2011,Lyme disease,Citywide,1,Citywide,736,,8.9,8.8
+2011,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),252,,16.2,16
+2011,Lyme disease,Neighborhood poverty,2,Medium poverty,261,,9.9,9.6
+2011,Lyme disease,Neighborhood poverty,3,High poverty,144,,5.9,5.9
+2011,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),75,,4.6,4.5
+2011,Lyme disease,Neighborhood poverty,9,Unknown,4,,,
+2011,Lyme disease,Sex,1,Male,373,,9.5,9.5
+2011,Lyme disease,Sex,2,Female,356,,8.2,8.2
+2011,Lyme disease,Sex,9,Unknown,7,,,
+2012,Lyme disease,Borough,1,Bronx,33,,2.3,2.4
+2012,Lyme disease,Borough,2,Brooklyn,125,,4.9,4.8
+2012,Lyme disease,Borough,3,Manhattan,264,,16.3,15.9
+2012,Lyme disease,Borough,4,Queens,89,,3.9,3.9
+2012,Lyme disease,Borough,5,Staten Island,34,,7.2,7.6
+2012,Lyme disease,Borough,9,Unknown,0,,,
+2012,Lyme disease,Age group,1,<1 year,0,,0,
+2012,Lyme disease,Age group,2,1-4 years,11,,2.5,
+2012,Lyme disease,Age group,3,5-14 years,51,,5.4,
+2012,Lyme disease,Age group,4,15-24 years,57,,5,
+2012,Lyme disease,Age group,5,25-44 years,199,,7.6,
+2012,Lyme disease,Age group,6,45-64 years,156,,7.6,
+2012,Lyme disease,Age group,7,65+ years ,68,,6.4,
+2012,Lyme disease,Age group,9,Unknown,3,,,
+2012,Lyme disease,Citywide,1,Citywide,545,,6.5,6.4
+2012,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),205,,14.3,13.9
+2012,Lyme disease,Neighborhood poverty,2,Medium poverty,199,,6.5,6.3
+2012,Lyme disease,Neighborhood poverty,3,High poverty,84,,4.1,4.1
+2012,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),55,,3,2.9
+2012,Lyme disease,Neighborhood poverty,9,Unknown,2,,,
+2012,Lyme disease,Sex,1,Male,307,,7.7,7.7
+2012,Lyme disease,Sex,2,Female,227,,5.2,5.1
+2012,Lyme disease,Sex,9,Unknown,11,,,
+2013,Lyme disease,Borough,1,Bronx,48,,3.4,3.4
+2013,Lyme disease,Borough,2,Brooklyn,252,,9.7,9.9
+2013,Lyme disease,Borough,3,Manhattan,312,,19.2,19.2
+2013,Lyme disease,Borough,4,Queens,107,,4.7,4.6
+2013,Lyme disease,Borough,5,Staten Island,41,,8.7,8.9
+2013,Lyme disease,Borough,9,Unknown,0,,,
+2013,Lyme disease,Age group,1,<1 year,0,,0,
+2013,Lyme disease,Age group,2,1-4 years,27,,6.2,
+2013,Lyme disease,Age group,3,5-14 years,110,,11.6,
+2013,Lyme disease,Age group,4,15-24 years,78,,7,
+2013,Lyme disease,Age group,5,25-44 years,207,,7.8,
+2013,Lyme disease,Age group,6,45-64 years,211,,10.3,
+2013,Lyme disease,Age group,7,65+ years ,124,,11.4,
+2013,Lyme disease,Age group,9,Unknown,3,,,
+2013,Lyme disease,Citywide,1,Citywide,760,,9.1,9.1
+2013,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),239,,16.6,16.2
+2013,Lyme disease,Neighborhood poverty,2,Medium poverty,267,,8.7,8.6
+2013,Lyme disease,Neighborhood poverty,3,High poverty,132,,6.4,6.5
+2013,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),120,,6.5,6.2
+2013,Lyme disease,Neighborhood poverty,9,Unknown,2,,,
+2013,Lyme disease,Sex,1,Male,439,,11,11.1
+2013,Lyme disease,Sex,2,Female,309,,7,6.9
+2013,Lyme disease,Sex,9,Unknown,12,,,
+2014,Lyme disease,Borough,1,Bronx,49,,3.4,3.5
+2014,Lyme disease,Borough,2,Brooklyn,285,,11,11.3
+2014,Lyme disease,Borough,3,Manhattan,338,,20.7,20.9
+2014,Lyme disease,Borough,4,Queens,104,,4.5,4.5
+2014,Lyme disease,Borough,5,Staten Island,76,,16.1,15.8
+2014,Lyme disease,Borough,9,Unknown,0,,,
+2014,Lyme disease,Age group,1,<1 year,0,,0,
+2014,Lyme disease,Age group,2,1-4 years,25,,5.6,
+2014,Lyme disease,Age group,3,5-14 years,140,,14.9,
+2014,Lyme disease,Age group,4,15-24 years,100,,9.2,
+2014,Lyme disease,Age group,5,25-44 years,240,,9,
+2014,Lyme disease,Age group,6,45-64 years,217,,10.5,
+2014,Lyme disease,Age group,7,65+ years ,129,,11.5,
+2014,Lyme disease,Age group,9,Unknown,1,,,
+2014,Lyme disease,Citywide,1,Citywide,852,,10.1,10.2
+2014,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),287,,19.9,19.8
+2014,Lyme disease,Neighborhood poverty,2,Medium poverty,295,,9.5,9.5
+2014,Lyme disease,Neighborhood poverty,3,High poverty,145,,6.9,7.2
+2014,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),124,,6.6,6.6
+2014,Lyme disease,Neighborhood poverty,9,Unknown,1,,,
+2014,Lyme disease,Sex,1,Male,482,,12,12.2
+2014,Lyme disease,Sex,2,Female,365,,8.3,8.3
+2014,Lyme disease,Sex,9,Unknown,5,,,
+2015,Lyme disease,Borough,1,Bronx,46,,3.2,3.2
+2015,Lyme disease,Borough,2,Brooklyn,335,,12.8,13.3
+2015,Lyme disease,Borough,3,Manhattan,327,,20,20.3
+2015,Lyme disease,Borough,4,Queens,116,,5,4.9
+2015,Lyme disease,Borough,5,Staten Island,121,,25.6,25.4
+2015,Lyme disease,Borough,9,Unknown,0,,,
+2015,Lyme disease,Age group,1,<1 year,1,,0.8,
+2015,Lyme disease,Age group,2,1-4 years,46,,10.3,
+2015,Lyme disease,Age group,3,5-14 years,155,,16.5,
+2015,Lyme disease,Age group,4,15-24 years,98,,9.3,
+2015,Lyme disease,Age group,5,25-44 years,262,,9.8,
+2015,Lyme disease,Age group,6,45-64 years,240,,11.6,
+2015,Lyme disease,Age group,7,65+ years ,143,,12.3,
+2015,Lyme disease,Age group,9,Unknown,0,,,
+2015,Lyme disease,Citywide,1,Citywide,945,,11.2,11.3
+2015,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),312,,21.6,21.8
+2015,Lyme disease,Neighborhood poverty,2,Medium poverty,305,,9.8,9.7
+2015,Lyme disease,Neighborhood poverty,3,High poverty,158,,7.5,7.7
+2015,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),167,,8.9,8.7
+2015,Lyme disease,Neighborhood poverty,9,Unknown,3,,,
+2015,Lyme disease,Sex,1,Male,573,,14.2,14.5
+2015,Lyme disease,Sex,2,Female,364,,8.2,8.3
+2015,Lyme disease,Sex,9,Unknown,8,,,
+2016,Lyme disease,Borough,1,Bronx,51,,3.5,3.5
+2016,Lyme disease,Borough,2,Brooklyn,322,,12.3,12.9
+2016,Lyme disease,Borough,3,Manhattan,321,,19.6,19.7
+2016,Lyme disease,Borough,4,Queens,129,,5.6,5.7
+2016,Lyme disease,Borough,5,Staten Island,123,,25.9,25.1
+2016,Lyme disease,Borough,9,Unknown,0,,,
+2016,Lyme disease,Age group,1,<1 year,1,,0.9,
+2016,Lyme disease,Age group,2,1-4 years,26,,5.9,
+2016,Lyme disease,Age group,3,5-14 years,160,,16.9,
+2016,Lyme disease,Age group,4,15-24 years,115,,11.2,
+2016,Lyme disease,Age group,5,25-44 years,244,,9.1,
+2016,Lyme disease,Age group,6,45-64 years,252,,12.1,
+2016,Lyme disease,Age group,7,65+ years ,148,,12.4,
+2016,Lyme disease,Age group,9,Unknown,0,,,
+2016,Lyme disease,Citywide,1,Citywide,946,,11.2,11.3
+2016,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),310,,19.2,19.3
+2016,Lyme disease,Neighborhood poverty,2,Medium poverty,323,,10.4,10.4
+2016,Lyme disease,Neighborhood poverty,3,High poverty,171,,9,9.2
+2016,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),142,,7.4,7.4
+2016,Lyme disease,Neighborhood poverty,9,Unknown,0,,,
+2016,Lyme disease,Sex,1,Male,546,,13.5,13.7
+2016,Lyme disease,Sex,2,Female,398,,9,9.2
+2016,Lyme disease,Sex,9,Unknown,2,,,
+2017,Lyme disease,Borough,1,Bronx,47,,3.3,3.3
+2017,Lyme disease,Borough,2,Brooklyn,384,,14.8,15.2
+2017,Lyme disease,Borough,3,Manhattan,385,,23.6,23.3
+2017,Lyme disease,Borough,4,Queens,150,,6.5,6.4
+2017,Lyme disease,Borough,5,Staten Island,124,,26.1,26.2
+2017,Lyme disease,Borough,9,Unknown,0,,,
+2017,Lyme disease,Age group,1,<1 year,1,,0.9,
+2017,Lyme disease,Age group,2,1-4 years,35,,8.1,
+2017,Lyme disease,Age group,3,5-14 years,190,,20.2,
+2017,Lyme disease,Age group,4,15-24 years,99,,9.9,
+2017,Lyme disease,Age group,5,25-44 years,302,,11.4,
+2017,Lyme disease,Age group,6,45-64 years,287,,13.9,
+2017,Lyme disease,Age group,7,65+ years ,175,,14.3,
+2017,Lyme disease,Age group,9,Unknown,1,,,
+2017,Lyme disease,Citywide,1,Citywide,"1,090",,12.9,13
+2017,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),391,,25.8,25.9
+2017,Lyme disease,Neighborhood poverty,2,Medium poverty,327,,10.1,10
+2017,Lyme disease,Neighborhood poverty,3,High poverty,259,,11.2,11.4
+2017,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),110,,7.1,7
+2017,Lyme disease,Neighborhood poverty,9,Unknown,3,,,
+2017,Lyme disease,Sex,1,Male,606,,15.1,15.2
+2017,Lyme disease,Sex,2,Female,480,,10.9,11
+2017,Lyme disease,Sex,9,Unknown,4,,,
+2018,Lyme disease,Borough,1,Bronx,34,,2.4,2.4
+2018,Lyme disease,Borough,2,Brooklyn,283,,11,11.4
+2018,Lyme disease,Borough,3,Manhattan,267,,16.4,16.1
+2018,Lyme disease,Borough,4,Queens,87,,3.8,3.7
+2018,Lyme disease,Borough,5,Staten Island,87,,18.3,17
+2018,Lyme disease,Borough,9,Unknown,0,,,
+2018,Lyme disease,Age group,1,<1 year,1,,0.9,
+2018,Lyme disease,Age group,2,1-4 years,21,,5,
+2018,Lyme disease,Age group,3,5-14 years,137,,14.6,
+2018,Lyme disease,Age group,4,15-24 years,70,,7.2,
+2018,Lyme disease,Age group,5,25-44 years,216,,8.2,
+2018,Lyme disease,Age group,6,45-64 years,197,,9.6,
+2018,Lyme disease,Age group,7,65+ years ,116,,9.3,
+2018,Lyme disease,Age group,9,Unknown,0,,,
+2018,Lyme disease,Citywide,1,Citywide,758,,9,9.1
+2018,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),241,,14.7,14.4
+2018,Lyme disease,Neighborhood poverty,2,Medium poverty,283,,8,8
+2018,Lyme disease,Neighborhood poverty,3,High poverty,162,,7.8,8.1
+2018,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),69,,5.9,5.8
+2018,Lyme disease,Neighborhood poverty,9,Unknown,3,,,
+2018,Lyme disease,Sex,1,Male,450,,11.2,11.3
+2018,Lyme disease,Sex,2,Female,308,,7,7.2
+2018,Lyme disease,Sex,9,Unknown,0,,,
+2019,Lyme disease,Borough,1,Bronx,25,,1.8,1.8
+2019,Lyme disease,Borough,2,Brooklyn,284,,11.1,11.4
+2019,Lyme disease,Borough,3,Manhattan,290,,17.8,17.3
+2019,Lyme disease,Borough,4,Queens,111,,4.9,4.7
+2019,Lyme disease,Borough,5,Staten Island,53,,11.1,10.7
+2019,Lyme disease,Borough,9,Unknown,0,,,
+2019,Lyme disease,Age group,1,<1 year,0,,0,
+2019,Lyme disease,Age group,2,1-4 years,13,,3.1,
+2019,Lyme disease,Age group,3,5-14 years,111,,12,
+2019,Lyme disease,Age group,4,15-24 years,72,,7.5,
+2019,Lyme disease,Age group,5,25-44 years,243,,9.3,
+2019,Lyme disease,Age group,6,45-64 years,173,,8.5,
+2019,Lyme disease,Age group,7,65+ years ,151,,11.8,
+2019,Lyme disease,Age group,9,Unknown,0,,,
+2019,Lyme disease,Citywide,1,Citywide,763,,9.1,9.1
+2019,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),273,,14.9,14
+2019,Lyme disease,Neighborhood poverty,2,Medium poverty,289,,7.9,7.7
+2019,Lyme disease,Neighborhood poverty,3,High poverty,154,,8.8,9
+2019,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),46,,4.3,4.2
+2019,Lyme disease,Neighborhood poverty,9,Unknown,1,,,
+2019,Lyme disease,Sex,1,Male,458,,11.5,11.6
+2019,Lyme disease,Sex,2,Female,299,,6.9,6.7
+2019,Lyme disease,Sex,9,Unknown,6,,,
+2020,Lyme disease,Borough,1,Bronx,23,,1.6,1.6
+2020,Lyme disease,Borough,2,Brooklyn,279,,11,11.3
+2020,Lyme disease,Borough,3,Manhattan,242,,15,15
+2020,Lyme disease,Borough,4,Queens,112,,5,4.7
+2020,Lyme disease,Borough,5,Staten Island,48,,10.1,9.7
+2020,Lyme disease,Borough,9,Unknown,0,,,
+2020,Lyme disease,Age group,1,<1 year,0,,0,
+2020,Lyme disease,Age group,2,1-4 years,14,,3.5,
+2020,Lyme disease,Age group,3,5-14 years,103,,11.2,
+2020,Lyme disease,Age group,4,15-24 years,59,,6.3,
+2020,Lyme disease,Age group,5,25-44 years,208,,8,
+2020,Lyme disease,Age group,6,45-64 years,208,,10.4,
+2020,Lyme disease,Age group,7,65+ years ,112,,8.6,
+2020,Lyme disease,Age group,9,Unknown,0,,,
+2020,Lyme disease,Citywide,1,Citywide,704,,8.5,8.5
+2020,Lyme disease,Neighborhood poverty,1,Low poverty (wealthiest),210,,11.6,11.2
+2020,Lyme disease,Neighborhood poverty,2,Medium poverty,326,,9,8.8
+2020,Lyme disease,Neighborhood poverty,3,High poverty,127,,7.3,7.5
+2020,Lyme disease,Neighborhood poverty,4,Very high poverty (poorest),39,,3.6,3.6
+2020,Lyme disease,Neighborhood poverty,9,Unknown,2,,,
+2020,Lyme disease,Sex,1,Male,401,,10.2,10.2
+2020,Lyme disease,Sex,2,Female,303,,7,6.9
+2020,Lyme disease,Sex,9,Unknown,0,,,
