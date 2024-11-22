@@ -164,7 +164,8 @@ print(NY_lyme_tick)
 
 NY_lyme_tick_county = NY_lyme_tick %>%
   left_join(ny_county, by = "NAME") %>% 
-  janitor::clean_names()
+  janitor::clean_names() 
+
 # didn't delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
 
 print(NY_lyme_tick_county)
