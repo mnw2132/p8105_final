@@ -194,7 +194,7 @@ print(NY_lyme_tick_county)
 
 # Description of data
 
-The data set includes 147 observations and 147 variables. Of the
+The data set includes 147 observations and 26 variables. Of the
 variables, all are `numeric` except for those that are characters (name,
 county_centroid, swis, nysp_zone, dos_ll, nyc) and multipolygon
 (geometry). These contain information about tick surveillance within New
