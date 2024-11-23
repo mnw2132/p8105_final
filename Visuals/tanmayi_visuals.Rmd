@@ -1,0 +1,16 @@
+---
+title: "Data Visuals"
+author: "Tanmayi Amanchi"
+date: "2024-11-23"
+output: github_document
+---
+
+This document for visualizing the cleaned/tidied dataset.
+
+```{r, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+``` 
