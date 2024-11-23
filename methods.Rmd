@@ -1,0 +1,12 @@
+---
+title: "Methods"
+---
+
+Here we can report our methods and provide some code. 
+
+# Data Tidying
+
+# Exploratory Analysis
+
+# Statistical Analysis
+
