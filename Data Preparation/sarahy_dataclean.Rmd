@@ -74,10 +74,6 @@ NY_lyme_tick_county = NY_lyme_tick %>%
 
 # didn't delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
 
-NY_lyme_tick_county %>% 
-  knitr::kable()
-
-print(NY_lyme_tick_county)
 
 ```
 
@@ -88,18 +84,30 @@ print(NY_lyme_tick_county)
 
 ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
   janitor::clean_names() %>% 
-  select(county:dec_22)
+  select(county:dec_22) %>% 
+mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = "county") %>%  # renaming to have common identifier 
+  drop_na(name) # there are two rows with entirely no data so I dropped them 
 
+tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset with avg weather 
+  left_join(ny_temp, by = "name") %>% 
+  janitor::clean_names() 
+         
+         
+         
+```
 
+# Saved Final Dataset 
 
+```{r}
+write_csv(tick_lyme_weather, "final_data.csv")
+
+tidied = read_csv("final_data.csv")
 ```
 
 
 
-# Description of merged lyme and tick data
-The data set includes `r nrow(NY_lyme_tick_county)` observations and `r ncol(NY_lyme_tick_county)` variables. Of the variables, all are `numeric` except for those that are characters (name, county_centroid, swis, nysp_zone, dos_ll, nyc) and multipolygon (geometry). These contain information about tick surveillance within New York counties, including the number of ticks collected, the number tested for Lyme disease, and the tick population density. The dataset also includes demographic and spatial data of human populations within each county. The information can help identify the high-risk areas and guide public health interventions. 
-
-
+# Attempt Using NOAA data 
 ```{r,eval= FALSE}
 # importing the weather data 
 
@@ -175,12 +183,4 @@ print(ny_weather)
 
 
 
-
-## Saved Dataset 
-
-```{r}
-write_csv(NY_lyme_tick_county, "final_data.csv")
-
-tidied = read_csv("final_data.csv")
-```
 
