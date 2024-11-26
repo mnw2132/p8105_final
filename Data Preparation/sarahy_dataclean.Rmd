@@ -80,9 +80,11 @@ print(NY_lyme_tick_county)
 
 ```
 
+# Description of merged lyme and tick data
+The data set includes `r nrow(NY_lyme_tick_county)` observations and `r ncol(NY_lyme_tick_county)` variables. Of the variables, all are `numeric` except for those that are characters (name, county_centroid, swis, nysp_zone, dos_ll, nyc) and multipolygon (geometry). These contain information about tick surveillance within New York counties, including the number of ticks collected, the number tested for Lyme disease, and the tick population density. The dataset also includes demographic and spatial data of human populations within each county. The information can help identify the high-risk areas and guide public health interventions. 
 
 
-```{r}
+```{r,eval= FALSE}
 # importing the weather data 
 
 library(dplyr)
@@ -103,34 +105,35 @@ nydat <- meteo_pull_monitors(nystationids$id,
 # Save the resulting data
 save(nystationids, nydat, file = "nynoaadat.RData")
 
+```
 
 
+
+```{r, eval=FALSE}
+# convert from rdata to csv
+
+load("nynoaadat.RData")
+
+ls()  # This will list all the objects in your environment
+
+str(nydat)
+
+
+noaa_data <- as.data.frame(nydat)
+
+
+write.csv(data, file = "nydat.csv", row.names = FALSE)
 
 
 ```
 
 
 
-
-# Description of data
-The data set includes `r nrow(NY_lyme_tick_county)` observations and `r ncol(NY_lyme_tick_county)` variables. Of the variables, all are `numeric` except for those that are characters (name, county_centroid, swis, nysp_zone, dos_ll, nyc) and multipolygon (geometry). These contain information about tick surveillance within New York counties, including the number of ticks collected, the number tested for Lyme disease, and the tick population density. The dataset also includes demographic and spatial data of human populations within each county. The information can help identify the high-risk areas and guide public health interventions. 
+## Saved Dataset 
 
 ```{r}
 write_csv(NY_lyme_tick_county, "final_data.csv")
 
 tidied = read_csv("final_data.csv")
 ```
-
-
-```{r}
-
-
-
-
-
-
-
-```
-
-
 
