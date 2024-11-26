@@ -11,6 +11,7 @@ library(rvest)
 library(sf)
 library(purrr)
 library(knitr)
+library(readxl)
 ```
 
 ``` r
@@ -348,6 +349,30 @@ print(NY_lyme_tick_county)
     ## #   calc_sq_mi <dbl>, datemod <date>, shape_leng <dbl>, shape_area <dbl>,
     ## #   geometry <MULTIPOLYGON [m]>
 
+``` r
+# merging and reading in tammy csv file with avg temps 
+
+ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
+  janitor::clean_names() %>% 
+  select(county:dec_22)
+```
+
+    ## New names:
+    ## Rows: 65 Columns: 56
+    ## ── Column specification
+    ## ──────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (1): County dbl (48): Jan-19, Feb-19, Mar-19, Apr-19, May-19, Jun-19, Jul-19,
+    ## Aug-19, Se... lgl (7): ...50, ...51, ...52, ...53, ...54, ...55, ...56
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+    ## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    ## • `` -> `...50`
+    ## • `` -> `...51`
+    ## • `` -> `...52`
+    ## • `` -> `...53`
+    ## • `` -> `...54`
+    ## • `` -> `...55`
+    ## • `` -> `...56`
+
 # Description of merged lyme and tick data
 
 The data set includes 147 observations and 26 variables. Of the
@@ -396,6 +421,30 @@ noaa_data <- as.data.frame(nydat)
 
 
 write.csv(data, file = "nydat.csv", row.names = FALSE)
+```
+
+``` r
+ny_weather = read_csv("./nydat.csv") %>% 
+  select(id, date, prcp,tmax) %>% 
+  drop_na(tmax) 
+
+
+ny_weather <- ny_weather %>%
+  group_by(id, date) %>%
+  summarise(
+    prcp = mean(prcp, na.rm = TRUE),
+    tmax = mean(tmax, na.rm = TRUE),
+    .groups = 'drop'
+  ) %>%
+  pivot_wider(
+    names_from = id,
+    values_from = c(date, prcp, tmax)
+  )
+
+ny_weather <- ny_weather %>%
+  unnest(cols = c(date, prcp, tmax))
+
+print(ny_weather)
 ```
 
 ## Saved Dataset
