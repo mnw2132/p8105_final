@@ -1,0 +1,48 @@
+---
+title: "Exploratory Analysis"
+author: "Kaleb J. Frierson"
+date: "2024-11-23"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Loading packages:
+```{r}
+library(tidyverse)
+```
+
+Copied and pasted `final_data.csv` from data preparation folder into data analysis folder and am reading it into this document as `ticks`. 
+```{r}
+ticks = read_csv("final_data.csv")
+```
+I want a count of counties with complete data for each year: 
+```{r}
+summary_by_year = 
+  ticks |> 
+  group_by(year) |> 
+  summarize(non_missing_counties = sum(!is.na(total_ticks_collected)))
+
+summary_by_year
+```
+
+I also want to know which couties have non zero values for all three years of data collection: 
+```{r}
+all_year_data = 
+  ticks |> 
+  filter(year %in% c(2019, 2020, 2021)) |>  
+  group_by(name) |>                        
+  summarize(
+    years_with_data = sum(!is.na(total_ticks_collected)),  
+    all_years_present = all(year %in% c(2019, 2020, 2021)) 
+  ) |> 
+  filter(years_with_data == 3 & all_years_present) |>      
+  select(name)                                          
+
+all_year_data
+
+```
+
+I think it would be reasonable to restrict the dataset to the 36 counties with data across three years. This would allow us to incorporate a column for tmax for each county in each year and potentially assess any correlation between temperature increases and abundance. 

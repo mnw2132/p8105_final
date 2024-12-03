@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2024-11-21" />
+
+<title>Cleaning and Description of Analytic dataset</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="background.html">Background</a>
+</li>
+<li>
+  <a href="methods.html">Methods</a>
+</li>
+<li>
+  <a href="findings.html">Findings</a>
+</li>
+<li>
+  <a href="dashboard.html">Dashboard</a>
+</li>
+<li>
+  <a href="about.html">About the Authors</a>
+</li>
+<li>
+  <a href="mailto:&lt;you@youremail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/&lt;YOUR_GH_NAME&gt;/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Cleaning and Description of Analytic
+dataset</h1>
+<h4 class="date">2024-11-21</h4>
+
+</div>
+
+
+<div id="sarahys-data-cleaning" class="section level1">
+<h1>Sarahy’s Data Cleaning</h1>
+<p>This document for cleaning and tidying the data.</p>
+<pre class="r"><code>library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+library(readxl)</code></pre>
+<pre class="r"><code>nineteen_twentyone_county_lyme = read_csv(&quot;new_york_county_lyme.csv&quot;) %&gt;%  #read in the NYC lyme data
+  janitor::clean_names() %&gt;%  #clean the names 
+  select(county_name, event_count,percent_rate ) %&gt;%  # select variables of interest 
+  rename(NAME = &quot;county_name&quot;, 
+         lyme_count = &quot;event_count&quot;,
+         lyme_rate = &quot;percent_rate&quot;
+         ) %&gt;%  # renaming so we can have a common variable when merging 
+  mutate( data = &quot;lyme&quot;) # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)</code></pre>
+<pre><code>## # A tibble: 62 × 4
+##    NAME      lyme_count lyme_rate data 
+##    &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+##  1 Queens           336       4.9 lyme 
+##  2 Saratoga         494      70.8 lyme 
+##  3 Greene           612     427.  lyme 
+##  4 Niagara           10       1.6 lyme 
+##  5 Allegany          59      42.3 lyme 
+##  6 Bronx             78       1.8 lyme 
+##  7 Ulster           657     122.  lyme 
+##  8 Jefferson        170      49.7 lyme 
+##  9 Orange           878      75.1 lyme 
+## 10 Wayne            120      44.2 lyme 
+## # ℹ 52 more rows</code></pre>
+<p>Tidy deer tick data</p>
+<pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %&gt;%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = &quot;county&quot;) %&gt;% # renaming for common identifier
+  rename(ticks_tested = &quot;total_tested&quot;) %&gt;% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %&gt;%  # selecting and removing variables of interest , 
+mutate(data = &quot;ticks&quot;)  # adding a variable to identify merging 
+
+
+print(tick_surveillance)</code></pre>
+<pre><code>## # A tibble: 138 × 8
+##     year NAME       total_ticks_collected tick_population_density ticks_tested
+##    &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1  2021 Albany                       366                    85.8          168
+##  2  2021 Chautauqua                   199                    36.7          107
+##  3  2021 Dutchess                     438                    66.8           51
+##  4  2021 Warren                        88                    13.8           87
+##  5  2020 Albany                       114                    37.2          103
+##  6  2020 Chemung                      271                   257.            50
+##  7  2020 Delaware                      75                    21.9           69
+##  8  2020 Tompkins                     131                    52.4           44
+##  9  2020 Oneida                       157                    78.5           50
+## 10  2020 Seneca                        51                    35.5           50
+## # ℹ 128 more rows
+## # ℹ 3 more variables: b_burgdorferi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;,
+## #   data &lt;chr&gt;</code></pre>
+<p>Read in shp file for NY counties</p>
+<pre class="r"><code>ny_county =  st_read(&quot;./Counties.shp&quot;)  # read in the county shapefile </code></pre>
+<pre><code>## Reading layer `Counties&#39; from data source 
+##   `/Users/nickywilliams/Desktop/Data Science/p8105_final/Counties.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## Projected CRS: NAD83 / UTM zone 18N</code></pre>
+<pre class="r"><code>print(ny_county)</code></pre>
+<pre><code>## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## Projected CRS: NAD83 / UTM zone 18N
+## First 10 features:
+##           NAME ABBREV GNIS_ID FIPS_CODE   SWIS   NYSP_ZONE POP1990 POP2000
+## 1       Albany   ALBA  974099     36001 010000        East  292594  294565
+## 2     Allegany   ALLE  974100     36003 020000        West   50470   49927
+## 3        Bronx   BRON  974101     36005 600000 Long Island 1203789 1332650
+## 4       Broome   BROO  974102     36007 030000     Central  212160  200536
+## 5  Cattaraugus   CATT  974103     36009 040000        West   84234   83955
+## 6       Cayuga   CAYU  974104     36011 050000     Central   82313   81963
+## 7   Chautauqua   CHAU  974105     36013 060000        West  141895  139750
+## 8      Chemung   CHEM  974106     36015 070000     Central   95195   91070
+## 9     Chenango   CHEN  974107     36017 080000     Central   51768   51401
+## 10     Clinton   CLIN  974108     36019 090000        East   85969   79894
+##    POP2010 POP2020 DOS_LL DOSLL_DATE NYC CALC_SQ_MI    DATEMOD Shape_Leng
+## 1   304204  314848   &lt;NA&gt;       &lt;NA&gt;   N  532.79178 2017-11-10  166077.83
+## 2    48946   46456   &lt;NA&gt;       &lt;NA&gt;   N 1035.20913 2019-04-26  210499.34
+## 3  1385108 1472654   &lt;NA&gt;       &lt;NA&gt;   Y   57.47215 2019-10-04   57253.86
+## 4   200600  198683   &lt;NA&gt;       &lt;NA&gt;   N  715.28747 2019-04-26  227933.33
+## 5    80317   77042   &lt;NA&gt;       &lt;NA&gt;   N 1324.30922 2019-04-26  276084.51
+## 6    80026   76248   &lt;NA&gt;       &lt;NA&gt;   N  881.82350 2018-07-18  334039.80
+## 7   134905  127657   &lt;NA&gt;       &lt;NA&gt;   N 1507.79455 2019-04-26  247508.47
+## 8    88830   84148   &lt;NA&gt;       &lt;NA&gt;   N  410.95932 2019-04-26  146916.78
+## 9    50477   47220   &lt;NA&gt;       &lt;NA&gt;   N  897.81864 2018-10-03  226955.16
+## 10   82128   79843   &lt;NA&gt;       &lt;NA&gt;   N 1116.81373 2018-12-07  235243.35
+##    Shape_Area                       geometry
+## 1  1379924372 MULTIPOLYGON (((605729 4737...
+## 2  2681179340 MULTIPOLYGON (((229573.9 47...
+## 3   148852180 MULTIPOLYGON (((595540.7 45...
+## 4  1852586030 MULTIPOLYGON (((428899.3 46...
+## 5  3429945130 MULTIPOLYGON (((169747.3 47...
+## 6  2283912393 MULTIPOLYGON (((369644.2 47...
+## 7  3905169964 MULTIPOLYGON (((161319.8 47...
+## 8  1064379743 MULTIPOLYGON (((353386.9 46...
+## 9  2325339613 MULTIPOLYGON (((464936.4 47...
+## 10 2892534278 MULTIPOLYGON (((629506.7 49...</code></pre>
+<p>Merging the data sets</p>
+<pre class="r"><code># merging the excel sheets first 
+
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = &quot;NAME&quot;) %&gt;% 
+  select(-data.x, -data.y)
+
+print(NY_lyme_tick)</code></pre>
+<pre><code>## # A tibble: 147 × 9
+##     year NAME       total_ticks_collected tick_population_density ticks_tested
+##    &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1  2021 Albany                       366                    85.8          168
+##  2  2021 Chautauqua                   199                    36.7          107
+##  3  2021 Dutchess                     438                    66.8           51
+##  4  2021 Warren                        88                    13.8           87
+##  5  2020 Albany                       114                    37.2          103
+##  6  2020 Chemung                      271                   257.            50
+##  7  2020 Delaware                      75                    21.9           69
+##  8  2020 Tompkins                     131                    52.4           44
+##  9  2020 Oneida                       157                    78.5           50
+## 10  2020 Seneca                        51                    35.5           50
+## # ℹ 137 more rows
+## # ℹ 4 more variables: b_burgdorferi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;,
+## #   lyme_count &lt;dbl&gt;, lyme_rate &lt;dbl&gt;</code></pre>
+<pre class="r"><code># now merging the shape file with excel file 
+
+NY_lyme_tick_county = NY_lyme_tick %&gt;%
+  left_join(ny_county, by = &quot;NAME&quot;) %&gt;% 
+  janitor::clean_names() 
+
+# didn&#39;t delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. </code></pre>
+<pre class="r"><code># merging and reading in tammy csv file with avg temps 
+
+ny_temp = read_csv(&quot;./avg_temp_county.csv&quot;, skip =1) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  select(county:dec_22) %&gt;% 
+mutate(county = str_replace_all(county, &quot;(?i) county$&quot;, &quot;&quot;)) %&gt;% #mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = &quot;county&quot;) %&gt;%  # renaming to have common identifier 
+  drop_na(name) # there are two rows with entirely no data so I dropped them </code></pre>
+<pre><code>## New names:
+## Rows: 65 Columns: 56
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (1): County dbl (48): Jan-19, Feb-19, Mar-19, Apr-19, May-19, Jun-19, Jul-19,
+## Aug-19, Se... lgl (7): ...50, ...51, ...52, ...53, ...54, ...55, ...56
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...50`
+## • `` -&gt; `...51`
+## • `` -&gt; `...52`
+## • `` -&gt; `...53`
+## • `` -&gt; `...54`
+## • `` -&gt; `...55`
+## • `` -&gt; `...56`</code></pre>
+<pre class="r"><code>tick_lyme_weather = NY_lyme_tick_county  %&gt;% # now merging the entire dataset with avg weather 
+  left_join(ny_temp, by = &quot;name&quot;) %&gt;% 
+  janitor::clean_names() </code></pre>
+<pre><code>## Warning in left_join(., ny_temp, by = &quot;name&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 145 of `x` matches multiple rows in `y`.
+## ℹ Row 2 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
+</div>
+<div id="saved-final-dataset" class="section level1">
+<h1>Saved Final Dataset</h1>
+<pre class="r"><code>write_csv(tick_lyme_weather, &quot;final_data.csv&quot;)
+
+tidied = read_csv(&quot;final_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 148 Columns: 74
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr   (7): name, county_centroid, abbrev, swis, nysp_zone, nyc, geometry
+## dbl  (64): year, total_ticks_collected, tick_population_density, ticks_teste...
+## lgl   (2): dos_ll, dosll_date
+## date  (1): datemod
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div id="attempt-using-noaa-data" class="section level2">
+<h2>Attempt Using NOAA data</h2>
+<pre class="r"><code># importing the weather data 
+
+library(dplyr)
+library(rnoaa)
+
+# Get a list of all NY station IDs
+stations &lt;- ghcnd_stations()
+nystationids &lt;-  stations %&gt;% 
+  filter(state == &quot;NY&quot;) %&gt;% 
+  distinct(id)
+
+# Pull the desired weather data for all of these stations
+nydat &lt;- meteo_pull_monitors(nystationids$id, 
+                             date_min = &quot;2019-01-01&quot;, 
+                             date_max = &quot;2021-12-31&quot;, 
+                             var = c(&quot;PRCP&quot;, &quot;SNOW&quot;, &quot;SNWD&quot;, &quot;TMAX&quot;, &quot;TMIN&quot;))
+
+# Save the resulting data
+save(nystationids, nydat, file = &quot;nynoaadat.RData&quot;)</code></pre>
+<pre class="r"><code># convert from rdata to csv
+
+load(&quot;nynoaadat.RData&quot;)
+
+ls()  # This will list all the objects in your environment
+
+str(nydat)
+
+
+noaa_data &lt;- as.data.frame(nydat)
+
+
+write.csv(data, file = &quot;nydat.csv&quot;, row.names = FALSE)</code></pre>
+<pre class="r"><code>ny_weather = read_csv(&quot;./nydat.csv&quot;) %&gt;% 
+  select(id, date, prcp,tmax) %&gt;% 
+  drop_na(tmax) 
+
+
+ny_weather &lt;- ny_weather %&gt;%
+  group_by(id, date) %&gt;%
+  summarise(
+    prcp = mean(prcp, na.rm = TRUE),
+    tmax = mean(tmax, na.rm = TRUE),
+    .groups = &#39;drop&#39;
+  ) %&gt;%
+  pivot_wider(
+    names_from = id,
+    values_from = c(date, prcp, tmax)
+  )
+
+ny_weather &lt;- ny_weather %&gt;%
+  unnest(cols = c(date, prcp, tmax))
+
+print(ny_weather)
+
+summary(tick_lyme_weather)</code></pre>
+</div>
+</div>
+<div id="marys-data-analysis" class="section level1">
+<h1>Mary’s Data Analysis</h1>
+<pre class="r"><code>#load necessary libraries
+library(broom)</code></pre>
+<div
+id="relationship-between-tick-density-and-average-temperature-per-month"
+class="section level3">
+<h3>Relationship between tick density and average temperature per
+month</h3>
+<pre class="r"><code>density_vs_avg_temp &lt;- lm(tick_population_density ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 +jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather, na.action = na.exclude) #examine the relationship between tick density and average temperature
+
+broom::tidy(density_vs_avg_temp)</code></pre>
+<pre><code>## # A tibble: 37 × 5
+##    term        estimate std.error statistic  p.value
+##    &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 (Intercept)   -53.0     1473.    -0.0360 0.971   
+##  2 jan_19         32.7       17.4    1.88   0.0627  
+##  3 feb_19         87.8       32.8    2.68   0.00865 
+##  4 mar_19         -2.22      27.9   -0.0796 0.937   
+##  5 apr_19        -31.8       35.6   -0.892  0.374   
+##  6 may_19         -7.17      40.7   -0.176  0.861   
+##  7 jun_19        132.        53.0    2.48   0.0147  
+##  8 jul_19       -204.        55.3   -3.68   0.000381
+##  9 aug_19        105.        48.0    2.18   0.0314  
+## 10 sep_19         44.8       27.4    1.63   0.105   
+## # ℹ 27 more rows</code></pre>
+<p>This output demonstrates that many of the months show non-significant
+results, therefore meaning a weak or unclear association of each month
+with tick density. However some months in 2019, like June (p-value=
+0.015) and August (p-value = 0.031), which have significant positive
+outcomes, and July (p-value &lt; 0.005) had a negative outcome. The
+intercept was -53.0 with a large of SE of 1,473, and a p-value of 0.971.
+Therefore<br />
+NEED TO LOOK AT THE REST OF THE VARIABLES</p>
+</div>
+<div
+id="relationship-between-lyme_count-and-average-temperatures-per-month"
+class="section level3">
+<h3>Relationship between lyme_count and average temperatures per
+month</h3>
+<pre class="r"><code>lyme_vs_avg_temp &lt;- lm(lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather)
+
+broom::tidy(lyme_vs_avg_temp)</code></pre>
+<pre><code>## # A tibble: 37 × 5
+##    term         estimate std.error statistic    p.value
+##    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+##  1 (Intercept) -17067.      3592.    -4.75   0.00000626
+##  2 jan_19         258.        53.1    4.87   0.00000382
+##  3 feb_19           3.44      95.3    0.0361 0.971     
+##  4 mar_19        -300.        85.9   -3.50   0.000686  
+##  5 apr_19          75.3      102.     0.740  0.461     
+##  6 may_19         -44.2      107.    -0.414  0.680     
+##  7 jun_19         -96.7      122.    -0.794  0.429     
+##  8 jul_19         265.       126.     2.10   0.0385    
+##  9 aug_19         245.       118.     2.07   0.0407    
+## 10 sep_19        -273.        74.7   -3.65   0.000404  
+## # ℹ 27 more rows</code></pre>
+<pre class="r"><code>broom::tidy(lyme_vs_avg_temp) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-17066.636</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">jan_19</td>
+<td align="right">258.449</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_19</td>
+<td align="right">3.441</td>
+<td align="right">0.971</td>
+</tr>
+<tr class="even">
+<td align="left">mar_19</td>
+<td align="right">-300.180</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_19</td>
+<td align="right">75.273</td>
+<td align="right">0.461</td>
+</tr>
+<tr class="even">
+<td align="left">may_19</td>
+<td align="right">-44.239</td>
+<td align="right">0.680</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_19</td>
+<td align="right">-96.697</td>
+<td align="right">0.429</td>
+</tr>
+<tr class="even">
+<td align="left">jul_19</td>
+<td align="right">264.719</td>
+<td align="right">0.038</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_19</td>
+<td align="right">244.749</td>
+<td align="right">0.041</td>
+</tr>
+<tr class="even">
+<td align="left">sep_19</td>
+<td align="right">-272.592</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_19</td>
+<td align="right">-79.027</td>
+<td align="right">0.533</td>
+</tr>
+<tr class="even">
+<td align="left">nov_19</td>
+<td align="right">39.460</td>
+<td align="right">0.686</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_19</td>
+<td align="right">8.347</td>
+<td align="right">0.873</td>
+</tr>
+<tr class="even">
+<td align="left">jan_20</td>
+<td align="right">204.935</td>
+<td align="right">0.086</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_20</td>
+<td align="right">-104.129</td>
+<td align="right">0.104</td>
+</tr>
+<tr class="even">
+<td align="left">mar_20</td>
+<td align="right">394.157</td>
+<td align="right">0.002</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_20</td>
+<td align="right">-505.587</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">may_20</td>
+<td align="right">-1.507</td>
+<td align="right">0.992</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_20</td>
+<td align="right">-270.712</td>
+<td align="right">0.032</td>
+</tr>
+<tr class="even">
+<td align="left">jul_20</td>
+<td align="right">33.252</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_20</td>
+<td align="right">-137.283</td>
+<td align="right">0.222</td>
+</tr>
+<tr class="even">
+<td align="left">sep_20</td>
+<td align="right">284.838</td>
+<td align="right">0.024</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_20</td>
+<td align="right">41.076</td>
+<td align="right">0.778</td>
+</tr>
+<tr class="even">
+<td align="left">nov_20</td>
+<td align="right">-127.534</td>
+<td align="right">0.059</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_20</td>
+<td align="right">-280.467</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">jan_21</td>
+<td align="right">-212.407</td>
+<td align="right">0.004</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_21</td>
+<td align="right">122.543</td>
+<td align="right">0.128</td>
+</tr>
+<tr class="even">
+<td align="left">mar_21</td>
+<td align="right">-243.546</td>
+<td align="right">0.016</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_21</td>
+<td align="right">424.075</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">may_21</td>
+<td align="right">259.209</td>
+<td align="right">0.049</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_21</td>
+<td align="right">-122.999</td>
+<td align="right">0.097</td>
+</tr>
+<tr class="even">
+<td align="left">jul_21</td>
+<td align="right">-547.860</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_21</td>
+<td align="right">682.250</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">sep_21</td>
+<td align="right">47.721</td>
+<td align="right">0.670</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_21</td>
+<td align="right">152.558</td>
+<td align="right">0.101</td>
+</tr>
+<tr class="even">
+<td align="left">nov_21</td>
+<td align="right">-388.754</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_21</td>
+<td align="right">315.730</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<p>Lyme count has similar findings to tick density, with strong positive
+relationships in August 2019, and negative relationships in June 2019.
+The intercept was -17,100 with a (SE: 3592) and a p-value &lt;
+0.005.</p>
+</div>
+<div id="relationship-between-lyme_rate-and-population-variables"
+class="section level3">
+<h3>Relationship between lyme_rate and population variables</h3>
+<pre class="r"><code>lyme_rate_vs_population &lt;- lm(lyme_rate ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+broom::tidy(lyme_rate_vs_population)</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term                    estimate std.error statistic      p.value
+##   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)              81.3      13.9        5.84  0.0000000378
+## 2 tick_population_density   0.133     0.194      0.684 0.495       
+## 3 total_ticks_collected     0.0314    0.0297     1.06  0.292</code></pre>
+<p>This linear regression analyzes the relationship between Lyme rate
+and tick population density and total ticks collected. Intercept
+estimate was 121 (SE: 16.4), with a test statistic of 7.39 and
+p-value&lt;0.005. Therefore the intercept is highly signficant, however
+the predictors are not. This demonstrates a weak association between
+Lyme rates and the variables.</p>
+<p>The calculated square mileage estimate was -0.0305 (SE: 0.0159), with
+a statistic of -1.92 and a p-value&lt;0.005.</p>
+</div>
+<div id="relationship-between-lyme_rate-and-area-variables"
+class="section level3">
+<h3>Relationship between lyme_rate and area variables</h3>
+<pre class="r"><code>lyme_rate_vs_area &lt;- lm(lyme_rate ~ shape_area  + shape_leng + calc_sq_mi, data = tick_lyme_weather)
+broom::tidy(lyme_rate_vs_area)</code></pre>
+<pre><code>## # A tibble: 4 × 5
+##   term        estimate     std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  1.01e+2 30.8              3.26   0.00140
+## 2 shape_area  -2.09e-8  0.0000000132    -1.59   0.115  
+## 3 shape_leng   1.84e-4  0.000235         0.784  0.434  
+## 4 calc_sq_mi  NA       NA               NA     NA</code></pre>
+<p>Considering that all other variables but the intercept are weak,
+there does not appear to be an association between lyme rate and area
+variables (shape area, shape length, and calculated square miles).</p>
+</div>
+<div
+id="trying-the-relationship-between-lyme_rate-and-area-variables-including-human-population-density-in-2020"
+class="section level3">
+<h3>Trying the relationship between lyme_rate and area variables,
+including human population density in 2020</h3>
+<pre class="r"><code>lyme_rate_vs_area_human &lt;- lm(lyme_rate ~ shape_area  + shape_leng + calc_sq_mi + pop2020, data = tick_lyme_weather)
+broom::tidy(lyme_rate_vs_area_human)</code></pre>
+<pre><code>## # A tibble: 5 × 5
+##   term        estimate     std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)  1.42e+2 30.9              4.60   0.00000942
+## 2 shape_area  -1.49e-8  0.0000000126    -1.19   0.237     
+## 3 shape_leng   2.37e-5  0.000226         0.105  0.917     
+## 4 calc_sq_mi  NA       NA               NA     NA         
+## 5 pop2020     -6.88e-5  0.0000166       -4.14   0.0000589</code></pre>
+<p>Human population was found to be negatively associated(-4.14) and
+significantly association (p-value&lt;0.005) with lyme rate.</p>
+</div>
+<div
+id="relationship-between-b_burgdorferi_percent-and-population-variables"
+class="section level3">
+<h3>Relationship between b_burgdorferi_percent and population
+variables</h3>
+<pre class="r"><code>b_burgdorferi_percent_vs_population &lt;- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+broom::tidy(b_burgdorferi_percent_vs_population)</code></pre>
+<pre><code>## # A tibble: 4 × 5
+##   term                     estimate std.error statistic  p.value
+##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)             48.9        1.94       25.2   4.87e-52
+## 2 lyme_rate                0.0225     0.0108      2.08  3.99e- 2
+## 3 tick_population_density  0.0511     0.0241      2.12  3.63e- 2
+## 4 total_ticks_collected   -0.000411   0.00371    -0.111 9.12e- 1</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
