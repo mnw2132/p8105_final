@@ -1499,6 +1499,31 @@ library(sf)
 library(leaflet)
 library(tigris)
 options(tigris_use_cache = TRUE)</code></pre>
+<pre class="r"><code>#Read in lyme dataset and select necessary variables
+nineteen_twentyone_county_lyme = read_csv(&quot;new_york_county_lyme.csv&quot;) %&gt;%  #read in the NYC lyme data
+  janitor::clean_names() %&gt;%  #clean the names 
+  select(county_name, event_count,percent_rate ) %&gt;%  # select variables of interest 
+  rename(NAME = &quot;county_name&quot;, 
+         lyme_count = &quot;event_count&quot;,
+         lyme_rate = &quot;percent_rate&quot;
+         ) %&gt;%  # renaming so we can have a common variable when merging 
+  mutate( data = &quot;lyme&quot;) # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)</code></pre>
+<pre><code>## # A tibble: 62 × 4
+##    NAME      lyme_count lyme_rate data 
+##    &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+##  1 Queens           336       4.9 lyme 
+##  2 Saratoga         494      70.8 lyme 
+##  3 Greene           612     427.  lyme 
+##  4 Niagara           10       1.6 lyme 
+##  5 Allegany          59      42.3 lyme 
+##  6 Bronx             78       1.8 lyme 
+##  7 Ulster           657     122.  lyme 
+##  8 Jefferson        170      49.7 lyme 
+##  9 Orange           878      75.1 lyme 
+## 10 Wayne            120      44.2 lyme 
+## # ℹ 52 more rows</code></pre>
 
 
 
