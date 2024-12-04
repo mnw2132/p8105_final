@@ -167,3 +167,6 @@ generate_map <- function(selected_year) {
 }
 ```
 
+```{r, generate_map_2020, cache=TRUE}
+generate_map(2020)
+```
