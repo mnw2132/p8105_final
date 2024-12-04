@@ -2,15 +2,24 @@
 title: "Data Visuals"
 author: "Tanmayi Amanchi"
 date: "2024-11-23"
-output: github_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 This document for visualizing the cleaned/tidied dataset.
-
 ```{r, message=FALSE}
+#Load the necessary libraries 
 library(tidyverse)
 library(rvest)
 library(sf)
 library(purrr)
 library(knitr)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(leaflet)
+library(tigris)
+options(tigris_use_cache = TRUE)
 ``` 
