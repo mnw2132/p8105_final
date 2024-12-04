@@ -49,3 +49,8 @@ mutate(data = "ticks")  # adding a variable to identify merging
 
 print(tick_surveillance)
 ```
+
+```{r, message=FALSE}
+#Read in shp file for NY counties to use for heatmap and county level data
+ny_county =  st_read("Counties.shp")  
+```
