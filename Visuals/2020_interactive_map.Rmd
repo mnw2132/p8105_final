@@ -21,3 +21,18 @@ library(leaflet)
 library(tigris)
 options(tigris_use_cache = TRUE)
 ``` 
+
+```{r, message=FALSE}
+#Read in lyme dataset and select necessary variables
+nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read in the NYC lyme data
+  janitor::clean_names() %>%  #clean the names 
+  select(county_name, event_count,percent_rate ) %>%  # select variables of interest 
+  rename(NAME = "county_name", 
+         lyme_count = "event_count",
+         lyme_rate = "percent_rate"
+         ) %>%  # renaming so we can have a common variable when merging 
+  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)
+
+```
