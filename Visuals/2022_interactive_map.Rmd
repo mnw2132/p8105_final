@@ -201,3 +201,7 @@ generate_map <- function(selected_year) {
   return(leaflet_map)
 }
 ```
+
+```{r, generate_map_2022, cache=TRUE}
+generate_map(2022)
+```
