@@ -56,3 +56,14 @@ print(tick_surveillance)
 #Read in shp file for NY counties to use for heatmap and county level data
 ny_county =  st_read("./Counties.shp")  
 ```
+
+```{r, message=FALSE}
+# Merging the tick and lyme data set  
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
+  select(-data.x, -data.y)
+
+# Merging the shape file with this combined file
+NY_lyme_tick_county = NY_lyme_tick %>%
+  left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names() 
+```
