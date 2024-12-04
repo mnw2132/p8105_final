@@ -444,6 +444,36 @@ NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by =
 NY_lyme_tick_county = NY_lyme_tick %&gt;%
   left_join(ny_county, by = &quot;NAME&quot;) %&gt;% 
   janitor::clean_names() </code></pre>
+<pre class="r"><code>#Merging and reading in average temperature csv with data from Jan19 to Dec22
+ny_temp = read_csv(&quot;./avg_temp_county.csv&quot;, skip =1) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  select(county:dec_22) %&gt;% 
+mutate(county = str_replace_all(county, &quot;(?i) county$&quot;, &quot;&quot;)) %&gt;% #Mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = &quot;county&quot;) %&gt;%  #Renaming to have common identifier 
+  drop_na(name) #There are two rows with entirely no data they are dropped </code></pre>
+<pre><code>## New names:
+## Rows: 65 Columns: 56
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (1): County dbl (48): Jan-19, Feb-19, Mar-19, Apr-19, May-19, Jun-19, Jul-19,
+## Aug-19, Se... lgl (7): ...50, ...51, ...52, ...53, ...54, ...55, ...56
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `` -&gt; `...50`
+## • `` -&gt; `...51`
+## • `` -&gt; `...52`
+## • `` -&gt; `...53`
+## • `` -&gt; `...54`
+## • `` -&gt; `...55`
+## • `` -&gt; `...56`</code></pre>
+<pre class="r"><code>tick_lyme_weather = NY_lyme_tick_county  %&gt;% #Merging the entire data set with avg weather 
+  left_join(ny_temp, by = &quot;name&quot;) %&gt;% 
+  janitor::clean_names() </code></pre>
+<pre><code>## Warning in left_join(., ny_temp, by = &quot;name&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 145 of `x` matches multiple rows in `y`.
+## ℹ Row 2 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
 
 
 
