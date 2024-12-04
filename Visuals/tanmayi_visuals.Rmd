@@ -108,6 +108,19 @@ print(paste("Correlation between average temperature and Lyme rate:", correlatio
 ```
 
 ```{r}
+#Create visual plot for correlation between average temperature and lyme disease rate
+ggplot(tick_lyme_weather_summary, aes(x = avg_temp, y = avg_lyme_rate)) +
+  geom_point(color = "blue", size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(
+    title = "Correlation between Avg Temperature and Lyme Disease Rate",
+    x = "Average Temperature (°F)",
+    y = "Average Lyme Disease Rate"
+  ) +
+  theme_minimal()
+```
+
+```{r}
 #Create heat map of average temperature by county
 ggplot(tick_lyme_weather_summary) +
   geom_sf(aes(fill = avg_temp, geometry = geometry), color = "white") +
@@ -119,5 +132,3 @@ ggplot(tick_lyme_weather_summary) +
   theme_minimal()
 #Looking at this heat map, we can observe than as me move from North to South, the temperatures increase around 12 degrees. The avg temp for most counties ranges between 46 to 52 degrees.
 ```
-
-
