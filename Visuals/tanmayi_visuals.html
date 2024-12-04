@@ -1606,6 +1606,14 @@ mutate(county = str_replace_all(county, &quot;(?i) county$&quot;, &quot;&quot;))
 <pre class="r"><code>#Create an avg temp column that takes the averages of all the months temperature values by county 
 tick_lyme_weather &lt;- tick_lyme_weather %&gt;%
   mutate(avg_temp = rowMeans(select(., jan_19:dec_22), na.rm = TRUE))</code></pre>
+<pre class="r"><code>#Create avg lyme rate column
+tick_lyme_weather_summary &lt;- tick_lyme_weather %&gt;%
+  group_by(name, geometry) %&gt;%
+  summarise(
+    avg_lyme_rate = mean(lyme_rate, na.rm = TRUE),
+    avg_temp = mean(avg_temp, na.rm = TRUE),
+    .groups = &quot;drop&quot;  #Remove the grouping structure since we don&#39;t need it in the final result
+  )</code></pre>
 
 
 
