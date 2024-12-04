@@ -117,3 +117,17 @@ ggplot(tick_lyme_weather_summary, aes(x = avg_temp, y = avg_lyme_rate)) +
   ) +
   theme_minimal()
 ```
+
+```{r}
+#Create heat map of average temperature by county
+ggplot(tick_lyme_weather_summary) +
+  geom_sf(aes(fill = avg_temp, geometry = geometry), color = "white") +
+  scale_fill_viridis_c(option = "C") +
+  labs(
+    title = "Heat Map of Average Temperature by County",
+    fill = "Avg Temp (°F)"
+  ) +
+  theme_minimal()
+#Looking at this heat map, we can observe than as me move from North to South, the temperatures increase around 12 degrees. The avg temp for most counties ranges between 46 to 52 degrees.
+```
+
