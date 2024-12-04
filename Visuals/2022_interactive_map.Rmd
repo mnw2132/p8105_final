@@ -104,3 +104,16 @@ print(paste("Correlation between average temperature and Lyme rate:", correlatio
 
 #The correlation coefficient is -0.24 meaning as average temperature increases, there is a slight tendency for the average Lyme rate to decrease, and vice versa. However, the weak magnitude implies that this pattern is not very pronounced
 ```
+
+```{r}
+#Create visual plot for correlation between average temperature and lyme disease rate
+ggplot(tick_lyme_weather_summary, aes(x = avg_temp, y = avg_lyme_rate)) +
+  geom_point(color = "blue", size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(
+    title = "Correlation between Avg Temperature and Lyme Disease Rate",
+    x = "Average Temperature (°F)",
+    y = "Average Lyme Disease Rate"
+  ) +
+  theme_minimal()
+```
