@@ -485,6 +485,22 @@ tick_lyme_weather_summary &lt;- tick_lyme_weather %&gt;%
     avg_temp = mean(avg_temp, na.rm = TRUE),
     .groups = &quot;drop&quot;  #Remove the grouping structure since we don&#39;t need it in the final result
   )</code></pre>
+<pre class="r"><code>#Gather county specific geo spatial data and combine with tick, lyme, and weather data
+ny_counties &lt;- counties(state = &quot;NY&quot;, class = &quot;sf&quot;)</code></pre>
+<pre><code>## Retrieving data for the year 2022</code></pre>
+<pre class="r"><code>data_long &lt;- tick_lyme_weather %&gt;%
+  pivot_longer(
+    cols = starts_with(&quot;jan_&quot;) | starts_with(&quot;feb_&quot;) | starts_with(&quot;mar_&quot;) | 
+           starts_with(&quot;apr_&quot;) | starts_with(&quot;may_&quot;) | starts_with(&quot;jun_&quot;) | 
+           starts_with(&quot;jul_&quot;) | starts_with(&quot;aug_&quot;) | starts_with(&quot;sep_&quot;) | 
+           starts_with(&quot;oct_&quot;) | starts_with(&quot;nov_&quot;) | starts_with(&quot;dec_&quot;),
+    names_to = &quot;month_year&quot;, 
+    values_to = &quot;temperature&quot;
+  ) %&gt;%
+  mutate(
+    year = as.numeric(substr(month_year, nchar(month_year) - 1, nchar(month_year))),
+    month = substr(month_year, 1, 3)
+  )</code></pre>
 
 
 
