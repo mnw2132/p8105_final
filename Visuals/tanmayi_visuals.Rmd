@@ -8,7 +8,7 @@ output:
     toc_float: true
 ---
 
-This document for visualizing the cleaned/tidied dataset.
+This document for visualizing the cleaned/tidied data set.The beginning of this code is a repeat of the tidied data from Data Preparation. This was performed again since there was an issue in the geometry  of the final_data.csv. So we will be working with a data set called tick_lyme_weather with proper geometry attributes needed to make maps.
 ```{r, message=FALSE}
 #Load the necessary libraries 
 library(tidyverse)
@@ -65,5 +65,19 @@ NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by =
 # Merging the shape file with this combined file
 NY_lyme_tick_county = NY_lyme_tick %>%
   left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names() 
+```
+
+```{r}
+#Merging and reading in average temperature csv with data from Jan19 to Dec22
+ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
+  janitor::clean_names() %>% 
+  select(county:dec_22) %>% 
+mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #Mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = "county") %>%  #Renaming to have common identifier 
+  drop_na(name) #There are two rows with entirely no data they are dropped 
+
+tick_lyme_weather = NY_lyme_tick_county  %>% #Merging the entire data set with avg weather 
+  left_join(ny_temp, by = "name") %>% 
   janitor::clean_names() 
 ```
