@@ -218,10 +218,7 @@ lyme_rate_vs_area <- lm(lyme_rate ~ shape_area  + shape_leng + pop2020, data = t
 
 broom::tidy(lyme_rate_vs_area) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 
-tick_lyme_weather |> 
-  select(shape_area, shape_leng, pop2020) |> 
-  cor(use = "complete.obs")
-
+summary(tick_lyme_weather$pop2020)
 ```
 Considering that all other variables but the intercept are weak, there does not appear to be an association between lyme rate and area variables (shape area, shape length, and calculated square miles). 
 
@@ -236,6 +233,7 @@ Human population was found to be negatively associated(-4.14) and significantly 
 ### Relationship between b_burgdorferi_percent and population variables
 ```{r}
 b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+
 broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
 

@@ -1117,13 +1117,9 @@ broom::tidy(lyme_rate_vs_area) |&gt; select(term, estimate, p.value) |&gt;knitr:
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>tick_lyme_weather |&gt; 
-  select(shape_area, shape_leng, pop2020) |&gt; 
-  cor(use = &quot;complete.obs&quot;)</code></pre>
-<pre><code>##            shape_area shape_leng    pop2020
-## shape_area  1.0000000  0.8715984 -0.0912427
-## shape_leng  0.8715984  1.0000000 -0.1564054
-## pop2020    -0.0912427 -0.1564054  1.0000000</code></pre>
+<pre class="r"><code>summary(tick_lyme_weather$pop2020)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    5107   49532   92434  273104  234663 2736074       2</code></pre>
 <p>Considering that all other variables but the intercept are weak,
 there does not appear to be an association between lyme rate and area
 variables (shape area, shape length, and calculated square miles).</p>
@@ -1176,6 +1172,7 @@ class="section level3">
 <h3>Relationship between b_burgdorferi_percent and population
 variables</h3>
 <pre class="r"><code>b_burgdorferi_percent_vs_population &lt;- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+
 broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
 <thead>
