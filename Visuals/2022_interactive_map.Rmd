@@ -151,3 +151,53 @@ data_long <- tick_lyme_weather %>%
   )
 ```
 
+
+```{r}
+# Reproject ny_counties to WGS84
+ny_counties <- st_transform(ny_counties, crs = 4326)  # EPSG code 4326 corresponds to WGS84
+
+# Merge Lyme disease and temperature data with geospatial data
+ny_data <- ny_counties %>%
+  left_join(data_long, by = c("NAME" = "name"))  # Adjust column name for county matching
+# Extract the year from 'month_year' and convert it to a 2-digit year
+ny_data$year <- as.numeric(sub(".*_(\\d{2})$", "\\1", ny_data$month_year))  # Extract 2-digit year
+
+# Correct the year conversion for 2-digit years (manual adjustment for 20)
+ny_data$year <- ifelse(ny_data$year <= 22, ny_data$year + 2000, ny_data$year + 1900)
+
+# Check unique years to ensure proper extraction
+unique(ny_data$year)
+
+# Define a function to generate the map for a specific year
+generate_map <- function(selected_year) {
+  
+  # Filter data based on selected year
+  filtered_data <- ny_data %>% filter(year == selected_year)
+  # Create Leaflet map
+  leaflet_map <- leaflet(data = filtered_data) %>%
+    addTiles() %>%  # Add default OpenStreetMap tiles
+    addPolygons(
+      fillColor = ~colorNumeric("YlOrRd", lyme_count)(lyme_count), # Color by Lyme count
+      fillOpacity = 0.7,
+      color = "black",
+      weight = 1,
+      popup = ~paste(
+        "County: ", NAME, "<br>",  # Adjusted to 'NAME' from ny_counties
+        "Year: ", year, "<br>",
+        "Lyme Count: ", lyme_count, "<br>",
+        "Ticks Tested: ", ticks_tested
+      ),
+      highlightOptions = highlightOptions(weight = 3, color = "#666", fillOpacity = 0.7, bringToFront = TRUE)
+    ) %>%
+    addLegend(
+      position = "topright",
+      pal = colorNumeric("YlOrRd", filtered_data$lyme_count),  # Apply color palette for Lyme count
+      values = filtered_data$lyme_count,
+      title = "Lyme Count",
+      opacity = 0.7
+    )
+  
+  # Return the map
+  return(leaflet_map)
+}
+```
