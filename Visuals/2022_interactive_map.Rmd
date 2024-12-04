@@ -96,3 +96,11 @@ tick_lyme_weather_summary <- tick_lyme_weather %>%
     .groups = "drop"  #Remove the grouping structure since we don't need it in the final result
   )
 ```
+
+```{r}
+#Calculate the correlation coefficient between avg temperature and avg lyme rate
+correlation <- cor(tick_lyme_weather_summary$avg_temp, tick_lyme_weather_summary$avg_lyme_rate, use = "complete.obs")
+print(paste("Correlation between average temperature and Lyme rate:", correlation))
+
+#The correlation coefficient is -0.24 meaning as average temperature increases, there is a slight tendency for the average Lyme rate to decrease, and vice versa. However, the weak magnitude implies that this pattern is not very pronounced
+```

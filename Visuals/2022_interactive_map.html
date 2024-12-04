@@ -485,6 +485,11 @@ tick_lyme_weather_summary &lt;- tick_lyme_weather %&gt;%
     avg_temp = mean(avg_temp, na.rm = TRUE),
     .groups = &quot;drop&quot;  #Remove the grouping structure since we don&#39;t need it in the final result
   )</code></pre>
+<pre class="r"><code>#Calculate the correlation coefficient between avg temperature and avg lyme rate
+correlation &lt;- cor(tick_lyme_weather_summary$avg_temp, tick_lyme_weather_summary$avg_lyme_rate, use = &quot;complete.obs&quot;)
+print(paste(&quot;Correlation between average temperature and Lyme rate:&quot;, correlation))</code></pre>
+<pre><code>## [1] &quot;Correlation between average temperature and Lyme rate: -0.240720043953669&quot;</code></pre>
+<pre class="r"><code>#The correlation coefficient is -0.24 meaning as average temperature increases, there is a slight tendency for the average Lyme rate to decrease, and vice versa. However, the weak magnitude implies that this pattern is not very pronounced</code></pre>
 
 
 
