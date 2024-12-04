@@ -85,3 +85,14 @@ tick_lyme_weather = NY_lyme_tick_county  %>% #Merging the entire data set with a
 tick_lyme_weather <- tick_lyme_weather %>%
   mutate(avg_temp = rowMeans(select(., jan_19:dec_22), na.rm = TRUE))
 ```
+
+```{r}
+#Create avg lyme rate column
+tick_lyme_weather_summary <- tick_lyme_weather %>%
+  group_by(name, geometry) %>%
+  summarise(
+    avg_lyme_rate = mean(lyme_rate, na.rm = TRUE),
+    avg_temp = mean(avg_temp, na.rm = TRUE),
+    .groups = "drop"  #Remove the grouping structure since we don't need it in the final result
+  )
+```
