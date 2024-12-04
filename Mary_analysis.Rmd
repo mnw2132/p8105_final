@@ -1,0 +1,241 @@
+---
+title: "Cleaning and Description of Analytic dataset"
+Author: "Mary Williams"
+date: "2024-11-21"
+output: github_document
+---
+# Sarahy's Data Cleaning
+
+This document for cleaning and tidying the data.
+
+```{r, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+library(readxl)
+``` 
+
+```{r, message=FALSE}
+nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read in the NYC lyme data
+  janitor::clean_names() %>%  #clean the names 
+  select(county_name, event_count,percent_rate ) %>%  # select variables of interest 
+  rename(NAME = "county_name", 
+         lyme_count = "event_count",
+         lyme_rate = "percent_rate"
+         ) %>%  # renaming so we can have a common variable when merging 
+  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)
+
+```
+
+
+Tidy deer tick data 
+```{r, message=FALSE}
+
+tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
+  janitor::clean_names() %>% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %>%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = "county") %>% # renaming for common identifier
+  rename(ticks_tested = "total_tested") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>%  # selecting and removing variables of interest , 
+mutate(data = "ticks")  # adding a variable to identify merging 
+
+
+print(tick_surveillance)
+
+```
+
+Read in shp file for NY counties 
+
+```{r, message=FALSE}
+ny_county =  st_read("./Counties.shp")  # read in the county shapefile 
+ 
+print(ny_county)
+
+```
+
+Merging the data sets 
+
+```{r, message=FALSE}
+
+# merging the excel sheets first 
+
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
+  select(-data.x, -data.y)
+
+print(NY_lyme_tick)
+# now merging the shape file with excel file 
+
+NY_lyme_tick_county = NY_lyme_tick %>%
+  left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names() 
+
+# didn't delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
+
+
+```
+
+
+
+```{r}
+# merging and reading in tammy csv file with avg temps 
+
+ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
+  janitor::clean_names() %>% 
+  select(county:dec_22) %>% 
+mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = "county") %>%  # renaming to have common identifier 
+  drop_na(name) # there are two rows with entirely no data so I dropped them 
+
+tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset with avg weather 
+  left_join(ny_temp, by = "name") %>% 
+  janitor::clean_names() 
+         
+         
+         
+```
+
+# Saved Final Dataset 
+
+```{r}
+write_csv(tick_lyme_weather, "final_data.csv")
+
+tidied = read_csv("final_data.csv")
+```
+
+
+
+## Attempt Using NOAA data 
+```{r,eval= FALSE}
+# importing the weather data 
+
+library(dplyr)
+library(rnoaa)
+
+# Get a list of all NY station IDs
+stations <- ghcnd_stations()
+nystationids <-  stations %>% 
+  filter(state == "NY") %>% 
+  distinct(id)
+
+# Pull the desired weather data for all of these stations
+nydat <- meteo_pull_monitors(nystationids$id, 
+                             date_min = "2019-01-01", 
+                             date_max = "2021-12-31", 
+                             var = c("PRCP", "SNOW", "SNWD", "TMAX", "TMIN"))
+
+# Save the resulting data
+save(nystationids, nydat, file = "nynoaadat.RData")
+
+```
+
+
+
+```{r, eval=FALSE}
+# convert from rdata to csv
+
+load("nynoaadat.RData")
+
+ls()  # This will list all the objects in your environment
+
+str(nydat)
+
+
+noaa_data <- as.data.frame(nydat)
+
+
+write.csv(data, file = "nydat.csv", row.names = FALSE)
+
+```
+
+
+
+```{r, eval=FALSE}
+
+ny_weather = read_csv("./nydat.csv") %>% 
+  select(id, date, prcp,tmax) %>% 
+  drop_na(tmax) 
+
+
+ny_weather <- ny_weather %>%
+  group_by(id, date) %>%
+  summarise(
+    prcp = mean(prcp, na.rm = TRUE),
+    tmax = mean(tmax, na.rm = TRUE),
+    .groups = 'drop'
+  ) %>%
+  pivot_wider(
+    names_from = id,
+    values_from = c(date, prcp, tmax)
+  )
+
+ny_weather <- ny_weather %>%
+  unnest(cols = c(date, prcp, tmax))
+
+print(ny_weather)
+
+summary(tick_lyme_weather)
+```
+# Mary's Data Analysis
+```{r}
+#load necessary libraries
+library(broom)
+```
+
+### Relationship between tick density and average temperature per month 
+```{r}
+density_vs_avg_temp <- lm(tick_population_density ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 +jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather, na.action = na.exclude) #examine the relationship between tick density and average temperature
+
+broom::tidy(density_vs_avg_temp) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+This output demonstrates that many of the months show non-significant results, therefore meaning a weak or unclear association of each month with tick density. However some months in 2019, like June (p-value= 0.015) and August (p-value = 0.031), which have significant positive outcomes, and July (p-value < 0.005) had a negative outcome. The intercept was -53.0 with a large of SE of 1,473, and a p-value of 0.971. Therefore  
+NEED TO LOOK AT THE REST OF THE VARIABLES
+
+### Relationship between lyme_count and average temperatures per month
+```{r}
+lyme_vs_avg_temp <- lm(lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather)
+
+broom::tidy(lyme_vs_avg_temp) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+Lyme count has similar findings to tick density, with strong positive relationships in August 2019, and negative relationships in June 2019. The intercept was -17,100 with a (SE: 3592) and a p-value < 0.005. 
+
+### Relationship between lyme_rate and population variables
+```{r}
+lyme_rate_vs_population <- lm(lyme_rate ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+
+broom::tidy(lyme_rate_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+This linear regression analyzes the relationship between Lyme rate and tick population density and total ticks collected. Intercept estimate was 121 (SE: 16.4), with a test statistic of 7.39 and p-value<0.005. Therefore the intercept is highly signficant, however the predictors are not. This demonstrates a weak association between Lyme rates and the variables. 
+
+The calculated square mileage estimate was -0.0305 (SE: 0.0159), with a statistic of -1.92 and a p-value<0.005. 
+ 
+### Relationship between lyme_rate and area variables
+```{r}
+lyme_rate_vs_area <- lm(lyme_rate ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
+
+broom::tidy(lyme_rate_vs_area) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+
+tick_lyme_weather |> 
+  select(shape_area, shape_leng, pop2020) |> 
+  cor(use = "complete.obs")
+
+```
+Considering that all other variables but the intercept are weak, there does not appear to be an association between lyme rate and area variables (shape area, shape length, and calculated square miles). 
+
+### Trying the relationship between lyme_rate and area variables, including human population density in 2020
+```{r}
+lyme_rate_vs_area_human <- lm(lyme_rate ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
+
+broom::tidy(lyme_rate_vs_area_human) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+Human population was found to be negatively associated(-4.14) and significantly association (p-value<0.005) with lyme rate. 
+
+### Relationship between b_burgdorferi_percent and population variables
+```{r}
+b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+
