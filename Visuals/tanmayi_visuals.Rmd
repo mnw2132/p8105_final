@@ -132,3 +132,23 @@ ggplot(tick_lyme_weather_summary) +
   theme_minimal()
 #Looking at this heat map, we can observe than as me move from North to South, the temperatures increase around 12 degrees. The avg temp for most counties ranges between 46 to 52 degrees.
 ```
+
+
+```{r}
+#Gather county specific geo spatial data and combine with tick, lyme, and weather data
+ny_counties <- counties(state = "NY", class = "sf")
+
+data_long <- tick_lyme_weather %>%
+  pivot_longer(
+    cols = starts_with("jan_") | starts_with("feb_") | starts_with("mar_") | 
+           starts_with("apr_") | starts_with("may_") | starts_with("jun_") | 
+           starts_with("jul_") | starts_with("aug_") | starts_with("sep_") | 
+           starts_with("oct_") | starts_with("nov_") | starts_with("dec_"),
+    names_to = "month_year", 
+    values_to = "temperature"
+  ) %>%
+  mutate(
+    year = as.numeric(substr(month_year, nchar(month_year) - 1, nchar(month_year))),
+    month = substr(month_year, 1, 3)
+  )
+```
