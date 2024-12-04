@@ -1,0 +1,23 @@
+---
+title: "Data Visuals"
+author: "Tanmayi Amanchi"
+date: "2024-11-23"
+output: html_document
+runtine: shiny
+---
+
+This document for visualizing the cleaned/tidied data set.The beginning of this code is a repeat of the tidied data from Data Preparation. This was performed again since there was an issue in the geometry  of the final_data.csv. So we will be working with a data set called tick_lyme_weather with proper geometry attributes needed to make maps.
+```{r, message=FALSE}
+#Load the necessary libraries 
+library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(leaflet)
+library(tigris)
+options(tigris_use_cache = TRUE)
+``` 
