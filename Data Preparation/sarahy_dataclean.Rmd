@@ -177,8 +177,6 @@ ny_weather <- ny_weather %>%
 
 print(ny_weather)
 
-
-
 ```
 
 
