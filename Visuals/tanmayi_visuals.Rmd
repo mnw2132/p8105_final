@@ -38,3 +38,16 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read
 print(nineteen_twentyone_county_lyme)
 
 ```
+
+```{r, message=FALSE}
+#Read in tick data set and remove unnecessary variables 
+tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
+  janitor::clean_names() %>% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %>%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = "county") %>% # renaming for common identifier
+  rename(ticks_tested = "total_tested") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>%  # selecting and removing variables of interest , 
+mutate(data = "ticks")  # adding a variable to identify merging 
+
+print(tick_surveillance)
+```

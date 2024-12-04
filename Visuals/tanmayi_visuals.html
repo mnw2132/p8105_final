@@ -1524,6 +1524,32 @@ print(nineteen_twentyone_county_lyme)</code></pre>
 ##  9 Orange           878      75.1 lyme 
 ## 10 Wayne            120      44.2 lyme 
 ## # ℹ 52 more rows</code></pre>
+<pre class="r"><code>#Read in tick data set and remove unnecessary variables 
+tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %&gt;%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = &quot;county&quot;) %&gt;% # renaming for common identifier
+  rename(ticks_tested = &quot;total_tested&quot;) %&gt;% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %&gt;%  # selecting and removing variables of interest , 
+mutate(data = &quot;ticks&quot;)  # adding a variable to identify merging 
+
+print(tick_surveillance)</code></pre>
+<pre><code>## # A tibble: 138 × 8
+##     year NAME       total_ticks_collected tick_population_density ticks_tested
+##    &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1  2021 Albany                       366                    85.8          168
+##  2  2021 Chautauqua                   199                    36.7          107
+##  3  2021 Dutchess                     438                    66.8           51
+##  4  2021 Warren                        88                    13.8           87
+##  5  2020 Albany                       114                    37.2          103
+##  6  2020 Chemung                      271                   257.            50
+##  7  2020 Delaware                      75                    21.9           69
+##  8  2020 Tompkins                     131                    52.4           44
+##  9  2020 Oneida                       157                    78.5           50
+## 10  2020 Seneca                        51                    35.5           50
+## # ℹ 128 more rows
+## # ℹ 3 more variables: b_burgdorferi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;,
+## #   data &lt;chr&gt;</code></pre>
 
 
 
