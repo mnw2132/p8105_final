@@ -106,3 +106,15 @@ print(paste("Correlation between average temperature and Lyme rate:", correlatio
 
 #The correlation coefficient is -0.24 meaning as average temperature increases, there is a slight tendency for the average Lyme rate to decrease, and vice versa. However, the weak magnitude implies that this pattern is not very pronounced
 ```
+
+```{r}
+#Create heat map of average temperature by county
+ggplot(tick_lyme_weather_summary) +
+  geom_sf(aes(fill = avg_temp, geometry = geometry), color = "white") +
+  scale_fill_viridis_c(option = "C") +
+  labs(
+    title = "Heat Map of Average Temperature by County",
+    fill = "Avg Temp (°F)"
+  ) +
+  theme_minimal()
+```
