@@ -1550,6 +1550,16 @@ print(tick_surveillance)</code></pre>
 ## # ℹ 128 more rows
 ## # ℹ 3 more variables: b_burgdorferi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;,
 ## #   data &lt;chr&gt;</code></pre>
+<pre class="r"><code>#Read in shp file for NY counties to use for heatmap and county level data
+ny_county =  st_read(&quot;./Counties.shp&quot;)  </code></pre>
+<pre><code>## Reading layer `Counties&#39; from data source 
+##   `/Users/Tammy/Desktop/Data Science 1/p8105_final/Visuals/Counties.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## CRS:           NA</code></pre>
 
 
 
