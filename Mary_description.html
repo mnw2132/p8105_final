@@ -624,21 +624,203 @@ class="section level3">
 month</h3>
 <pre class="r"><code>density_vs_avg_temp &lt;- lm(tick_population_density ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 +jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather, na.action = na.exclude) #examine the relationship between tick density and average temperature
 
-broom::tidy(density_vs_avg_temp)</code></pre>
-<pre><code>## # A tibble: 37 × 5
-##    term        estimate std.error statistic  p.value
-##    &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 (Intercept)   -53.0     1473.    -0.0360 0.971   
-##  2 jan_19         32.7       17.4    1.88   0.0627  
-##  3 feb_19         87.8       32.8    2.68   0.00865 
-##  4 mar_19         -2.22      27.9   -0.0796 0.937   
-##  5 apr_19        -31.8       35.6   -0.892  0.374   
-##  6 may_19         -7.17      40.7   -0.176  0.861   
-##  7 jun_19        132.        53.0    2.48   0.0147  
-##  8 jul_19       -204.        55.3   -3.68   0.000381
-##  9 aug_19        105.        48.0    2.18   0.0314  
-## 10 sep_19         44.8       27.4    1.63   0.105   
-## # ℹ 27 more rows</code></pre>
+broom::tidy(density_vs_avg_temp) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-52.953</td>
+<td align="right">0.971</td>
+</tr>
+<tr class="even">
+<td align="left">jan_19</td>
+<td align="right">32.671</td>
+<td align="right">0.063</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_19</td>
+<td align="right">87.834</td>
+<td align="right">0.009</td>
+</tr>
+<tr class="even">
+<td align="left">mar_19</td>
+<td align="right">-2.218</td>
+<td align="right">0.937</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_19</td>
+<td align="right">-31.786</td>
+<td align="right">0.374</td>
+</tr>
+<tr class="even">
+<td align="left">may_19</td>
+<td align="right">-7.172</td>
+<td align="right">0.861</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_19</td>
+<td align="right">131.641</td>
+<td align="right">0.015</td>
+</tr>
+<tr class="even">
+<td align="left">jul_19</td>
+<td align="right">-203.546</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_19</td>
+<td align="right">104.829</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="even">
+<td align="left">sep_19</td>
+<td align="right">44.756</td>
+<td align="right">0.105</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_19</td>
+<td align="right">59.240</td>
+<td align="right">0.223</td>
+</tr>
+<tr class="even">
+<td align="left">nov_19</td>
+<td align="right">15.851</td>
+<td align="right">0.625</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_19</td>
+<td align="right">15.815</td>
+<td align="right">0.483</td>
+</tr>
+<tr class="even">
+<td align="left">jan_20</td>
+<td align="right">-70.825</td>
+<td align="right">0.117</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_20</td>
+<td align="right">-68.034</td>
+<td align="right">0.007</td>
+</tr>
+<tr class="even">
+<td align="left">mar_20</td>
+<td align="right">136.275</td>
+<td align="right">0.002</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_20</td>
+<td align="right">-111.410</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">may_20</td>
+<td align="right">61.492</td>
+<td align="right">0.235</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_20</td>
+<td align="right">-90.638</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">jul_20</td>
+<td align="right">2.760</td>
+<td align="right">0.134</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_20</td>
+<td align="right">147.522</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">sep_20</td>
+<td align="right">-58.779</td>
+<td align="right">0.176</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_20</td>
+<td align="right">-74.293</td>
+<td align="right">0.208</td>
+</tr>
+<tr class="even">
+<td align="left">nov_20</td>
+<td align="right">-40.459</td>
+<td align="right">0.053</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_20</td>
+<td align="right">39.541</td>
+<td align="right">0.063</td>
+</tr>
+<tr class="even">
+<td align="left">jan_21</td>
+<td align="right">-68.826</td>
+<td align="right">0.017</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_21</td>
+<td align="right">52.352</td>
+<td align="right">0.047</td>
+</tr>
+<tr class="even">
+<td align="left">mar_21</td>
+<td align="right">-44.201</td>
+<td align="right">0.267</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_21</td>
+<td align="right">70.047</td>
+<td align="right">0.047</td>
+</tr>
+<tr class="even">
+<td align="left">may_21</td>
+<td align="right">5.560</td>
+<td align="right">0.921</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_21</td>
+<td align="right">13.545</td>
+<td align="right">0.583</td>
+</tr>
+<tr class="even">
+<td align="left">jul_21</td>
+<td align="right">-74.811</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_21</td>
+<td align="right">58.128</td>
+<td align="right">0.058</td>
+</tr>
+<tr class="even">
+<td align="left">sep_21</td>
+<td align="right">-49.404</td>
+<td align="right">0.246</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_21</td>
+<td align="right">-68.462</td>
+<td align="right">0.041</td>
+</tr>
+<tr class="even">
+<td align="left">nov_21</td>
+<td align="right">32.918</td>
+<td align="right">0.394</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_21</td>
+<td align="right">-25.287</td>
+<td align="right">0.329</td>
+</tr>
+</tbody>
+</table>
 <p>This output demonstrates that many of the months show non-significant
 results, therefore meaning a weak or unclear association of each month
 with tick density. However some months in 2019, like June (p-value=
@@ -655,22 +837,7 @@ class="section level3">
 month</h3>
 <pre class="r"><code>lyme_vs_avg_temp &lt;- lm(lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather)
 
-broom::tidy(lyme_vs_avg_temp)</code></pre>
-<pre><code>## # A tibble: 37 × 5
-##    term         estimate std.error statistic    p.value
-##    &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-##  1 (Intercept) -17067.      3592.    -4.75   0.00000626
-##  2 jan_19         258.        53.1    4.87   0.00000382
-##  3 feb_19           3.44      95.3    0.0361 0.971     
-##  4 mar_19        -300.        85.9   -3.50   0.000686  
-##  5 apr_19          75.3      102.     0.740  0.461     
-##  6 may_19         -44.2      107.    -0.414  0.680     
-##  7 jun_19         -96.7      122.    -0.794  0.429     
-##  8 jul_19         265.       126.     2.10   0.0385    
-##  9 aug_19         245.       118.     2.07   0.0407    
-## 10 sep_19        -273.        74.7   -3.65   0.000404  
-## # ℹ 27 more rows</code></pre>
-<pre class="r"><code>broom::tidy(lyme_vs_avg_temp) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+broom::tidy(lyme_vs_avg_temp) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -876,13 +1043,34 @@ The intercept was -17,100 with a (SE: 3592) and a p-value &lt;
 class="section level3">
 <h3>Relationship between lyme_rate and population variables</h3>
 <pre class="r"><code>lyme_rate_vs_population &lt;- lm(lyme_rate ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
-broom::tidy(lyme_rate_vs_population)</code></pre>
-<pre><code>## # A tibble: 3 × 5
-##   term                    estimate std.error statistic      p.value
-##   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-## 1 (Intercept)              81.3      13.9        5.84  0.0000000378
-## 2 tick_population_density   0.133     0.194      0.684 0.495       
-## 3 total_ticks_collected     0.0314    0.0297     1.06  0.292</code></pre>
+
+broom::tidy(lyme_rate_vs_population) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">81.274</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">tick_population_density</td>
+<td align="right">0.133</td>
+<td align="right">0.495</td>
+</tr>
+<tr class="odd">
+<td align="left">total_ticks_collected</td>
+<td align="right">0.031</td>
+<td align="right">0.292</td>
+</tr>
+</tbody>
+</table>
 <p>This linear regression analyzes the relationship between Lyme rate
 and tick population density and total ticks collected. Intercept
 estimate was 121 (SE: 16.4), with a test statistic of 7.39 and
@@ -895,15 +1083,47 @@ a statistic of -1.92 and a p-value&lt;0.005.</p>
 <div id="relationship-between-lyme_rate-and-area-variables"
 class="section level3">
 <h3>Relationship between lyme_rate and area variables</h3>
-<pre class="r"><code>lyme_rate_vs_area &lt;- lm(lyme_rate ~ shape_area  + shape_leng + calc_sq_mi, data = tick_lyme_weather)
-broom::tidy(lyme_rate_vs_area)</code></pre>
-<pre><code>## # A tibble: 4 × 5
-##   term        estimate     std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)  1.01e+2 30.8              3.26   0.00140
-## 2 shape_area  -2.09e-8  0.0000000132    -1.59   0.115  
-## 3 shape_leng   1.84e-4  0.000235         0.784  0.434  
-## 4 calc_sq_mi  NA       NA               NA     NA</code></pre>
+<pre class="r"><code>lyme_rate_vs_area &lt;- lm(lyme_rate ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
+
+broom::tidy(lyme_rate_vs_area) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">142.01</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">shape_area</td>
+<td align="right">0.00</td>
+<td align="right">0.237</td>
+</tr>
+<tr class="odd">
+<td align="left">shape_leng</td>
+<td align="right">0.00</td>
+<td align="right">0.917</td>
+</tr>
+<tr class="even">
+<td align="left">pop2020</td>
+<td align="right">0.00</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tick_lyme_weather |&gt; 
+  select(shape_area, shape_leng, pop2020) |&gt; 
+  cor(use = &quot;complete.obs&quot;)</code></pre>
+<pre><code>##            shape_area shape_leng    pop2020
+## shape_area  1.0000000  0.8715984 -0.0912427
+## shape_leng  0.8715984  1.0000000 -0.1564054
+## pop2020    -0.0912427 -0.1564054  1.0000000</code></pre>
 <p>Considering that all other variables but the intercept are weak,
 there does not appear to be an association between lyme rate and area
 variables (shape area, shape length, and calculated square miles).</p>
@@ -913,16 +1133,40 @@ id="trying-the-relationship-between-lyme_rate-and-area-variables-including-human
 class="section level3">
 <h3>Trying the relationship between lyme_rate and area variables,
 including human population density in 2020</h3>
-<pre class="r"><code>lyme_rate_vs_area_human &lt;- lm(lyme_rate ~ shape_area  + shape_leng + calc_sq_mi + pop2020, data = tick_lyme_weather)
-broom::tidy(lyme_rate_vs_area_human)</code></pre>
-<pre><code>## # A tibble: 5 × 5
-##   term        estimate     std.error statistic     p.value
-##   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 (Intercept)  1.42e+2 30.9              4.60   0.00000942
-## 2 shape_area  -1.49e-8  0.0000000126    -1.19   0.237     
-## 3 shape_leng   2.37e-5  0.000226         0.105  0.917     
-## 4 calc_sq_mi  NA       NA               NA     NA         
-## 5 pop2020     -6.88e-5  0.0000166       -4.14   0.0000589</code></pre>
+<pre class="r"><code>lyme_rate_vs_area_human &lt;- lm(lyme_rate ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
+
+broom::tidy(lyme_rate_vs_area_human) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">142.01</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">shape_area</td>
+<td align="right">0.00</td>
+<td align="right">0.237</td>
+</tr>
+<tr class="odd">
+<td align="left">shape_leng</td>
+<td align="right">0.00</td>
+<td align="right">0.917</td>
+</tr>
+<tr class="even">
+<td align="left">pop2020</td>
+<td align="right">0.00</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
 <p>Human population was found to be negatively associated(-4.14) and
 significantly association (p-value&lt;0.005) with lyme rate.</p>
 </div>
@@ -932,14 +1176,38 @@ class="section level3">
 <h3>Relationship between b_burgdorferi_percent and population
 variables</h3>
 <pre class="r"><code>b_burgdorferi_percent_vs_population &lt;- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
-broom::tidy(b_burgdorferi_percent_vs_population)</code></pre>
-<pre><code>## # A tibble: 4 × 5
-##   term                     estimate std.error statistic  p.value
-##   &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)             48.9        1.94       25.2   4.87e-52
-## 2 lyme_rate                0.0225     0.0108      2.08  3.99e- 2
-## 3 tick_population_density  0.0511     0.0241      2.12  3.63e- 2
-## 4 total_ticks_collected   -0.000411   0.00371    -0.111 9.12e- 1</code></pre>
+broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">48.867</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">lyme_rate</td>
+<td align="right">0.022</td>
+<td align="right">0.040</td>
+</tr>
+<tr class="odd">
+<td align="left">tick_population_density</td>
+<td align="right">0.051</td>
+<td align="right">0.036</td>
+</tr>
+<tr class="even">
+<td align="left">total_ticks_collected</td>
+<td align="right">0.000</td>
+<td align="right">0.912</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
