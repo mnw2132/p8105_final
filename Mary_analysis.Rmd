@@ -51,7 +51,7 @@ print(tick_surveillance)
 Read in shp file for NY counties 
 
 ```{r, message=FALSE}
-ny_county =  st_read("./Counties.shp")  # read in the county shapefile 
+ny_county =  st_read("./Data Preparation/Counties.shp")  # read in the county shapefile 
  
 print(ny_county)
 
@@ -183,6 +183,8 @@ summary(tick_lyme_weather)
 ```{r}
 #load necessary libraries
 library(broom)
+library(ggplot2)
+library(dplyr)
 ```
 
 ### Relationship between tick density and average temperature per month 
@@ -236,4 +238,40 @@ b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_rate + ti
 
 broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
+The findings from the table demonstrate that the lyme rate and tick population density are slightly positively and significantly associated with B. burgdorferi percent. However, this does not appear to be related to the number of ticks collected considering that the number did not have a significant impact on the B. burgdorferi percent.
 
+### Logarithmic examination of lyme rate versus number of ticks collected and tick population density
+```{r}
+#Convert everything to a logarithmic format
+tick_lyme_weather_log <- tick_lyme_weather |>
+  mutate(
+    log_total_ticks =log1p(total_ticks_collected), 
+    log_tick_density = log1p(tick_population_density),
+    log_lyme_rate = log1p(lyme_rate)
+  )
+
+# Check for linear relationship with a scatterplot
+ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Log Tick Density vs Log Lyme Rate",
+       x = "Log Tick Density",
+       y = "Log Lyme Rate")
+
+#Examination of log-linear regression 
+log_model <- lm(log_lyme_rate ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
+summary(log_model)
+
+
+# Analyze seasonal weather effects
+tick_lyme_weather_seasonal <- tick_lyme_weather_log %>%
+  mutate(across(ends_with(c("19", "20", "21")), log1p, .names = "log_{.col}"))
+
+weather_model <- lm(log_lyme_rate ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
+
+broom::tidy(weather_model) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
+```
+The logarithmic analysis found that the total number of ticks found and the B. burgdoferi percent had a positive, significant association with increased lyme disease rates. 
+
+Some interesting findings from looking at the log of the weather variables include that months like  March 2019 ( β=−1.002, p<0.001) and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile, months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159, p=0.001)) had contrasting impacts, highlighting intra-annual variability in environmental or biological drivers.These months highlight that tick activity is present whenever the temperature is above freezing, is highly variable. 
+The low R^2 value demonstrates significant variability. Therefore further analysis with environmental, demographic and behavioral data would be beneficial. 

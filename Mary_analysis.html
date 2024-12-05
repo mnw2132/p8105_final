@@ -428,9 +428,9 @@ print(tick_surveillance)</code></pre>
 ## # ℹ 3 more variables: b_burgdorferi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;,
 ## #   data &lt;chr&gt;</code></pre>
 <p>Read in shp file for NY counties</p>
-<pre class="r"><code>ny_county =  st_read(&quot;./Counties.shp&quot;)  # read in the county shapefile </code></pre>
+<pre class="r"><code>ny_county =  st_read(&quot;./Data Preparation/Counties.shp&quot;)  # read in the county shapefile </code></pre>
 <pre><code>## Reading layer `Counties&#39; from data source 
-##   `/Users/nickywilliams/Desktop/Data Science/p8105_final/Counties.shp&#39; 
+##   `/Users/nickywilliams/Desktop/Data Science/p8105_final/Data Preparation/Counties.shp&#39; 
 ##   using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 62 features and 17 fields
 ## Geometry type: MULTIPOLYGON
@@ -616,7 +616,9 @@ summary(tick_lyme_weather)</code></pre>
 <div id="marys-data-analysis" class="section level1">
 <h1>Mary’s Data Analysis</h1>
 <pre class="r"><code>#load necessary libraries
-library(broom)</code></pre>
+library(broom)
+library(ggplot2)
+library(dplyr)</code></pre>
 <div
 id="relationship-between-tick-density-and-average-temperature-per-month"
 class="section level3">
@@ -1205,6 +1207,279 @@ broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.
 </tr>
 </tbody>
 </table>
+<p>The findings from the table demonstrate that the lyme rate and tick
+population density are slightly positively and significantly associated
+with B. burgdorferi percent. However, this does not appear to be related
+to the number of ticks collected considering that the number did not
+have a significant impact on the B. burgdorferi percent.</p>
+</div>
+<div
+id="logarithmic-examination-of-lyme-rate-versus-number-of-ticks-collected-and-tick-population-density"
+class="section level3">
+<h3>Logarithmic examination of lyme rate versus number of ticks
+collected and tick population density</h3>
+<pre class="r"><code>#Convert everything to a logarithmic format
+tick_lyme_weather_log &lt;- tick_lyme_weather |&gt;
+  mutate(
+    log_total_ticks =log1p(total_ticks_collected), 
+    log_tick_density = log1p(tick_population_density),
+    log_lyme_rate = log1p(lyme_rate)
+  )
+
+# Check for linear relationship with a scatterplot
+ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;) +
+  labs(title = &quot;Log Tick Density vs Log Lyme Rate&quot;,
+       x = &quot;Log Tick Density&quot;,
+       y = &quot;Log Lyme Rate&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 13 rows containing non-finite outside the scale range
+## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 13 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="Mary_analysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre class="r"><code>#Examination of log-linear regression 
+log_model &lt;- lm(log_lyme_rate ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
+summary(log_model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log_lyme_rate ~ log_total_ticks + log_tick_density + 
+##     b_burgdorferi_percent, data = tick_lyme_weather_log)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.72596 -0.55625  0.07906  0.68835  1.79425 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            2.399845   0.454777   5.277 5.29e-07 ***
+## log_total_ticks        0.329636   0.102829   3.206  0.00169 ** 
+## log_tick_density      -0.237413   0.133965  -1.772  0.07869 .  
+## b_burgdorferi_percent  0.019146   0.007063   2.711  0.00761 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9343 on 131 degrees of freedom
+##   (13 observations deleted due to missingness)
+## Multiple R-squared:  0.1387, Adjusted R-squared:  0.119 
+## F-statistic: 7.033 on 3 and 131 DF,  p-value: 0.0002019</code></pre>
+<pre class="r"><code># Analyze seasonal weather effects
+tick_lyme_weather_seasonal &lt;- tick_lyme_weather_log %&gt;%
+  mutate(across(ends_with(c(&quot;19&quot;, &quot;20&quot;, &quot;21&quot;)), log1p, .names = &quot;log_{.col}&quot;))
+
+weather_model &lt;- lm(log_lyme_rate ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
+
+broom::tidy(weather_model) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-6.413</td>
+<td align="right">0.582</td>
+</tr>
+<tr class="even">
+<td align="left">jan_19</td>
+<td align="right">0.414</td>
+<td align="right">0.018</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_19</td>
+<td align="right">0.534</td>
+<td align="right">0.086</td>
+</tr>
+<tr class="even">
+<td align="left">mar_19</td>
+<td align="right">-1.002</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_19</td>
+<td align="right">1.014</td>
+<td align="right">0.003</td>
+</tr>
+<tr class="even">
+<td align="left">may_19</td>
+<td align="right">-0.695</td>
+<td align="right">0.047</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_19</td>
+<td align="right">-0.454</td>
+<td align="right">0.253</td>
+</tr>
+<tr class="even">
+<td align="left">jul_19</td>
+<td align="right">0.636</td>
+<td align="right">0.123</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_19</td>
+<td align="right">0.742</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">sep_19</td>
+<td align="right">-0.526</td>
+<td align="right">0.032</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_19</td>
+<td align="right">-0.302</td>
+<td align="right">0.461</td>
+</tr>
+<tr class="even">
+<td align="left">nov_19</td>
+<td align="right">0.212</td>
+<td align="right">0.502</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_19</td>
+<td align="right">-0.420</td>
+<td align="right">0.014</td>
+</tr>
+<tr class="even">
+<td align="left">jan_20</td>
+<td align="right">-0.882</td>
+<td align="right">0.023</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_20</td>
+<td align="right">-0.332</td>
+<td align="right">0.109</td>
+</tr>
+<tr class="even">
+<td align="left">mar_20</td>
+<td align="right">0.462</td>
+<td align="right">0.244</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_20</td>
+<td align="right">0.135</td>
+<td align="right">0.637</td>
+</tr>
+<tr class="even">
+<td align="left">may_20</td>
+<td align="right">0.143</td>
+<td align="right">0.778</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_20</td>
+<td align="right">-0.820</td>
+<td align="right">0.045</td>
+</tr>
+<tr class="even">
+<td align="left">jul_20</td>
+<td align="right">0.050</td>
+<td align="right">0.004</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_20</td>
+<td align="right">-0.607</td>
+<td align="right">0.096</td>
+</tr>
+<tr class="even">
+<td align="left">sep_20</td>
+<td align="right">0.203</td>
+<td align="right">0.616</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_20</td>
+<td align="right">1.325</td>
+<td align="right">0.006</td>
+</tr>
+<tr class="even">
+<td align="left">nov_20</td>
+<td align="right">-0.158</td>
+<td align="right">0.468</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_20</td>
+<td align="right">-0.588</td>
+<td align="right">0.007</td>
+</tr>
+<tr class="even">
+<td align="left">jan_21</td>
+<td align="right">0.356</td>
+<td align="right">0.132</td>
+</tr>
+<tr class="odd">
+<td align="left">feb_21</td>
+<td align="right">0.194</td>
+<td align="right">0.455</td>
+</tr>
+<tr class="even">
+<td align="left">mar_21</td>
+<td align="right">0.135</td>
+<td align="right">0.677</td>
+</tr>
+<tr class="odd">
+<td align="left">apr_21</td>
+<td align="right">0.163</td>
+<td align="right">0.585</td>
+</tr>
+<tr class="even">
+<td align="left">may_21</td>
+<td align="right">0.314</td>
+<td align="right">0.458</td>
+</tr>
+<tr class="odd">
+<td align="left">jun_21</td>
+<td align="right">0.848</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">jul_21</td>
+<td align="right">-1.159</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">aug_21</td>
+<td align="right">-0.038</td>
+<td align="right">0.900</td>
+</tr>
+<tr class="even">
+<td align="left">sep_21</td>
+<td align="right">-0.167</td>
+<td align="right">0.646</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_21</td>
+<td align="right">0.787</td>
+<td align="right">0.010</td>
+</tr>
+<tr class="even">
+<td align="left">nov_21</td>
+<td align="right">-0.311</td>
+<td align="right">0.389</td>
+</tr>
+<tr class="odd">
+<td align="left">dec_21</td>
+<td align="right">-0.031</td>
+<td align="right">0.895</td>
+</tr>
+</tbody>
+</table>
+<p>The logarithmic analysis found that the total number of ticks found
+and the B. burgdoferi percent had a positive, significant association
+with increased lyme disease rates.</p>
+<p>Some interesting findings from looking at the log of the weather
+variables include that months like March 2019 ( β=−1.002, p&lt;0.001)
+and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile,
+months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159,
+p=0.001)) had contrasting impacts, highlighting intra-annual variability
+in environmental or biological drivers.These months highlight that tick
+activity is present whenever the temperature is above freezing, is
+highly variable. The low R^2 value demonstrates significant variability.
+Therefore further analysis with environmental, demographic and
+behavioral data would be beneficial.</p>
 </div>
 </div>
 
