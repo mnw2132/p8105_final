@@ -1,0 +1,207 @@
+---
+title: "Data Visuals 2022 + Heat Map"
+author: "Tanmayi Amanchi"
+date: "2024-11-23"
+output: html_document
+runtine: shiny
+---
+
+This document for visualizing the cleaned/tidied data set.The beginning of this code is a repeat of the tidied data from Data Preparation. This was performed again since there was an issue in the geometry  of the final_data.csv. So we will be working with a data set called tick_lyme_weather with proper geometry attributes needed to make maps.
+```{r, message=FALSE}
+#Load the necessary libraries 
+library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(leaflet)
+library(tigris)
+options(tigris_use_cache = TRUE)
+``` 
+
+```{r, message=FALSE}
+#Read in lyme dataset and select necessary variables
+nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read in the NYC lyme data
+  janitor::clean_names() %>%  #clean the names 
+  select(county_name, event_count,percent_rate ) %>%  # select variables of interest 
+  rename(NAME = "county_name", 
+         lyme_count = "event_count",
+         lyme_rate = "percent_rate"
+         ) %>%  # renaming so we can have a common variable when merging 
+  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)
+
+```
+
+```{r, message=FALSE}
+#Read in tick data set and remove unnecessary variables 
+tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
+  janitor::clean_names() %>% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %>%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = "county") %>% # renaming for common identifier
+  rename(ticks_tested = "total_tested") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>%  # selecting and removing variables of interest , 
+mutate(data = "ticks")  # adding a variable to identify merging 
+
+print(tick_surveillance)
+```
+
+```{r, message=FALSE}
+#Read in shp file for NY counties to use for heatmap and county level data
+ny_county =  st_read("Counties.shp")  
+```
+
+```{r, message=FALSE}
+# Merging the tick and lyme data set  
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
+  select(-data.x, -data.y)
+
+# Merging the shape file with this combined file
+NY_lyme_tick_county = NY_lyme_tick %>%
+  left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names() 
+```
+
+```{r}
+#Merging and reading in average temperature csv with data from Jan19 to Dec22
+ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
+  janitor::clean_names() %>% 
+  select(county:dec_22) %>% 
+mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #Mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = "county") %>%  #Renaming to have common identifier 
+  drop_na(name) #There are two rows with entirely no data they are dropped 
+
+tick_lyme_weather = NY_lyme_tick_county  %>% #Merging the entire data set with avg weather 
+  left_join(ny_temp, by = "name") %>% 
+  janitor::clean_names() 
+```
+
+```{r}
+#Create an avg temp column that takes the averages of all the months temperature values by county 
+tick_lyme_weather <- tick_lyme_weather %>%
+  mutate(avg_temp = rowMeans(select(., jan_19:dec_22), na.rm = TRUE))
+```
+
+```{r}
+#Create avg lyme rate column
+tick_lyme_weather_summary <- tick_lyme_weather %>%
+  group_by(name, geometry) %>%
+  summarise(
+    avg_lyme_rate = mean(lyme_rate, na.rm = TRUE),
+    avg_temp = mean(avg_temp, na.rm = TRUE),
+    .groups = "drop"  #Remove the grouping structure since we don't need it in the final result
+  )
+```
+
+```{r}
+#Calculate the correlation coefficient between avg temperature and avg lyme rate
+correlation <- cor(tick_lyme_weather_summary$avg_temp, tick_lyme_weather_summary$avg_lyme_rate, use = "complete.obs")
+print(paste("Correlation between average temperature and Lyme rate:", correlation))
+
+#The correlation coefficient is -0.24 meaning as average temperature increases, there is a slight tendency for the average Lyme rate to decrease, and vice versa. However, the weak magnitude implies that this pattern is not very pronounced
+```
+
+```{r}
+#Create visual plot for correlation between average temperature and lyme disease rate
+ggplot(tick_lyme_weather_summary, aes(x = avg_temp, y = avg_lyme_rate)) +
+  geom_point(color = "blue", size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(
+    title = "Correlation between Avg Temperature and Lyme Disease Rate",
+    x = "Average Temperature (°F)",
+    y = "Average Lyme Disease Rate"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#Create heat map of average temperature by county
+ggplot(tick_lyme_weather_summary) +
+  geom_sf(aes(fill = avg_temp, geometry = geometry), color = "white") +
+  scale_fill_viridis_c(option = "C") +
+  labs(
+    title = "Heat Map of Average Temperature by County",
+    fill = "Avg Temp (°F)"
+  ) +
+  theme_minimal()
+#Looking at this heat map, we can observe than as me move from North to South, the temperatures increase around 12 degrees. The avg temp for most counties ranges between 46 to 52 degrees.
+```
+
+
+```{r}
+#Gather county specific geo spatial data and combine with tick, lyme, and weather data
+ny_counties <- counties(state = "NY", class = "sf")
+
+data_long <- tick_lyme_weather %>%
+  pivot_longer(
+    cols = starts_with("jan_") | starts_with("feb_") | starts_with("mar_") | 
+           starts_with("apr_") | starts_with("may_") | starts_with("jun_") | 
+           starts_with("jul_") | starts_with("aug_") | starts_with("sep_") | 
+           starts_with("oct_") | starts_with("nov_") | starts_with("dec_"),
+    names_to = "month_year", 
+    values_to = "temperature"
+  ) %>%
+  mutate(
+    year = as.numeric(substr(month_year, nchar(month_year) - 1, nchar(month_year))),
+    month = substr(month_year, 1, 3)
+  )
+```
+
+
+```{r}
+# Reproject ny_counties to WGS84
+ny_counties <- st_transform(ny_counties, crs = 4326)  # EPSG code 4326 corresponds to WGS84
+
+# Merge Lyme disease and temperature data with geospatial data
+ny_data <- ny_counties %>%
+  left_join(data_long, by = c("NAME" = "name"))  # Adjust column name for county matching
+# Extract the year from 'month_year' and convert it to a 2-digit year
+ny_data$year <- as.numeric(sub(".*_(\\d{2})$", "\\1", ny_data$month_year))  # Extract 2-digit year
+
+# Correct the year conversion for 2-digit years (manual adjustment for 20)
+ny_data$year <- ifelse(ny_data$year <= 22, ny_data$year + 2000, ny_data$year + 1900)
+
+# Check unique years to ensure proper extraction
+unique(ny_data$year)
+
+# Define a function to generate the map for a specific year
+generate_map <- function(selected_year) {
+  
+  # Filter data based on selected year
+  filtered_data <- ny_data %>% filter(year == selected_year)
+  # Create Leaflet map
+  leaflet_map <- leaflet(data = filtered_data) %>%
+    addTiles() %>%  # Add default OpenStreetMap tiles
+    addPolygons(
+      fillColor = ~colorNumeric("YlOrRd", lyme_count)(lyme_count), # Color by Lyme count
+      fillOpacity = 0.7,
+      color = "black",
+      weight = 1,
+      popup = ~paste(
+        "County: ", NAME, "<br>",  # Adjusted to 'NAME' from ny_counties
+        "Year: ", year, "<br>",
+        "Lyme Count: ", lyme_count, "<br>",
+        "Ticks Tested: ", ticks_tested
+      ),
+      highlightOptions = highlightOptions(weight = 3, color = "#666", fillOpacity = 0.7, bringToFront = TRUE)
+    ) %>%
+    addLegend(
+      position = "topright",
+      pal = colorNumeric("YlOrRd", filtered_data$lyme_count),  # Apply color palette for Lyme count
+      values = filtered_data$lyme_count,
+      title = "Lyme Count",
+      opacity = 0.7
+    )
+  
+  # Return the map
+  return(leaflet_map)
+}
+```
+
+```{r, generate_map_2022, cache=TRUE}
+generate_map(2022)
+```
