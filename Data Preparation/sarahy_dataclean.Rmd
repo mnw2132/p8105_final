@@ -107,6 +107,10 @@ tidied = read_csv("final_data.csv")
 
 
 
+
+
+
+
 # Attempt Using NOAA data 
 ```{r,eval= FALSE}
 # importing the weather data 
