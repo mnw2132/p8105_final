@@ -1041,10 +1041,10 @@ relationships in August 2019, and negative relationships in June 2019.
 The intercept was -17,100 with a (SE: 3592) and a p-value &lt;
 0.005.</p>
 </div>
-<div id="relationship-between-lyme_rate-and-population-variables"
+<div id="relationship-between-lyme_count-and-population-variables"
 class="section level3">
-<h3>Relationship between lyme_rate and population variables</h3>
-<pre class="r"><code>lyme_rate_vs_population &lt;- lm(lyme_rate ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+<h3>Relationship between lyme_count and population variables</h3>
+<pre class="r"><code>lyme_rate_vs_population &lt;- lm(lyme_count ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_population) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
@@ -1058,18 +1058,18 @@ broom::tidy(lyme_rate_vs_population) |&gt; select(term, estimate, p.value) |&gt;
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">81.274</td>
+<td align="right">236.969</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">tick_population_density</td>
-<td align="right">0.133</td>
-<td align="right">0.495</td>
+<td align="right">-0.403</td>
+<td align="right">0.489</td>
 </tr>
 <tr class="odd">
 <td align="left">total_ticks_collected</td>
-<td align="right">0.031</td>
-<td align="right">0.292</td>
+<td align="right">0.596</td>
+<td align="right">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -1082,10 +1082,10 @@ Lyme rates and the variables.</p>
 <p>The calculated square mileage estimate was -0.0305 (SE: 0.0159), with
 a statistic of -1.92 and a p-value&lt;0.005.</p>
 </div>
-<div id="relationship-between-lyme_rate-and-area-variables"
+<div id="relationship-between-lyme_count-and-area-variables"
 class="section level3">
-<h3>Relationship between lyme_rate and area variables</h3>
-<pre class="r"><code>lyme_rate_vs_area &lt;- lm(lyme_rate ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
+<h3>Relationship between lyme_count and area variables</h3>
+<pre class="r"><code>lyme_rate_vs_area &lt;- lm(lyme_count ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_area) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
@@ -1099,22 +1099,22 @@ broom::tidy(lyme_rate_vs_area) |&gt; select(term, estimate, p.value) |&gt;knitr:
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">142.01</td>
-<td align="right">0.000</td>
+<td align="right">259.909</td>
+<td align="right">0.014</td>
 </tr>
 <tr class="even">
 <td align="left">shape_area</td>
-<td align="right">0.00</td>
-<td align="right">0.237</td>
+<td align="right">0.000</td>
+<td align="right">0.657</td>
 </tr>
 <tr class="odd">
 <td align="left">shape_leng</td>
-<td align="right">0.00</td>
-<td align="right">0.917</td>
+<td align="right">0.000</td>
+<td align="right">0.763</td>
 </tr>
 <tr class="even">
 <td align="left">pop2020</td>
-<td align="right">0.00</td>
+<td align="right">0.000</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
@@ -1127,11 +1127,11 @@ there does not appear to be an association between lyme rate and area
 variables (shape area, shape length, and calculated square miles).</p>
 </div>
 <div
-id="trying-the-relationship-between-lyme_rate-and-area-variables-including-human-population-density-in-2020"
+id="trying-the-relationship-between-lyme_count-and-area-variables-including-human-population-density-in-2020"
 class="section level3">
-<h3>Trying the relationship between lyme_rate and area variables,
+<h3>Trying the relationship between lyme_count and area variables,
 including human population density in 2020</h3>
-<pre class="r"><code>lyme_rate_vs_area_human &lt;- lm(lyme_rate ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
+<pre class="r"><code>lyme_rate_vs_area_human &lt;- lm(lyme_count ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_area_human) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
@@ -1145,22 +1145,22 @@ broom::tidy(lyme_rate_vs_area_human) |&gt; select(term, estimate, p.value) |&gt;
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">142.01</td>
-<td align="right">0.000</td>
+<td align="right">259.909</td>
+<td align="right">0.014</td>
 </tr>
 <tr class="even">
 <td align="left">shape_area</td>
-<td align="right">0.00</td>
-<td align="right">0.237</td>
+<td align="right">0.000</td>
+<td align="right">0.657</td>
 </tr>
 <tr class="odd">
 <td align="left">shape_leng</td>
-<td align="right">0.00</td>
-<td align="right">0.917</td>
+<td align="right">0.000</td>
+<td align="right">0.763</td>
 </tr>
 <tr class="even">
 <td align="left">pop2020</td>
-<td align="right">0.00</td>
+<td align="right">0.000</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
@@ -1173,7 +1173,7 @@ id="relationship-between-b_burgdorferi_percent-and-population-variables"
 class="section level3">
 <h3>Relationship between b_burgdorferi_percent and population
 variables</h3>
-<pre class="r"><code>b_burgdorferi_percent_vs_population &lt;- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+<pre class="r"><code>b_burgdorferi_percent_vs_population &lt;- lm(b_burgdorferi_percent ~ lyme_count + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
 
 broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
@@ -1187,23 +1187,23 @@ broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">48.867</td>
+<td align="right">49.796</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
-<td align="left">lyme_rate</td>
-<td align="right">0.022</td>
-<td align="right">0.040</td>
+<td align="left">lyme_count</td>
+<td align="right">0.004</td>
+<td align="right">0.302</td>
 </tr>
 <tr class="odd">
 <td align="left">tick_population_density</td>
-<td align="right">0.051</td>
-<td align="right">0.036</td>
+<td align="right">0.056</td>
+<td align="right">0.025</td>
 </tr>
 <tr class="even">
 <td align="left">total_ticks_collected</td>
-<td align="right">0.000</td>
-<td align="right">0.912</td>
+<td align="right">-0.002</td>
+<td align="right">0.651</td>
 </tr>
 </tbody>
 </table>
@@ -1223,11 +1223,11 @@ tick_lyme_weather_log &lt;- tick_lyme_weather |&gt;
   mutate(
     log_total_ticks =log1p(total_ticks_collected), 
     log_tick_density = log1p(tick_population_density),
-    log_lyme_rate = log1p(lyme_rate)
+    log_lyme_count = log1p(lyme_count)
   )
 
 # Check for linear relationship with a scatterplot
-ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
+ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_count)) +
   geom_point() +
   geom_smooth(method = &quot;lm&quot;) +
   labs(title = &quot;Log Tick Density vs Log Lyme Rate&quot;,
@@ -1240,35 +1240,35 @@ ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
 ## (`geom_point()`).</code></pre>
 <p><img src="Mary_analysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <pre class="r"><code>#Examination of log-linear regression 
-log_model &lt;- lm(log_lyme_rate ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
+log_model &lt;- lm(log_lyme_count ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
 summary(log_model)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = log_lyme_rate ~ log_total_ticks + log_tick_density + 
+## lm(formula = log_lyme_count ~ log_total_ticks + log_tick_density + 
 ##     b_burgdorferi_percent, data = tick_lyme_weather_log)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.72596 -0.55625  0.07906  0.68835  1.79425 
+## -2.12044 -0.68382  0.02336  0.65471  2.83909 
 ## 
 ## Coefficients:
 ##                        Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)            2.399845   0.454777   5.277 5.29e-07 ***
-## log_total_ticks        0.329636   0.102829   3.206  0.00169 ** 
-## log_tick_density      -0.237413   0.133965  -1.772  0.07869 .  
-## b_burgdorferi_percent  0.019146   0.007063   2.711  0.00761 ** 
+## (Intercept)            1.668607   0.494218   3.376 0.000967 ***
+## log_total_ticks        0.697176   0.111747   6.239 5.65e-09 ***
+## log_tick_density      -0.161116   0.145584  -1.107 0.270456    
+## b_burgdorferi_percent  0.015459   0.007675   2.014 0.046041 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.9343 on 131 degrees of freedom
+## Residual standard error: 1.015 on 131 degrees of freedom
 ##   (13 observations deleted due to missingness)
-## Multiple R-squared:  0.1387, Adjusted R-squared:  0.119 
-## F-statistic: 7.033 on 3 and 131 DF,  p-value: 0.0002019</code></pre>
+## Multiple R-squared:  0.363,  Adjusted R-squared:  0.3485 
+## F-statistic: 24.89 on 3 and 131 DF,  p-value: 8.276e-13</code></pre>
 <pre class="r"><code># Analyze seasonal weather effects
 tick_lyme_weather_seasonal &lt;- tick_lyme_weather_log %&gt;%
   mutate(across(ends_with(c(&quot;19&quot;, &quot;20&quot;, &quot;21&quot;)), log1p, .names = &quot;log_{.col}&quot;))
 
-weather_model &lt;- lm(log_lyme_rate ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
+weather_model &lt;- lm(log_lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
 
 broom::tidy(weather_model) |&gt; select(term, estimate, p.value) |&gt;knitr::kable(digits =3)</code></pre>
 <table>
@@ -1282,188 +1282,188 @@ broom::tidy(weather_model) |&gt; select(term, estimate, p.value) |&gt;knitr::kab
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-6.413</td>
-<td align="right">0.582</td>
+<td align="right">-28.689</td>
+<td align="right">0.050</td>
 </tr>
 <tr class="even">
 <td align="left">jan_19</td>
-<td align="right">0.414</td>
-<td align="right">0.018</td>
-</tr>
-<tr class="odd">
-<td align="left">feb_19</td>
-<td align="right">0.534</td>
-<td align="right">0.086</td>
-</tr>
-<tr class="even">
-<td align="left">mar_19</td>
-<td align="right">-1.002</td>
+<td align="right">1.018</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
+<td align="left">feb_19</td>
+<td align="right">1.922</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">mar_19</td>
+<td align="right">-0.925</td>
+<td align="right">0.009</td>
+</tr>
+<tr class="odd">
 <td align="left">apr_19</td>
-<td align="right">1.014</td>
-<td align="right">0.003</td>
+<td align="right">0.681</td>
+<td align="right">0.100</td>
 </tr>
 <tr class="even">
 <td align="left">may_19</td>
-<td align="right">-0.695</td>
-<td align="right">0.047</td>
+<td align="right">-1.180</td>
+<td align="right">0.007</td>
 </tr>
 <tr class="odd">
 <td align="left">jun_19</td>
-<td align="right">-0.454</td>
-<td align="right">0.253</td>
+<td align="right">-0.021</td>
+<td align="right">0.967</td>
 </tr>
 <tr class="even">
 <td align="left">jul_19</td>
-<td align="right">0.636</td>
-<td align="right">0.123</td>
+<td align="right">0.170</td>
+<td align="right">0.739</td>
 </tr>
 <tr class="odd">
 <td align="left">aug_19</td>
-<td align="right">0.742</td>
-<td align="right">0.055</td>
+<td align="right">1.588</td>
+<td align="right">0.001</td>
 </tr>
 <tr class="even">
 <td align="left">sep_19</td>
-<td align="right">-0.526</td>
-<td align="right">0.032</td>
+<td align="right">0.103</td>
+<td align="right">0.734</td>
 </tr>
 <tr class="odd">
 <td align="left">oct_19</td>
-<td align="right">-0.302</td>
-<td align="right">0.461</td>
+<td align="right">-0.130</td>
+<td align="right">0.799</td>
 </tr>
 <tr class="even">
 <td align="left">nov_19</td>
-<td align="right">0.212</td>
-<td align="right">0.502</td>
+<td align="right">-0.653</td>
+<td align="right">0.100</td>
 </tr>
 <tr class="odd">
 <td align="left">dec_19</td>
-<td align="right">-0.420</td>
-<td align="right">0.014</td>
+<td align="right">-0.205</td>
+<td align="right">0.331</td>
 </tr>
 <tr class="even">
 <td align="left">jan_20</td>
-<td align="right">-0.882</td>
-<td align="right">0.023</td>
+<td align="right">-0.966</td>
+<td align="right">0.045</td>
 </tr>
 <tr class="odd">
 <td align="left">feb_20</td>
-<td align="right">-0.332</td>
-<td align="right">0.109</td>
+<td align="right">-0.683</td>
+<td align="right">0.009</td>
 </tr>
 <tr class="even">
 <td align="left">mar_20</td>
-<td align="right">0.462</td>
-<td align="right">0.244</td>
+<td align="right">1.894</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">apr_20</td>
-<td align="right">0.135</td>
-<td align="right">0.637</td>
+<td align="right">-0.717</td>
+<td align="right">0.046</td>
 </tr>
 <tr class="even">
 <td align="left">may_20</td>
-<td align="right">0.143</td>
-<td align="right">0.778</td>
+<td align="right">0.554</td>
+<td align="right">0.381</td>
 </tr>
 <tr class="odd">
 <td align="left">jun_20</td>
-<td align="right">-0.820</td>
-<td align="right">0.045</td>
+<td align="right">-1.549</td>
+<td align="right">0.003</td>
 </tr>
 <tr class="even">
 <td align="left">jul_20</td>
-<td align="right">0.050</td>
-<td align="right">0.004</td>
+<td align="right">0.115</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">aug_20</td>
-<td align="right">-0.607</td>
-<td align="right">0.096</td>
+<td align="right">0.223</td>
+<td align="right">0.622</td>
 </tr>
 <tr class="even">
 <td align="left">sep_20</td>
-<td align="right">0.203</td>
-<td align="right">0.616</td>
+<td align="right">-0.490</td>
+<td align="right">0.332</td>
 </tr>
 <tr class="odd">
 <td align="left">oct_20</td>
-<td align="right">1.325</td>
-<td align="right">0.006</td>
+<td align="right">-0.415</td>
+<td align="right">0.480</td>
 </tr>
 <tr class="even">
 <td align="left">nov_20</td>
-<td align="right">-0.158</td>
-<td align="right">0.468</td>
+<td align="right">-0.503</td>
+<td align="right">0.065</td>
 </tr>
 <tr class="odd">
 <td align="left">dec_20</td>
-<td align="right">-0.588</td>
-<td align="right">0.007</td>
+<td align="right">0.353</td>
+<td align="right">0.184</td>
 </tr>
 <tr class="even">
 <td align="left">jan_21</td>
-<td align="right">0.356</td>
-<td align="right">0.132</td>
+<td align="right">-1.341</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">feb_21</td>
-<td align="right">0.194</td>
-<td align="right">0.455</td>
+<td align="right">0.260</td>
+<td align="right">0.422</td>
 </tr>
 <tr class="even">
 <td align="left">mar_21</td>
-<td align="right">0.135</td>
-<td align="right">0.677</td>
+<td align="right">-0.703</td>
+<td align="right">0.084</td>
 </tr>
 <tr class="odd">
 <td align="left">apr_21</td>
-<td align="right">0.163</td>
-<td align="right">0.585</td>
+<td align="right">0.627</td>
+<td align="right">0.095</td>
 </tr>
 <tr class="even">
 <td align="left">may_21</td>
-<td align="right">0.314</td>
-<td align="right">0.458</td>
+<td align="right">1.585</td>
+<td align="right">0.003</td>
 </tr>
 <tr class="odd">
 <td align="left">jun_21</td>
-<td align="right">0.848</td>
-<td align="right">0.001</td>
+<td align="right">-0.027</td>
+<td align="right">0.926</td>
 </tr>
 <tr class="even">
 <td align="left">jul_21</td>
-<td align="right">-1.159</td>
-<td align="right">0.001</td>
+<td align="right">-2.820</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">aug_21</td>
-<td align="right">-0.038</td>
-<td align="right">0.900</td>
-</tr>
-<tr class="even">
-<td align="left">sep_21</td>
-<td align="right">-0.167</td>
-<td align="right">0.646</td>
-</tr>
-<tr class="odd">
-<td align="left">oct_21</td>
-<td align="right">0.787</td>
+<td align="right">0.998</td>
 <td align="right">0.010</td>
 </tr>
 <tr class="even">
+<td align="left">sep_21</td>
+<td align="right">1.168</td>
+<td align="right">0.011</td>
+</tr>
+<tr class="odd">
+<td align="left">oct_21</td>
+<td align="right">0.890</td>
+<td align="right">0.018</td>
+</tr>
+<tr class="even">
 <td align="left">nov_21</td>
-<td align="right">-0.311</td>
-<td align="right">0.389</td>
+<td align="right">-0.879</td>
+<td align="right">0.053</td>
 </tr>
 <tr class="odd">
 <td align="left">dec_21</td>
-<td align="right">-0.031</td>
-<td align="right">0.895</td>
+<td align="right">0.619</td>
+<td align="right">0.036</td>
 </tr>
 </tbody>
 </table>

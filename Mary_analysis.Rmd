@@ -204,9 +204,9 @@ broom::tidy(lyme_vs_avg_temp) |> select(term, estimate, p.value) |>knitr::kable(
 ```
 Lyme count has similar findings to tick density, with strong positive relationships in August 2019, and negative relationships in June 2019. The intercept was -17,100 with a (SE: 3592) and a p-value < 0.005. 
 
-### Relationship between lyme_rate and population variables
+### Relationship between lyme_count and population variables
 ```{r}
-lyme_rate_vs_population <- lm(lyme_rate ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+lyme_rate_vs_population <- lm(lyme_count ~ tick_population_density + total_ticks_collected, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
@@ -214,9 +214,9 @@ This linear regression analyzes the relationship between Lyme rate and tick popu
 
 The calculated square mileage estimate was -0.0305 (SE: 0.0159), with a statistic of -1.92 and a p-value<0.005. 
  
-### Relationship between lyme_rate and area variables
+### Relationship between lyme_count and area variables
 ```{r}
-lyme_rate_vs_area <- lm(lyme_rate ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
+lyme_rate_vs_area <- lm(lyme_count ~ shape_area  + shape_leng + pop2020, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_area) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 
@@ -224,9 +224,9 @@ summary(tick_lyme_weather$pop2020)
 ```
 Considering that all other variables but the intercept are weak, there does not appear to be an association between lyme rate and area variables (shape area, shape length, and calculated square miles). 
 
-### Trying the relationship between lyme_rate and area variables, including human population density in 2020
+### Trying the relationship between lyme_count and area variables, including human population density in 2020
 ```{r}
-lyme_rate_vs_area_human <- lm(lyme_rate ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
+lyme_rate_vs_area_human <- lm(lyme_count ~ shape_area  + shape_leng  + pop2020, data = tick_lyme_weather)
 
 broom::tidy(lyme_rate_vs_area_human) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
@@ -234,7 +234,7 @@ Human population was found to be negatively associated(-4.14) and significantly 
 
 ### Relationship between b_burgdorferi_percent and population variables
 ```{r}
-b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_rate + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
+b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_count + tick_population_density + total_ticks_collected, data = tick_lyme_weather)
 
 broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
@@ -247,11 +247,11 @@ tick_lyme_weather_log <- tick_lyme_weather |>
   mutate(
     log_total_ticks =log1p(total_ticks_collected), 
     log_tick_density = log1p(tick_population_density),
-    log_lyme_rate = log1p(lyme_rate)
+    log_lyme_count = log1p(lyme_count)
   )
 
 # Check for linear relationship with a scatterplot
-ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
+ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_count)) +
   geom_point() +
   geom_smooth(method = "lm") +
   labs(title = "Log Tick Density vs Log Lyme Rate",
@@ -259,7 +259,7 @@ ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_rate)) +
        y = "Log Lyme Rate")
 
 #Examination of log-linear regression 
-log_model <- lm(log_lyme_rate ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
+log_model <- lm(log_lyme_count ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
 summary(log_model)
 
 
@@ -267,7 +267,7 @@ summary(log_model)
 tick_lyme_weather_seasonal <- tick_lyme_weather_log %>%
   mutate(across(ends_with(c("19", "20", "21")), log1p, .names = "log_{.col}"))
 
-weather_model <- lm(log_lyme_rate ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
+weather_model <- lm(log_lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 + jun_19 + jul_19 + aug_19 + sep_19 + oct_19 + nov_19 + dec_19 + jan_20 + feb_20 + mar_20 + apr_20 + may_20 + jun_20 + jul_20 + aug_20 + sep_20 + oct_20 + nov_20 + dec_20+ jan_21 + feb_21 + mar_21 + apr_21 + may_21 + jun_21 + jul_21 + aug_21 + sep_21 + oct_21 + nov_21 + dec_21, data = tick_lyme_weather_seasonal)
 
 broom::tidy(weather_model) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
