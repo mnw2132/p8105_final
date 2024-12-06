@@ -133,6 +133,8 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
 # Combined years and average temp 
 ```{r}
 combined_years_avg_temp = bind_rows(nineteen, twenty, twenty_one)
+
+write_csv(combined_years_avg_temp, "combined_data_kf.csv")
 ```
 
 
