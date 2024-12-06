@@ -14,6 +14,7 @@ library(sf)
 library(purrr)
 library(knitr)
 library(readxl)
+library(dplyr)
 ``` 
 
 ```{r, message=FALSE}
@@ -118,9 +119,17 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
          
 ```
 
+# Combined years and average temp 
+```{r}
+combined_years_avg_temp = bind_rows(nineteen, twenty, twenty_one)
+```
+
+
 # Saved Final Dataset 
 
 ```{r}
+
+# does not include the avg temp  by year 
 write_csv(tick_lyme_weather, "final_data.csv")
 
 tidied = read_csv("final_data.csv") 
