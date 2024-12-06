@@ -186,13 +186,11 @@ mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #mutated to rem
     ## New names:
     ## Rows: 65 Columns: 56
     ## ── Column specification
-    ## ──────────────────────────────────────── Delimiter: "," chr
-    ## (1): County dbl (48): Jan-19, Feb-19, Mar-19, Apr-19, May-19,
-    ## Jun-19, Jul-19, Aug-19, Se... lgl (7): ...50, ...51, ...52,
-    ## ...53, ...54, ...55, ...56
-    ## ℹ Use `spec()` to retrieve the full column specification for
-    ## this data. ℹ Specify the column types or set `show_col_types =
-    ## FALSE` to quiet this message.
+    ## ──────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (1): County dbl (48): Jan-19, Feb-19, Mar-19, Apr-19, May-19, Jun-19, Jul-19,
+    ## Aug-19, Se... lgl (7): ...50, ...51, ...52, ...53, ...54, ...55, ...56
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+    ## Specify the column types or set `show_col_types = FALSE` to quiet this message.
     ## • `` -> `...50`
     ## • `` -> `...51`
     ## • `` -> `...52`
@@ -207,12 +205,11 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
   janitor::clean_names() 
 ```
 
-    ## Warning in left_join(., ny_temp, by = "name"): Detected an unexpected many-to-many relationship between `x`
-    ## and `y`.
+    ## Warning in left_join(., ny_temp, by = "name"): Detected an unexpected many-to-many relationship between `x` and `y`.
     ## ℹ Row 145 of `x` matches multiple rows in `y`.
     ## ℹ Row 2 of `y` matches multiple rows in `x`.
-    ## ℹ If a many-to-many relationship is expected, set `relationship
-    ##   = "many-to-many"` to silence this warning.
+    ## ℹ If a many-to-many relationship is expected, set `relationship =
+    ##   "many-to-many"` to silence this warning.
 
 # Saved Final Dataset
 
@@ -223,7 +220,7 @@ tidied = read_csv("final_data.csv")
 ```
 
     ## Rows: 148 Columns: 74
-    ## ── Column specification ────────────────────────────────────────
+    ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr   (7): name, county_centroid, abbrev, swis, nysp_zone, nyc, geometry
     ## dbl  (64): year, total_ticks_collected, tick_population_density, ticks_teste...
@@ -531,8 +528,8 @@ ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_count)) +
     ## Warning: Removed 13 rows containing non-finite outside the scale range
     ## (`stat_smooth()`).
 
-    ## Warning: Removed 13 rows containing missing values or values outside the
-    ## scale range (`geom_point()`).
+    ## Warning: Removed 13 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
 
 ![](Mary_analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 

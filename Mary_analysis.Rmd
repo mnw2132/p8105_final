@@ -15,6 +15,7 @@ library(sf)
 library(purrr)
 library(knitr)
 library(readxl)
+library(gtsummary)
 ``` 
 
 ```{r, message=FALSE}
@@ -275,3 +276,82 @@ The logarithmic analysis found that the total number of ticks found and the B. b
 
 Some interesting findings from looking at the log of the weather variables include that months like  March 2019 ( β=−1.002, p<0.001) and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile, months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159, p=0.001)) had contrasting impacts, highlighting intra-annual variability in environmental or biological drivers.These months highlight that tick activity is present whenever the temperature is above freezing, is highly variable. 
 The low R^2 value demonstrates significant variability. Therefore further analysis with environmental, demographic and behavioral data would be beneficial. 
+
+# Kaleb Analytic Edits:
+
+```{r}
+# Step 1: Boxplot of 'cases' per 'year'
+
+data =
+  read_csv("Data Preparation/final_data.csv")
+  
+ggplot(data, aes(x = factor(year), y = cases)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution of Cases by Year",
+    x = "Year",
+    y = "Cases"
+  ) +
+  theme_minimal()
+
+# Step 2: Histogram and density plot for average temperature
+ggplot(data, aes(x = avg_temperature)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "blue", alpha = 0.7, color = "black") +
+  geom_density(alpha = 0.3, fill = "orange") +
+  labs(
+    title = "Distribution of Average Temperature",
+    x = "Average Temperature",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+# Step 3: Histogram and density plot for 'prev_badtick'
+ggplot(data, aes(x = prev_badtick)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.05, fill = "green", alpha = 0.7, color = "black") +
+  geom_density(alpha = 0.3, fill = "purple") +
+  labs(
+    title = "Distribution of prev_badtick",
+    x = "Prevalence of Bad Tick",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+# Step 4: Line plot of total cases per year
+annual_cases <- data %>%
+  group_by(year) %>%
+  summarize(total_cases = sum(cases, na.rm = TRUE))
+
+ggplot(annual_cases, aes(x = year, y = total_cases)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(
+    title = "Total Case Count by Year",
+    x = "Year",
+    y = "Total Case Count"
+  ) +
+  theme_minimal()
+
+# Step 5: Regression model of case_count on prev_badtick controlling for avg_temperature
+model <- lm(case_count ~ prev_badtick + avg_temperature, data = data)
+summary(model)
+
+# Step 6: Create a summary statistics table (Table 1) for each county
+table1 <- data %>%
+  select(county, cases, avg_temperature, prev_badtick) %>%
+  tbl_summary(
+    by = county,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} / {N} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2
+  ) %>%
+  add_overall() %>%
+  bold_labels()
+
+# Display the summary table
+table1
+
+```
+
+
