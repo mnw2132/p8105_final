@@ -248,7 +248,7 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
 ``` r
 write_csv(tick_lyme_weather, "final_data.csv")
 
-tidied = read_csv("final_data.csv")
+tidied = read_csv("final_data.csv") 
 ```
 
     ## Rows: 148 Columns: 74
