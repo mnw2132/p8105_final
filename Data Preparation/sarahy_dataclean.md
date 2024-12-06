@@ -172,6 +172,8 @@ NY_lyme_tick_county = NY_lyme_tick %>%
 # didn't delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
 ```
 
+Taking the average temperature across all counties per year
+
 ``` r
 # merging and reading in tammy csv file with avg temps 
 
