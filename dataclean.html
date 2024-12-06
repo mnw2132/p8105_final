@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>dataclean</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="background.html">Background</a>
+</li>
+<li>
+  <a href="methods.html">Methods</a>
+</li>
+<li>
+  <a href="findings.html">Findings</a>
+</li>
+<li>
+  <a href="dashboard.html">Dashboard</a>
+</li>
+<li>
+  <a href="about.html">About the Authors</a>
+</li>
+<li>
+  <a href="mailto:&lt;you@youremail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/&lt;YOUR_GH_NAME&gt;/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="analytic-dataset" class="section level1">
+<h1>Analytic Dataset</h1>
+<p>Sarahy Martinez 2024-11-16</p>
+<p>This document for cleaning and tidying the data.</p>
+<pre class="r"><code>library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)</code></pre>
+<pre class="r"><code>nineteen_twentyone_county_lyme = read_csv(&quot;new_york_county_lyme.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  select(county_name, event_count,percent_rate ) %&gt;% 
+  rename(NAME = &quot;county_name&quot;) %&gt;% 
+  mutate( data = &quot;lyme&quot;)
+
+print(nineteen_twentyone_county_lyme)</code></pre>
+<pre><code>## # A tibble: 62 × 4
+##    NAME      event_count percent_rate data 
+##    &lt;chr&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;
+##  1 Queens            336          4.9 lyme 
+##  2 Saratoga          494         70.8 lyme 
+##  3 Greene            612        427.  lyme 
+##  4 Niagara            10          1.6 lyme 
+##  5 Allegany           59         42.3 lyme 
+##  6 Bronx              78          1.8 lyme 
+##  7 Ulster            657        122.  lyme 
+##  8 Jefferson         170         49.7 lyme 
+##  9 Orange            878         75.1 lyme 
+## 10 Wayne             120         44.2 lyme 
+## # ℹ 52 more rows</code></pre>
+<p>Tidy deer tick data</p>
+<pre class="r"><code>tick_surveillance = read_csv(&quot;./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(year %in% 2019:2021 ) %&gt;% 
+  rename(NAME = &quot;county&quot;) %&gt;% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -year) %&gt;% 
+mutate(data = &quot;ticks&quot;)
+
+
+print(tick_surveillance)</code></pre>
+<pre><code>## # A tibble: 138 × 10
+##    NAME       total_ticks_collected tick_population_density total_tested
+##    &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Albany                       366                    85.8          168
+##  2 Chautauqua                   199                    36.7          107
+##  3 Dutchess                     438                    66.8           51
+##  4 Warren                        88                    13.8           87
+##  5 Albany                       114                    37.2          103
+##  6 Chemung                      271                   257.            50
+##  7 Delaware                      75                    21.9           69
+##  8 Tompkins                     131                    52.4           44
+##  9 Oneida                       157                    78.5           50
+## 10 Seneca                        51                    35.5           50
+## # ℹ 128 more rows
+## # ℹ 6 more variables: b_burgdorferi_percent &lt;dbl&gt;,
+## #   a_phagocytophilum_percent &lt;dbl&gt;, b_microti_percent &lt;dbl&gt;,
+## #   b_miyamotoi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;, data &lt;chr&gt;</code></pre>
+<p>Read in shp file for NY counties</p>
+<pre class="r"><code>ny_county =  st_read(&quot;./Counties.shp&quot;) </code></pre>
+<pre><code>## Reading layer `Counties&#39; from data source 
+##   `C:\Users\sarah\OneDrive\Documents\Data Science\p8105_final\Data Preparation\Counties.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## Projected CRS: NAD83 / UTM zone 18N</code></pre>
+<pre class="r"><code>print(ny_county)</code></pre>
+<pre><code>## Simple feature collection with 62 features and 17 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 105571.4 ymin: 4480943 xmax: 779932.1 ymax: 4985476
+## Projected CRS: NAD83 / UTM zone 18N
+## First 10 features:
+##           NAME ABBREV GNIS_ID FIPS_CODE   SWIS   NYSP_ZONE POP1990 POP2000
+## 1       Albany   ALBA  974099     36001 010000        East  292594  294565
+## 2     Allegany   ALLE  974100     36003 020000        West   50470   49927
+## 3        Bronx   BRON  974101     36005 600000 Long Island 1203789 1332650
+## 4       Broome   BROO  974102     36007 030000     Central  212160  200536
+## 5  Cattaraugus   CATT  974103     36009 040000        West   84234   83955
+## 6       Cayuga   CAYU  974104     36011 050000     Central   82313   81963
+## 7   Chautauqua   CHAU  974105     36013 060000        West  141895  139750
+## 8      Chemung   CHEM  974106     36015 070000     Central   95195   91070
+## 9     Chenango   CHEN  974107     36017 080000     Central   51768   51401
+## 10     Clinton   CLIN  974108     36019 090000        East   85969   79894
+##    POP2010 POP2020 DOS_LL DOSLL_DATE NYC CALC_SQ_MI    DATEMOD Shape_Leng
+## 1   304204  314848   &lt;NA&gt; -001-11-30   N  532.79178 2017-11-10  166077.83
+## 2    48946   46456   &lt;NA&gt; -001-11-30   N 1035.20913 2019-04-26  210499.34
+## 3  1385108 1472654   &lt;NA&gt; -001-11-30   Y   57.47215 2019-10-04   57253.86
+## 4   200600  198683   &lt;NA&gt; -001-11-30   N  715.28747 2019-04-26  227933.33
+## 5    80317   77042   &lt;NA&gt; -001-11-30   N 1324.30922 2019-04-26  276084.51
+## 6    80026   76248   &lt;NA&gt; -001-11-30   N  881.82350 2018-07-18  334039.80
+## 7   134905  127657   &lt;NA&gt; -001-11-30   N 1507.79455 2019-04-26  247508.47
+## 8    88830   84148   &lt;NA&gt; -001-11-30   N  410.95932 2019-04-26  146916.78
+## 9    50477   47220   &lt;NA&gt; -001-11-30   N  897.81864 2018-10-03  226955.16
+## 10   82128   79843   &lt;NA&gt; -001-11-30   N 1116.81373 2018-12-07  235243.35
+##    Shape_Area                       geometry
+## 1  1379924372 MULTIPOLYGON (((605729 4737...
+## 2  2681179340 MULTIPOLYGON (((229573.9 47...
+## 3   148852180 MULTIPOLYGON (((595540.7 45...
+## 4  1852586030 MULTIPOLYGON (((428899.3 46...
+## 5  3429945130 MULTIPOLYGON (((169747.3 47...
+## 6  2283912393 MULTIPOLYGON (((369644.2 47...
+## 7  3905169964 MULTIPOLYGON (((161319.8 47...
+## 8  1064379743 MULTIPOLYGON (((353386.9 46...
+## 9  2325339613 MULTIPOLYGON (((464936.4 47...
+## 10 2892534278 MULTIPOLYGON (((629506.7 49...</code></pre>
+<p>Merging the data sets</p>
+<pre class="r"><code># merging the excel sheets first 
+
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = &quot;NAME&quot;) %&gt;% 
+  select(-data.x, -data.y)
+
+print(NY_lyme_tick)</code></pre>
+<pre><code>## # A tibble: 147 × 11
+##    NAME       total_ticks_collected tick_population_density total_tested
+##    &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Albany                       366                    85.8          168
+##  2 Chautauqua                   199                    36.7          107
+##  3 Dutchess                     438                    66.8           51
+##  4 Warren                        88                    13.8           87
+##  5 Albany                       114                    37.2          103
+##  6 Chemung                      271                   257.            50
+##  7 Delaware                      75                    21.9           69
+##  8 Tompkins                     131                    52.4           44
+##  9 Oneida                       157                    78.5           50
+## 10 Seneca                        51                    35.5           50
+## # ℹ 137 more rows
+## # ℹ 7 more variables: b_burgdorferi_percent &lt;dbl&gt;,
+## #   a_phagocytophilum_percent &lt;dbl&gt;, b_microti_percent &lt;dbl&gt;,
+## #   b_miyamotoi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;, event_count &lt;dbl&gt;,
+## #   percent_rate &lt;dbl&gt;</code></pre>
+<pre class="r"><code># now merging the shape file with excel file 
+
+NY_lyme_tick_county = NY_lyme_tick %&gt;%
+  left_join(ny_county, by = &quot;NAME&quot;) %&gt;% 
+  janitor::clean_names()
+# didn&#39;t delete the other parts from abbrev and later because they are part of the shapefile and if I delete I have to convert it to a dataframe making the shapefile no longer spatial. 
+
+print(NY_lyme_tick_county)</code></pre>
+<pre><code>## # A tibble: 147 × 28
+##    name       total_ticks_collected tick_population_density total_tested
+##    &lt;chr&gt;                      &lt;dbl&gt;                   &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Albany                       366                    85.8          168
+##  2 Chautauqua                   199                    36.7          107
+##  3 Dutchess                     438                    66.8           51
+##  4 Warren                        88                    13.8           87
+##  5 Albany                       114                    37.2          103
+##  6 Chemung                      271                   257.            50
+##  7 Delaware                      75                    21.9           69
+##  8 Tompkins                     131                    52.4           44
+##  9 Oneida                       157                    78.5           50
+## 10 Seneca                        51                    35.5           50
+## # ℹ 137 more rows
+## # ℹ 24 more variables: b_burgdorferi_percent &lt;dbl&gt;,
+## #   a_phagocytophilum_percent &lt;dbl&gt;, b_microti_percent &lt;dbl&gt;,
+## #   b_miyamotoi_percent &lt;dbl&gt;, county_centroid &lt;chr&gt;, event_count &lt;dbl&gt;,
+## #   percent_rate &lt;dbl&gt;, abbrev &lt;chr&gt;, gnis_id &lt;chr&gt;, fips_code &lt;chr&gt;,
+## #   swis &lt;chr&gt;, nysp_zone &lt;chr&gt;, pop1990 &lt;dbl&gt;, pop2000 &lt;dbl&gt;, pop2010 &lt;dbl&gt;,
+## #   pop2020 &lt;dbl&gt;, dos_ll &lt;chr&gt;, dosll_date &lt;date&gt;, nyc &lt;chr&gt;, …</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
