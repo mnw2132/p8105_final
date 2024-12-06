@@ -218,15 +218,19 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
     filter(year == 2019 ) %>% 
     mutate(avg_temp = rowMeans(select(., jan_19:dec_19), na.rm = TRUE)) %>% 
     select( everything(), -jan_19, -feb_19, -mar_19, -apr_19, -may_19,-jun_19, -jul_19, -aug_19, -sep_19, -oct_19, -nov_19, -dec_19)
-  
-  # Avg temo across counties 2020
+```
+
+``` r
+  # Avg temp across counties 2020
   twenty =  tick_lyme_weather %>% 
     select(everything(), -jan_19, -feb_19, -mar_19, -apr_19, -may_19,-jun_19, -jul_19, -aug_19, -sep_19, -oct_19, -nov_19, -dec_19, -jan_21, -feb_21, -mar_21, -apr_21, -may_21,-jun_21, -jul_21, -aug_21, -sep_21, -oct_21, -nov_21, -dec_21, -jan_22, -feb_22, -mar_22, -apr_22, -may_22,-jun_22, -jul_22, -aug_22, -sep_22, -oct_22, -nov_22, -dec_22) %>% 
     filter(year == 2020) %>% 
     mutate(avg_temp = rowMeans(select(., jan_20:dec_20), na.rm = TRUE)) %>% 
     select( everything(), -jan_20, -feb_20, -mar_20, -apr_20, -may_20,-jun_20, -jul_20, -aug_20, -sep_20, -oct_20, -nov_20, -dec_20)
-  
-# Avg temp across counteis 2021
+```
+
+``` r
+# Avg temp across counties 2021
   twenty_one = tick_lyme_weather %>% 
     select(everything(), -jan_19, -feb_19, -mar_19, -apr_19, -may_19,-jun_19, -jul_19, -aug_19, -sep_19, -oct_19, -nov_19, -dec_19, -jan_20, -feb_20, -mar_20, -apr_20, -may_20,-jun_20, -jul_20, -aug_20, -sep_20, -oct_20, -nov_20, -dec_20, -jan_22, -feb_22, -mar_22, -apr_22, -may_22,-jun_22, -jul_22, -aug_22, -sep_22, -oct_22, -nov_22, -dec_22) %>% 
     filter(year == 2021) %>% 
