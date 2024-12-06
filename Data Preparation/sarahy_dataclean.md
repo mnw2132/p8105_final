@@ -231,16 +231,6 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
     filter(year == 2021) %>% 
     mutate(avg_temp = rowMeans(select(., jan_21:dec_21), na.rm = TRUE)) %>% 
     select( everything(), -jan_21, -feb_21, -mar_21, -apr_21, -may_21,-jun_21, -jul_21, -aug_21, -sep_21, -oct_21, -nov_21, -dec_21)
-  
-
- 
-
-  #then once we get the get avg per year then merge them together
-
-
-   
-# average temperatures by year by county 
-# get yearly by summing the year and finding the average 
 ```
 
 # Saved Final Dataset
