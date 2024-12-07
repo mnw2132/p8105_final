@@ -1,7 +1,6 @@
 Analytic Dataset
 ================
 Sarahy Martinez
-2024-11-16
 
 This document for cleaning and tidying the data.
 
