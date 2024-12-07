@@ -7,25 +7,6 @@ Cleaning and Description of Analytic dataset
 This document for cleaning and tidying the data.
 
 ``` r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-install.packages("remotes")
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//RtmpAW4Tld/downloaded_packages
-
-``` r
-install.packages("broom.helpers")
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//RtmpAW4Tld/downloaded_packages
-
-``` r
-remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -780,7 +761,7 @@ data <- data %>%
   mutate(
     name = case_when(
       name == "Cattaragus" ~ "Cattaraugus",
-      name == "St Lawrance" ~ "St. Lawrance",
+      name == "St Lawrence" ~ "St. Lawrence",
       TRUE ~ name))
 ```
 
@@ -1160,20 +1141,20 @@ regression_table =
 regression_table
 ```
 
-<div id="jpaoselcef" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jpaoselcef table {
+<div id="doykqyooci" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#doykqyooci table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#jpaoselcef thead, #jpaoselcef tbody, #jpaoselcef tfoot, #jpaoselcef tr, #jpaoselcef td, #jpaoselcef th {
+&#10;#doykqyooci thead, #doykqyooci tbody, #doykqyooci tfoot, #doykqyooci tr, #doykqyooci td, #doykqyooci th {
   border-style: none;
 }
-&#10;#jpaoselcef p {
+&#10;#doykqyooci p {
   margin: 0;
   padding: 0;
 }
-&#10;#jpaoselcef .gt_table {
+&#10;#doykqyooci .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1198,11 +1179,11 @@ regression_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_caption {
+&#10;#doykqyooci .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#jpaoselcef .gt_title {
+&#10;#doykqyooci .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1213,7 +1194,7 @@ regression_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#jpaoselcef .gt_subtitle {
+&#10;#doykqyooci .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1224,7 +1205,7 @@ regression_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#jpaoselcef .gt_heading {
+&#10;#doykqyooci .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1235,12 +1216,12 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_bottom_border {
+&#10;#doykqyooci .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_col_headings {
+&#10;#doykqyooci .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1254,7 +1235,7 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_col_heading {
+&#10;#doykqyooci .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1273,7 +1254,7 @@ regression_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer {
+&#10;#doykqyooci .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1284,13 +1265,13 @@ regression_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer:first-child {
+&#10;#doykqyooci .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer:last-child {
+&#10;#doykqyooci .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#jpaoselcef .gt_column_spanner {
+&#10;#doykqyooci .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1301,10 +1282,10 @@ regression_table
   display: inline-block;
   width: 100%;
 }
-&#10;#jpaoselcef .gt_spanner_row {
+&#10;#doykqyooci .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#jpaoselcef .gt_group_heading {
+&#10;#doykqyooci .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1329,7 +1310,7 @@ regression_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#jpaoselcef .gt_empty_group_heading {
+&#10;#doykqyooci .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1343,13 +1324,13 @@ regression_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#jpaoselcef .gt_from_md > :first-child {
+&#10;#doykqyooci .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#jpaoselcef .gt_from_md > :last-child {
+&#10;#doykqyooci .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#jpaoselcef .gt_row {
+&#10;#doykqyooci .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1367,7 +1348,7 @@ regression_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#jpaoselcef .gt_stub {
+&#10;#doykqyooci .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1379,7 +1360,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_stub_row_group {
+&#10;#doykqyooci .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1392,13 +1373,13 @@ regression_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#jpaoselcef .gt_row_group_first td {
+&#10;#doykqyooci .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_row_group_first th {
+&#10;#doykqyooci .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_summary_row {
+&#10;#doykqyooci .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1407,14 +1388,14 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_first_summary_row {
+&#10;#doykqyooci .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_first_summary_row.thick {
+&#10;#doykqyooci .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_last_summary_row {
+&#10;#doykqyooci .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1423,7 +1404,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_grand_summary_row {
+&#10;#doykqyooci .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1432,7 +1413,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_first_grand_summary_row {
+&#10;#doykqyooci .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1441,7 +1422,7 @@ regression_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_last_grand_summary_row_top {
+&#10;#doykqyooci .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1450,10 +1431,10 @@ regression_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_striped {
+&#10;#doykqyooci .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#jpaoselcef .gt_table_body {
+&#10;#doykqyooci .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1461,7 +1442,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_footnotes {
+&#10;#doykqyooci .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1474,7 +1455,7 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_footnote {
+&#10;#doykqyooci .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1482,7 +1463,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_sourcenotes {
+&#10;#doykqyooci .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1495,64 +1476,64 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_sourcenote {
+&#10;#doykqyooci .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_left {
+&#10;#doykqyooci .gt_left {
   text-align: left;
 }
-&#10;#jpaoselcef .gt_center {
+&#10;#doykqyooci .gt_center {
   text-align: center;
 }
-&#10;#jpaoselcef .gt_right {
+&#10;#doykqyooci .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#jpaoselcef .gt_font_normal {
+&#10;#doykqyooci .gt_font_normal {
   font-weight: normal;
 }
-&#10;#jpaoselcef .gt_font_bold {
+&#10;#doykqyooci .gt_font_bold {
   font-weight: bold;
 }
-&#10;#jpaoselcef .gt_font_italic {
+&#10;#doykqyooci .gt_font_italic {
   font-style: italic;
 }
-&#10;#jpaoselcef .gt_super {
+&#10;#doykqyooci .gt_super {
   font-size: 65%;
 }
-&#10;#jpaoselcef .gt_footnote_marks {
+&#10;#doykqyooci .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#jpaoselcef .gt_asterisk {
+&#10;#doykqyooci .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#jpaoselcef .gt_indent_1 {
+&#10;#doykqyooci .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#jpaoselcef .gt_indent_2 {
+&#10;#doykqyooci .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#jpaoselcef .gt_indent_3 {
+&#10;#doykqyooci .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#jpaoselcef .gt_indent_4 {
+&#10;#doykqyooci .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#jpaoselcef .gt_indent_5 {
+&#10;#doykqyooci .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#jpaoselcef .katex-display {
+&#10;#doykqyooci .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#jpaoselcef div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#doykqyooci div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1614,20 +1595,20 @@ table1 =
 table1
 ```
 
-<div id="rgylpqwqmn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rgylpqwqmn table {
+<div id="vapqgvzgbj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vapqgvzgbj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#rgylpqwqmn thead, #rgylpqwqmn tbody, #rgylpqwqmn tfoot, #rgylpqwqmn tr, #rgylpqwqmn td, #rgylpqwqmn th {
+&#10;#vapqgvzgbj thead, #vapqgvzgbj tbody, #vapqgvzgbj tfoot, #vapqgvzgbj tr, #vapqgvzgbj td, #vapqgvzgbj th {
   border-style: none;
 }
-&#10;#rgylpqwqmn p {
+&#10;#vapqgvzgbj p {
   margin: 0;
   padding: 0;
 }
-&#10;#rgylpqwqmn .gt_table {
+&#10;#vapqgvzgbj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1652,11 +1633,11 @@ table1
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_caption {
+&#10;#vapqgvzgbj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#rgylpqwqmn .gt_title {
+&#10;#vapqgvzgbj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1667,7 +1648,7 @@ table1
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#rgylpqwqmn .gt_subtitle {
+&#10;#vapqgvzgbj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1678,7 +1659,7 @@ table1
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#rgylpqwqmn .gt_heading {
+&#10;#vapqgvzgbj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1689,12 +1670,12 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_bottom_border {
+&#10;#vapqgvzgbj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_col_headings {
+&#10;#vapqgvzgbj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1708,7 +1689,7 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_col_heading {
+&#10;#vapqgvzgbj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1727,7 +1708,7 @@ table1
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer {
+&#10;#vapqgvzgbj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1738,13 +1719,13 @@ table1
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer:first-child {
+&#10;#vapqgvzgbj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer:last-child {
+&#10;#vapqgvzgbj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#rgylpqwqmn .gt_column_spanner {
+&#10;#vapqgvzgbj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1755,10 +1736,10 @@ table1
   display: inline-block;
   width: 100%;
 }
-&#10;#rgylpqwqmn .gt_spanner_row {
+&#10;#vapqgvzgbj .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#rgylpqwqmn .gt_group_heading {
+&#10;#vapqgvzgbj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1783,7 +1764,7 @@ table1
   vertical-align: middle;
   text-align: left;
 }
-&#10;#rgylpqwqmn .gt_empty_group_heading {
+&#10;#vapqgvzgbj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1797,13 +1778,13 @@ table1
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#rgylpqwqmn .gt_from_md > :first-child {
+&#10;#vapqgvzgbj .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#rgylpqwqmn .gt_from_md > :last-child {
+&#10;#vapqgvzgbj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#rgylpqwqmn .gt_row {
+&#10;#vapqgvzgbj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1821,7 +1802,7 @@ table1
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#rgylpqwqmn .gt_stub {
+&#10;#vapqgvzgbj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1833,7 +1814,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_stub_row_group {
+&#10;#vapqgvzgbj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1846,13 +1827,13 @@ table1
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#rgylpqwqmn .gt_row_group_first td {
+&#10;#vapqgvzgbj .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_row_group_first th {
+&#10;#vapqgvzgbj .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_summary_row {
+&#10;#vapqgvzgbj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1861,14 +1842,14 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_first_summary_row {
+&#10;#vapqgvzgbj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_first_summary_row.thick {
+&#10;#vapqgvzgbj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_last_summary_row {
+&#10;#vapqgvzgbj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1877,7 +1858,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_grand_summary_row {
+&#10;#vapqgvzgbj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1886,7 +1867,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_first_grand_summary_row {
+&#10;#vapqgvzgbj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1895,7 +1876,7 @@ table1
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_last_grand_summary_row_top {
+&#10;#vapqgvzgbj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1904,10 +1885,10 @@ table1
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_striped {
+&#10;#vapqgvzgbj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#rgylpqwqmn .gt_table_body {
+&#10;#vapqgvzgbj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1915,7 +1896,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_footnotes {
+&#10;#vapqgvzgbj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1928,7 +1909,7 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_footnote {
+&#10;#vapqgvzgbj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1936,7 +1917,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_sourcenotes {
+&#10;#vapqgvzgbj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1949,64 +1930,64 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_sourcenote {
+&#10;#vapqgvzgbj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_left {
+&#10;#vapqgvzgbj .gt_left {
   text-align: left;
 }
-&#10;#rgylpqwqmn .gt_center {
+&#10;#vapqgvzgbj .gt_center {
   text-align: center;
 }
-&#10;#rgylpqwqmn .gt_right {
+&#10;#vapqgvzgbj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#rgylpqwqmn .gt_font_normal {
+&#10;#vapqgvzgbj .gt_font_normal {
   font-weight: normal;
 }
-&#10;#rgylpqwqmn .gt_font_bold {
+&#10;#vapqgvzgbj .gt_font_bold {
   font-weight: bold;
 }
-&#10;#rgylpqwqmn .gt_font_italic {
+&#10;#vapqgvzgbj .gt_font_italic {
   font-style: italic;
 }
-&#10;#rgylpqwqmn .gt_super {
+&#10;#vapqgvzgbj .gt_super {
   font-size: 65%;
 }
-&#10;#rgylpqwqmn .gt_footnote_marks {
+&#10;#vapqgvzgbj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#rgylpqwqmn .gt_asterisk {
+&#10;#vapqgvzgbj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#rgylpqwqmn .gt_indent_1 {
+&#10;#vapqgvzgbj .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#rgylpqwqmn .gt_indent_2 {
+&#10;#vapqgvzgbj .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#rgylpqwqmn .gt_indent_3 {
+&#10;#vapqgvzgbj .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#rgylpqwqmn .gt_indent_4 {
+&#10;#vapqgvzgbj .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#rgylpqwqmn .gt_indent_5 {
+&#10;#vapqgvzgbj .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#rgylpqwqmn .katex-display {
+&#10;#vapqgvzgbj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#rgylpqwqmn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#vapqgvzgbj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2098,31 +2079,29 @@ N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 N = 2</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_41"><span class='gt_from_md'><strong>Seneca</strong><br />
 N = 2</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_42"><span class='gt_from_md'><strong>St Lawrence</strong><br />
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_42"><span class='gt_from_md'><strong>St. Lawrence</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_43"><span class='gt_from_md'><strong>Steuben</strong><br />
 N = 2</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_43"><span class='gt_from_md'><strong>St. Lawrence</strong><br />
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_44"><span class='gt_from_md'><strong>Suffolk</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_45"><span class='gt_from_md'><strong>Sullivan</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_46"><span class='gt_from_md'><strong>Tompkins</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_47"><span class='gt_from_md'><strong>Ulster</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_48"><span class='gt_from_md'><strong>Warren</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_49"><span class='gt_from_md'><strong>Washington</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_50"><span class='gt_from_md'><strong>Wayne</strong><br />
 N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_44"><span class='gt_from_md'><strong>Steuben</strong><br />
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_51"><span class='gt_from_md'><strong>Westchester</strong><br />
+N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_52"><span class='gt_from_md'><strong>Wyoming</strong><br />
 N = 2</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_45"><span class='gt_from_md'><strong>Suffolk</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_46"><span class='gt_from_md'><strong>Sullivan</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_47"><span class='gt_from_md'><strong>Tompkins</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_48"><span class='gt_from_md'><strong>Ulster</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_49"><span class='gt_from_md'><strong>Warren</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_50"><span class='gt_from_md'><strong>Washington</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_51"><span class='gt_from_md'><strong>Wayne</strong><br />
-N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_52"><span class='gt_from_md'><strong>Westchester</strong><br />
-N = 3</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_53"><span class='gt_from_md'><strong>Wyoming</strong><br />
-N = 2</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_54"><span class='gt_from_md'><strong>Yates</strong><br />
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_53"><span class='gt_from_md'><strong>Yates</strong><br />
 N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
     </tr>
   </thead>
@@ -2170,19 +2149,18 @@ N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 <td headers="stat_39" class="gt_row gt_center">157.00 (0.00)</td>
 <td headers="stat_40" class="gt_row gt_center">124.00 (0.00)</td>
 <td headers="stat_41" class="gt_row gt_center">56.00 (0.00)</td>
-<td headers="stat_42" class="gt_row gt_center">NA (NA)</td>
-<td headers="stat_43" class="gt_row gt_center">268.00 (NA)</td>
-<td headers="stat_44" class="gt_row gt_center">181.00 (0.00)</td>
-<td headers="stat_45" class="gt_row gt_center">1,269.00 (0.00)</td>
-<td headers="stat_46" class="gt_row gt_center">139.00 (0.00)</td>
-<td headers="stat_47" class="gt_row gt_center">405.00 (0.00)</td>
-<td headers="stat_48" class="gt_row gt_center">657.00 (0.00)</td>
-<td headers="stat_49" class="gt_row gt_center">295.00 (0.00)</td>
-<td headers="stat_50" class="gt_row gt_center">323.00 (0.00)</td>
-<td headers="stat_51" class="gt_row gt_center">120.00 (NA)</td>
-<td headers="stat_52" class="gt_row gt_center">493.00 (0.00)</td>
-<td headers="stat_53" class="gt_row gt_center">29.00 (0.00)</td>
-<td headers="stat_54" class="gt_row gt_center">55.00 (NA)</td></tr>
+<td headers="stat_42" class="gt_row gt_center">268.00 (NA)</td>
+<td headers="stat_43" class="gt_row gt_center">181.00 (0.00)</td>
+<td headers="stat_44" class="gt_row gt_center">1,269.00 (0.00)</td>
+<td headers="stat_45" class="gt_row gt_center">139.00 (0.00)</td>
+<td headers="stat_46" class="gt_row gt_center">405.00 (0.00)</td>
+<td headers="stat_47" class="gt_row gt_center">657.00 (0.00)</td>
+<td headers="stat_48" class="gt_row gt_center">295.00 (0.00)</td>
+<td headers="stat_49" class="gt_row gt_center">323.00 (0.00)</td>
+<td headers="stat_50" class="gt_row gt_center">120.00 (NA)</td>
+<td headers="stat_51" class="gt_row gt_center">493.00 (0.00)</td>
+<td headers="stat_52" class="gt_row gt_center">29.00 (0.00)</td>
+<td headers="stat_53" class="gt_row gt_center">55.00 (NA)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
 <td headers="stat_0" class="gt_row gt_center">3</td>
 <td headers="stat_1" class="gt_row gt_center">0</td>
@@ -2237,8 +2215,7 @@ N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 <td headers="stat_50" class="gt_row gt_center">0</td>
 <td headers="stat_51" class="gt_row gt_center">0</td>
 <td headers="stat_52" class="gt_row gt_center">0</td>
-<td headers="stat_53" class="gt_row gt_center">0</td>
-<td headers="stat_54" class="gt_row gt_center">0</td></tr>
+<td headers="stat_53" class="gt_row gt_center">0</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">avg_temp</td>
 <td headers="stat_0" class="gt_row gt_center">47.82 (2.67)</td>
 <td headers="stat_1" class="gt_row gt_center">48.72 (1.36)</td>
@@ -2282,19 +2259,18 @@ N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 <td headers="stat_39" class="gt_row gt_center">46.27 (1.60)</td>
 <td headers="stat_40" class="gt_row gt_center">48.51 (0.18)</td>
 <td headers="stat_41" class="gt_row gt_center">49.67 (0.14)</td>
-<td headers="stat_42" class="gt_row gt_center">NA (NA)</td>
-<td headers="stat_43" class="gt_row gt_center">45.59 (NA)</td>
-<td headers="stat_44" class="gt_row gt_center">48.38 (0.02)</td>
-<td headers="stat_45" class="gt_row gt_center">53.45 (0.71)</td>
-<td headers="stat_46" class="gt_row gt_center">47.98 (1.20)</td>
-<td headers="stat_47" class="gt_row gt_center">47.35 (1.42)</td>
-<td headers="stat_48" class="gt_row gt_center">48.89 (1.27)</td>
-<td headers="stat_49" class="gt_row gt_center">44.66 (1.49)</td>
-<td headers="stat_50" class="gt_row gt_center">47.01 (1.22)</td>
-<td headers="stat_51" class="gt_row gt_center">49.30 (NA)</td>
-<td headers="stat_52" class="gt_row gt_center">53.40 (0.77)</td>
-<td headers="stat_53" class="gt_row gt_center">47.06 (2.12)</td>
-<td headers="stat_54" class="gt_row gt_center">49.13 (NA)</td></tr>
+<td headers="stat_42" class="gt_row gt_center">45.59 (NA)</td>
+<td headers="stat_43" class="gt_row gt_center">48.38 (0.02)</td>
+<td headers="stat_44" class="gt_row gt_center">53.45 (0.71)</td>
+<td headers="stat_45" class="gt_row gt_center">47.98 (1.20)</td>
+<td headers="stat_46" class="gt_row gt_center">47.35 (1.42)</td>
+<td headers="stat_47" class="gt_row gt_center">48.89 (1.27)</td>
+<td headers="stat_48" class="gt_row gt_center">44.66 (1.49)</td>
+<td headers="stat_49" class="gt_row gt_center">47.01 (1.22)</td>
+<td headers="stat_50" class="gt_row gt_center">49.30 (NA)</td>
+<td headers="stat_51" class="gt_row gt_center">53.40 (0.77)</td>
+<td headers="stat_52" class="gt_row gt_center">47.06 (2.12)</td>
+<td headers="stat_53" class="gt_row gt_center">49.13 (NA)</td></tr>
     <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
 <td headers="stat_0" class="gt_row gt_center">3</td>
 <td headers="stat_1" class="gt_row gt_center">0</td>
@@ -2349,8 +2325,7 @@ N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 <td headers="stat_50" class="gt_row gt_center">0</td>
 <td headers="stat_51" class="gt_row gt_center">0</td>
 <td headers="stat_52" class="gt_row gt_center">0</td>
-<td headers="stat_53" class="gt_row gt_center">0</td>
-<td headers="stat_54" class="gt_row gt_center">0</td></tr>
+<td headers="stat_53" class="gt_row gt_center">0</td></tr>
     <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">b_burgdorferi_percent</td>
 <td headers="stat_0" class="gt_row gt_center">53.72 (12.09)</td>
 <td headers="stat_1" class="gt_row gt_center">62.37 (9.12)</td>
@@ -2394,23 +2369,22 @@ N = 1</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style
 <td headers="stat_39" class="gt_row gt_center">54.73 (7.96)</td>
 <td headers="stat_40" class="gt_row gt_center">61.00 (7.07)</td>
 <td headers="stat_41" class="gt_row gt_center">51.00 (7.07)</td>
-<td headers="stat_42" class="gt_row gt_center">45.00 (4.24)</td>
-<td headers="stat_43" class="gt_row gt_center">46.00 (NA)</td>
-<td headers="stat_44" class="gt_row gt_center">64.00 (2.83)</td>
-<td headers="stat_45" class="gt_row gt_center">50.77 (7.97)</td>
-<td headers="stat_46" class="gt_row gt_center">52.00 (2.00)</td>
-<td headers="stat_47" class="gt_row gt_center">52.37 (6.56)</td>
-<td headers="stat_48" class="gt_row gt_center">56.90 (11.25)</td>
-<td headers="stat_49" class="gt_row gt_center">49.37 (7.20)</td>
-<td headers="stat_50" class="gt_row gt_center">54.97 (15.06)</td>
-<td headers="stat_51" class="gt_row gt_center">60.00 (NA)</td>
-<td headers="stat_52" class="gt_row gt_center">48.00 (19.29)</td>
-<td headers="stat_53" class="gt_row gt_center">41.35 (6.58)</td>
-<td headers="stat_54" class="gt_row gt_center">20.00 (NA)</td></tr>
+<td headers="stat_42" class="gt_row gt_center">45.33 (3.06)</td>
+<td headers="stat_43" class="gt_row gt_center">64.00 (2.83)</td>
+<td headers="stat_44" class="gt_row gt_center">50.77 (7.97)</td>
+<td headers="stat_45" class="gt_row gt_center">52.00 (2.00)</td>
+<td headers="stat_46" class="gt_row gt_center">52.37 (6.56)</td>
+<td headers="stat_47" class="gt_row gt_center">56.90 (11.25)</td>
+<td headers="stat_48" class="gt_row gt_center">49.37 (7.20)</td>
+<td headers="stat_49" class="gt_row gt_center">54.97 (15.06)</td>
+<td headers="stat_50" class="gt_row gt_center">60.00 (NA)</td>
+<td headers="stat_51" class="gt_row gt_center">48.00 (19.29)</td>
+<td headers="stat_52" class="gt_row gt_center">41.35 (6.58)</td>
+<td headers="stat_53" class="gt_row gt_center">20.00 (NA)</td></tr>
   </tbody>
   &#10;  <tfoot class="gt_footnotes">
     <tr>
-      <td class="gt_footnote" colspan="56"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>Mean (SD)</span></td>
+      <td class="gt_footnote" colspan="55"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class='gt_from_md'>Mean (SD)</span></td>
     </tr>
   </tfoot>
 </table>
@@ -2461,20 +2435,20 @@ summary_table <- summary_stats %>%
 summary_table
 ```
 
-<div id="zruoezicnp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zruoezicnp table {
+<div id="ugcjxlxvdb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ugcjxlxvdb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#zruoezicnp thead, #zruoezicnp tbody, #zruoezicnp tfoot, #zruoezicnp tr, #zruoezicnp td, #zruoezicnp th {
+&#10;#ugcjxlxvdb thead, #ugcjxlxvdb tbody, #ugcjxlxvdb tfoot, #ugcjxlxvdb tr, #ugcjxlxvdb td, #ugcjxlxvdb th {
   border-style: none;
 }
-&#10;#zruoezicnp p {
+&#10;#ugcjxlxvdb p {
   margin: 0;
   padding: 0;
 }
-&#10;#zruoezicnp .gt_table {
+&#10;#ugcjxlxvdb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2499,11 +2473,11 @@ summary_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_caption {
+&#10;#ugcjxlxvdb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#zruoezicnp .gt_title {
+&#10;#ugcjxlxvdb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2514,7 +2488,7 @@ summary_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#zruoezicnp .gt_subtitle {
+&#10;#ugcjxlxvdb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2525,7 +2499,7 @@ summary_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#zruoezicnp .gt_heading {
+&#10;#ugcjxlxvdb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2536,12 +2510,12 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_bottom_border {
+&#10;#ugcjxlxvdb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_col_headings {
+&#10;#ugcjxlxvdb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2555,7 +2529,7 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_col_heading {
+&#10;#ugcjxlxvdb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2574,7 +2548,7 @@ summary_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer {
+&#10;#ugcjxlxvdb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2585,13 +2559,13 @@ summary_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer:first-child {
+&#10;#ugcjxlxvdb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer:last-child {
+&#10;#ugcjxlxvdb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#zruoezicnp .gt_column_spanner {
+&#10;#ugcjxlxvdb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2602,10 +2576,10 @@ summary_table
   display: inline-block;
   width: 100%;
 }
-&#10;#zruoezicnp .gt_spanner_row {
+&#10;#ugcjxlxvdb .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#zruoezicnp .gt_group_heading {
+&#10;#ugcjxlxvdb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2630,7 +2604,7 @@ summary_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#zruoezicnp .gt_empty_group_heading {
+&#10;#ugcjxlxvdb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2644,13 +2618,13 @@ summary_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#zruoezicnp .gt_from_md > :first-child {
+&#10;#ugcjxlxvdb .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#zruoezicnp .gt_from_md > :last-child {
+&#10;#ugcjxlxvdb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#zruoezicnp .gt_row {
+&#10;#ugcjxlxvdb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2668,7 +2642,7 @@ summary_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#zruoezicnp .gt_stub {
+&#10;#ugcjxlxvdb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2680,7 +2654,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_stub_row_group {
+&#10;#ugcjxlxvdb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2693,13 +2667,13 @@ summary_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#zruoezicnp .gt_row_group_first td {
+&#10;#ugcjxlxvdb .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_row_group_first th {
+&#10;#ugcjxlxvdb .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_summary_row {
+&#10;#ugcjxlxvdb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2708,14 +2682,14 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_first_summary_row {
+&#10;#ugcjxlxvdb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_first_summary_row.thick {
+&#10;#ugcjxlxvdb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_last_summary_row {
+&#10;#ugcjxlxvdb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2724,7 +2698,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_grand_summary_row {
+&#10;#ugcjxlxvdb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2733,7 +2707,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_first_grand_summary_row {
+&#10;#ugcjxlxvdb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2742,7 +2716,7 @@ summary_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_last_grand_summary_row_top {
+&#10;#ugcjxlxvdb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2751,10 +2725,10 @@ summary_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_striped {
+&#10;#ugcjxlxvdb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#zruoezicnp .gt_table_body {
+&#10;#ugcjxlxvdb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2762,7 +2736,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_footnotes {
+&#10;#ugcjxlxvdb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2775,7 +2749,7 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_footnote {
+&#10;#ugcjxlxvdb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2783,7 +2757,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_sourcenotes {
+&#10;#ugcjxlxvdb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2796,64 +2770,64 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_sourcenote {
+&#10;#ugcjxlxvdb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_left {
+&#10;#ugcjxlxvdb .gt_left {
   text-align: left;
 }
-&#10;#zruoezicnp .gt_center {
+&#10;#ugcjxlxvdb .gt_center {
   text-align: center;
 }
-&#10;#zruoezicnp .gt_right {
+&#10;#ugcjxlxvdb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#zruoezicnp .gt_font_normal {
+&#10;#ugcjxlxvdb .gt_font_normal {
   font-weight: normal;
 }
-&#10;#zruoezicnp .gt_font_bold {
+&#10;#ugcjxlxvdb .gt_font_bold {
   font-weight: bold;
 }
-&#10;#zruoezicnp .gt_font_italic {
+&#10;#ugcjxlxvdb .gt_font_italic {
   font-style: italic;
 }
-&#10;#zruoezicnp .gt_super {
+&#10;#ugcjxlxvdb .gt_super {
   font-size: 65%;
 }
-&#10;#zruoezicnp .gt_footnote_marks {
+&#10;#ugcjxlxvdb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#zruoezicnp .gt_asterisk {
+&#10;#ugcjxlxvdb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#zruoezicnp .gt_indent_1 {
+&#10;#ugcjxlxvdb .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#zruoezicnp .gt_indent_2 {
+&#10;#ugcjxlxvdb .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#zruoezicnp .gt_indent_3 {
+&#10;#ugcjxlxvdb .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#zruoezicnp .gt_indent_4 {
+&#10;#ugcjxlxvdb .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#zruoezicnp .gt_indent_5 {
+&#10;#ugcjxlxvdb .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#zruoezicnp .katex-display {
+&#10;#ugcjxlxvdb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#zruoezicnp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#ugcjxlxvdb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3160,97 +3134,90 @@ summary_table
 <td headers="stub_1_41 avg_temp_sd" class="gt_row gt_right">0.14</td>
 <td headers="stub_1_41 b_burgdorferi_percent_mean" class="gt_row gt_right">51.00</td>
 <td headers="stub_1_41 b_burgdorferi_percent_sd" class="gt_row gt_right">7.07</td></tr>
-    <tr><th id="stub_1_42" scope="row" class="gt_row gt_left gt_stub">St Lawrence</th>
-<td headers="stub_1_42 years_with_data" class="gt_row gt_right">2.00</td>
-<td headers="stub_1_42 lyme_count_mean" class="gt_row gt_right">NaN</td>
-<td headers="stub_1_42 avg_temp_mean" class="gt_row gt_right">NaN</td>
+    <tr><th id="stub_1_42" scope="row" class="gt_row gt_left gt_stub">St. Lawrence</th>
+<td headers="stub_1_42 years_with_data" class="gt_row gt_right">3.00</td>
+<td headers="stub_1_42 lyme_count_mean" class="gt_row gt_right">268.00</td>
+<td headers="stub_1_42 avg_temp_mean" class="gt_row gt_right">45.59</td>
 <td headers="stub_1_42 avg_temp_sd" class="gt_row gt_right">NA</td>
-<td headers="stub_1_42 b_burgdorferi_percent_mean" class="gt_row gt_right">45.00</td>
-<td headers="stub_1_42 b_burgdorferi_percent_sd" class="gt_row gt_right">4.24</td></tr>
-    <tr><th id="stub_1_43" scope="row" class="gt_row gt_left gt_stub">St. Lawrence</th>
-<td headers="stub_1_43 years_with_data" class="gt_row gt_right">1.00</td>
-<td headers="stub_1_43 lyme_count_mean" class="gt_row gt_right">268.00</td>
-<td headers="stub_1_43 avg_temp_mean" class="gt_row gt_right">45.59</td>
-<td headers="stub_1_43 avg_temp_sd" class="gt_row gt_right">NA</td>
-<td headers="stub_1_43 b_burgdorferi_percent_mean" class="gt_row gt_right">46.00</td>
-<td headers="stub_1_43 b_burgdorferi_percent_sd" class="gt_row gt_right">NA</td></tr>
-    <tr><th id="stub_1_44" scope="row" class="gt_row gt_left gt_stub">Steuben</th>
-<td headers="stub_1_44 years_with_data" class="gt_row gt_right">2.00</td>
-<td headers="stub_1_44 lyme_count_mean" class="gt_row gt_right">181.00</td>
-<td headers="stub_1_44 avg_temp_mean" class="gt_row gt_right">48.38</td>
-<td headers="stub_1_44 avg_temp_sd" class="gt_row gt_right">0.02</td>
-<td headers="stub_1_44 b_burgdorferi_percent_mean" class="gt_row gt_right">64.00</td>
-<td headers="stub_1_44 b_burgdorferi_percent_sd" class="gt_row gt_right">2.83</td></tr>
-    <tr><th id="stub_1_45" scope="row" class="gt_row gt_left gt_stub">Suffolk</th>
+<td headers="stub_1_42 b_burgdorferi_percent_mean" class="gt_row gt_right">45.33</td>
+<td headers="stub_1_42 b_burgdorferi_percent_sd" class="gt_row gt_right">3.06</td></tr>
+    <tr><th id="stub_1_43" scope="row" class="gt_row gt_left gt_stub">Steuben</th>
+<td headers="stub_1_43 years_with_data" class="gt_row gt_right">2.00</td>
+<td headers="stub_1_43 lyme_count_mean" class="gt_row gt_right">181.00</td>
+<td headers="stub_1_43 avg_temp_mean" class="gt_row gt_right">48.38</td>
+<td headers="stub_1_43 avg_temp_sd" class="gt_row gt_right">0.02</td>
+<td headers="stub_1_43 b_burgdorferi_percent_mean" class="gt_row gt_right">64.00</td>
+<td headers="stub_1_43 b_burgdorferi_percent_sd" class="gt_row gt_right">2.83</td></tr>
+    <tr><th id="stub_1_44" scope="row" class="gt_row gt_left gt_stub">Suffolk</th>
+<td headers="stub_1_44 years_with_data" class="gt_row gt_right">3.00</td>
+<td headers="stub_1_44 lyme_count_mean" class="gt_row gt_right">1,269.00</td>
+<td headers="stub_1_44 avg_temp_mean" class="gt_row gt_right">53.45</td>
+<td headers="stub_1_44 avg_temp_sd" class="gt_row gt_right">0.71</td>
+<td headers="stub_1_44 b_burgdorferi_percent_mean" class="gt_row gt_right">50.77</td>
+<td headers="stub_1_44 b_burgdorferi_percent_sd" class="gt_row gt_right">7.97</td></tr>
+    <tr><th id="stub_1_45" scope="row" class="gt_row gt_left gt_stub">Sullivan</th>
 <td headers="stub_1_45 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_45 lyme_count_mean" class="gt_row gt_right">1,269.00</td>
-<td headers="stub_1_45 avg_temp_mean" class="gt_row gt_right">53.45</td>
-<td headers="stub_1_45 avg_temp_sd" class="gt_row gt_right">0.71</td>
-<td headers="stub_1_45 b_burgdorferi_percent_mean" class="gt_row gt_right">50.77</td>
-<td headers="stub_1_45 b_burgdorferi_percent_sd" class="gt_row gt_right">7.97</td></tr>
-    <tr><th id="stub_1_46" scope="row" class="gt_row gt_left gt_stub">Sullivan</th>
+<td headers="stub_1_45 lyme_count_mean" class="gt_row gt_right">139.00</td>
+<td headers="stub_1_45 avg_temp_mean" class="gt_row gt_right">47.98</td>
+<td headers="stub_1_45 avg_temp_sd" class="gt_row gt_right">1.20</td>
+<td headers="stub_1_45 b_burgdorferi_percent_mean" class="gt_row gt_right">52.00</td>
+<td headers="stub_1_45 b_burgdorferi_percent_sd" class="gt_row gt_right">2.00</td></tr>
+    <tr><th id="stub_1_46" scope="row" class="gt_row gt_left gt_stub">Tompkins</th>
 <td headers="stub_1_46 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_46 lyme_count_mean" class="gt_row gt_right">139.00</td>
-<td headers="stub_1_46 avg_temp_mean" class="gt_row gt_right">47.98</td>
-<td headers="stub_1_46 avg_temp_sd" class="gt_row gt_right">1.20</td>
-<td headers="stub_1_46 b_burgdorferi_percent_mean" class="gt_row gt_right">52.00</td>
-<td headers="stub_1_46 b_burgdorferi_percent_sd" class="gt_row gt_right">2.00</td></tr>
-    <tr><th id="stub_1_47" scope="row" class="gt_row gt_left gt_stub">Tompkins</th>
+<td headers="stub_1_46 lyme_count_mean" class="gt_row gt_right">405.00</td>
+<td headers="stub_1_46 avg_temp_mean" class="gt_row gt_right">47.35</td>
+<td headers="stub_1_46 avg_temp_sd" class="gt_row gt_right">1.42</td>
+<td headers="stub_1_46 b_burgdorferi_percent_mean" class="gt_row gt_right">52.37</td>
+<td headers="stub_1_46 b_burgdorferi_percent_sd" class="gt_row gt_right">6.56</td></tr>
+    <tr><th id="stub_1_47" scope="row" class="gt_row gt_left gt_stub">Ulster</th>
 <td headers="stub_1_47 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_47 lyme_count_mean" class="gt_row gt_right">405.00</td>
-<td headers="stub_1_47 avg_temp_mean" class="gt_row gt_right">47.35</td>
-<td headers="stub_1_47 avg_temp_sd" class="gt_row gt_right">1.42</td>
-<td headers="stub_1_47 b_burgdorferi_percent_mean" class="gt_row gt_right">52.37</td>
-<td headers="stub_1_47 b_burgdorferi_percent_sd" class="gt_row gt_right">6.56</td></tr>
-    <tr><th id="stub_1_48" scope="row" class="gt_row gt_left gt_stub">Ulster</th>
+<td headers="stub_1_47 lyme_count_mean" class="gt_row gt_right">657.00</td>
+<td headers="stub_1_47 avg_temp_mean" class="gt_row gt_right">48.89</td>
+<td headers="stub_1_47 avg_temp_sd" class="gt_row gt_right">1.27</td>
+<td headers="stub_1_47 b_burgdorferi_percent_mean" class="gt_row gt_right">56.90</td>
+<td headers="stub_1_47 b_burgdorferi_percent_sd" class="gt_row gt_right">11.25</td></tr>
+    <tr><th id="stub_1_48" scope="row" class="gt_row gt_left gt_stub">Warren</th>
 <td headers="stub_1_48 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_48 lyme_count_mean" class="gt_row gt_right">657.00</td>
-<td headers="stub_1_48 avg_temp_mean" class="gt_row gt_right">48.89</td>
-<td headers="stub_1_48 avg_temp_sd" class="gt_row gt_right">1.27</td>
-<td headers="stub_1_48 b_burgdorferi_percent_mean" class="gt_row gt_right">56.90</td>
-<td headers="stub_1_48 b_burgdorferi_percent_sd" class="gt_row gt_right">11.25</td></tr>
-    <tr><th id="stub_1_49" scope="row" class="gt_row gt_left gt_stub">Warren</th>
+<td headers="stub_1_48 lyme_count_mean" class="gt_row gt_right">295.00</td>
+<td headers="stub_1_48 avg_temp_mean" class="gt_row gt_right">44.66</td>
+<td headers="stub_1_48 avg_temp_sd" class="gt_row gt_right">1.49</td>
+<td headers="stub_1_48 b_burgdorferi_percent_mean" class="gt_row gt_right">49.37</td>
+<td headers="stub_1_48 b_burgdorferi_percent_sd" class="gt_row gt_right">7.20</td></tr>
+    <tr><th id="stub_1_49" scope="row" class="gt_row gt_left gt_stub">Washington</th>
 <td headers="stub_1_49 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_49 lyme_count_mean" class="gt_row gt_right">295.00</td>
-<td headers="stub_1_49 avg_temp_mean" class="gt_row gt_right">44.66</td>
-<td headers="stub_1_49 avg_temp_sd" class="gt_row gt_right">1.49</td>
-<td headers="stub_1_49 b_burgdorferi_percent_mean" class="gt_row gt_right">49.37</td>
-<td headers="stub_1_49 b_burgdorferi_percent_sd" class="gt_row gt_right">7.20</td></tr>
-    <tr><th id="stub_1_50" scope="row" class="gt_row gt_left gt_stub">Washington</th>
-<td headers="stub_1_50 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_50 lyme_count_mean" class="gt_row gt_right">323.00</td>
-<td headers="stub_1_50 avg_temp_mean" class="gt_row gt_right">47.01</td>
-<td headers="stub_1_50 avg_temp_sd" class="gt_row gt_right">1.22</td>
-<td headers="stub_1_50 b_burgdorferi_percent_mean" class="gt_row gt_right">54.97</td>
-<td headers="stub_1_50 b_burgdorferi_percent_sd" class="gt_row gt_right">15.06</td></tr>
-    <tr><th id="stub_1_51" scope="row" class="gt_row gt_left gt_stub">Wayne</th>
-<td headers="stub_1_51 years_with_data" class="gt_row gt_right">1.00</td>
-<td headers="stub_1_51 lyme_count_mean" class="gt_row gt_right">120.00</td>
-<td headers="stub_1_51 avg_temp_mean" class="gt_row gt_right">49.30</td>
-<td headers="stub_1_51 avg_temp_sd" class="gt_row gt_right">NA</td>
-<td headers="stub_1_51 b_burgdorferi_percent_mean" class="gt_row gt_right">60.00</td>
-<td headers="stub_1_51 b_burgdorferi_percent_sd" class="gt_row gt_right">NA</td></tr>
-    <tr><th id="stub_1_52" scope="row" class="gt_row gt_left gt_stub">Westchester</th>
-<td headers="stub_1_52 years_with_data" class="gt_row gt_right">3.00</td>
-<td headers="stub_1_52 lyme_count_mean" class="gt_row gt_right">493.00</td>
-<td headers="stub_1_52 avg_temp_mean" class="gt_row gt_right">53.40</td>
-<td headers="stub_1_52 avg_temp_sd" class="gt_row gt_right">0.77</td>
-<td headers="stub_1_52 b_burgdorferi_percent_mean" class="gt_row gt_right">48.00</td>
-<td headers="stub_1_52 b_burgdorferi_percent_sd" class="gt_row gt_right">19.29</td></tr>
-    <tr><th id="stub_1_53" scope="row" class="gt_row gt_left gt_stub">Wyoming</th>
-<td headers="stub_1_53 years_with_data" class="gt_row gt_right">2.00</td>
-<td headers="stub_1_53 lyme_count_mean" class="gt_row gt_right">29.00</td>
-<td headers="stub_1_53 avg_temp_mean" class="gt_row gt_right">47.06</td>
-<td headers="stub_1_53 avg_temp_sd" class="gt_row gt_right">2.12</td>
-<td headers="stub_1_53 b_burgdorferi_percent_mean" class="gt_row gt_right">41.35</td>
-<td headers="stub_1_53 b_burgdorferi_percent_sd" class="gt_row gt_right">6.58</td></tr>
-    <tr><th id="stub_1_54" scope="row" class="gt_row gt_left gt_stub">Yates</th>
-<td headers="stub_1_54 years_with_data" class="gt_row gt_right">1.00</td>
-<td headers="stub_1_54 lyme_count_mean" class="gt_row gt_right">55.00</td>
-<td headers="stub_1_54 avg_temp_mean" class="gt_row gt_right">49.13</td>
-<td headers="stub_1_54 avg_temp_sd" class="gt_row gt_right">NA</td>
-<td headers="stub_1_54 b_burgdorferi_percent_mean" class="gt_row gt_right">20.00</td>
-<td headers="stub_1_54 b_burgdorferi_percent_sd" class="gt_row gt_right">NA</td></tr>
+<td headers="stub_1_49 lyme_count_mean" class="gt_row gt_right">323.00</td>
+<td headers="stub_1_49 avg_temp_mean" class="gt_row gt_right">47.01</td>
+<td headers="stub_1_49 avg_temp_sd" class="gt_row gt_right">1.22</td>
+<td headers="stub_1_49 b_burgdorferi_percent_mean" class="gt_row gt_right">54.97</td>
+<td headers="stub_1_49 b_burgdorferi_percent_sd" class="gt_row gt_right">15.06</td></tr>
+    <tr><th id="stub_1_50" scope="row" class="gt_row gt_left gt_stub">Wayne</th>
+<td headers="stub_1_50 years_with_data" class="gt_row gt_right">1.00</td>
+<td headers="stub_1_50 lyme_count_mean" class="gt_row gt_right">120.00</td>
+<td headers="stub_1_50 avg_temp_mean" class="gt_row gt_right">49.30</td>
+<td headers="stub_1_50 avg_temp_sd" class="gt_row gt_right">NA</td>
+<td headers="stub_1_50 b_burgdorferi_percent_mean" class="gt_row gt_right">60.00</td>
+<td headers="stub_1_50 b_burgdorferi_percent_sd" class="gt_row gt_right">NA</td></tr>
+    <tr><th id="stub_1_51" scope="row" class="gt_row gt_left gt_stub">Westchester</th>
+<td headers="stub_1_51 years_with_data" class="gt_row gt_right">3.00</td>
+<td headers="stub_1_51 lyme_count_mean" class="gt_row gt_right">493.00</td>
+<td headers="stub_1_51 avg_temp_mean" class="gt_row gt_right">53.40</td>
+<td headers="stub_1_51 avg_temp_sd" class="gt_row gt_right">0.77</td>
+<td headers="stub_1_51 b_burgdorferi_percent_mean" class="gt_row gt_right">48.00</td>
+<td headers="stub_1_51 b_burgdorferi_percent_sd" class="gt_row gt_right">19.29</td></tr>
+    <tr><th id="stub_1_52" scope="row" class="gt_row gt_left gt_stub">Wyoming</th>
+<td headers="stub_1_52 years_with_data" class="gt_row gt_right">2.00</td>
+<td headers="stub_1_52 lyme_count_mean" class="gt_row gt_right">29.00</td>
+<td headers="stub_1_52 avg_temp_mean" class="gt_row gt_right">47.06</td>
+<td headers="stub_1_52 avg_temp_sd" class="gt_row gt_right">2.12</td>
+<td headers="stub_1_52 b_burgdorferi_percent_mean" class="gt_row gt_right">41.35</td>
+<td headers="stub_1_52 b_burgdorferi_percent_sd" class="gt_row gt_right">6.58</td></tr>
+    <tr><th id="stub_1_53" scope="row" class="gt_row gt_left gt_stub">Yates</th>
+<td headers="stub_1_53 years_with_data" class="gt_row gt_right">1.00</td>
+<td headers="stub_1_53 lyme_count_mean" class="gt_row gt_right">55.00</td>
+<td headers="stub_1_53 avg_temp_mean" class="gt_row gt_right">49.13</td>
+<td headers="stub_1_53 avg_temp_sd" class="gt_row gt_right">NA</td>
+<td headers="stub_1_53 b_burgdorferi_percent_mean" class="gt_row gt_right">20.00</td>
+<td headers="stub_1_53 b_burgdorferi_percent_sd" class="gt_row gt_right">NA</td></tr>
   </tbody>
   &#10;  
 </table>

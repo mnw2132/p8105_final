@@ -9,11 +9,6 @@ output: github_document
 This document for cleaning and tidying the data.
 
 ```{r, message=FALSE}
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-install.packages("remotes")
-install.packages("broom.helpers")
-remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -337,7 +332,7 @@ data <- data %>%
   mutate(
     name = case_when(
       name == "Cattaragus" ~ "Cattaraugus",
-      name == "St Lawrance" ~ "St. Lawrance",
+      name == "St Lawrence" ~ "St. Lawrence",
       TRUE ~ name))
 ```
 
