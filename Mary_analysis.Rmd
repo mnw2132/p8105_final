@@ -331,6 +331,14 @@ The low R^2 value demonstrates significant variability. Therefore further analys
 
 data =
   read_csv("Data Preparation/combined_data_kf.csv")
+
+# Fix mispells of Cattaraugus and St. Lawrance
+data <- data %>%
+  mutate(
+    name = case_when(
+      name == "Cattaragus" ~ "Cattaraugus",
+      name == "St Lawrance" ~ "St. Lawrance",
+      TRUE ~ name))
 ```
 
 ```{r}
