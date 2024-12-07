@@ -1,7 +1,0 @@
----
-title: "Background"
----
-
-# Motivation
-
-Here we can more in depth describe why this analysis was appropriate. 

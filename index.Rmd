@@ -1,7 +1,0 @@
----
-title: "Lyme Disease in NYS: A Final Project for P8105"
----
-
-# In Brief
-
-Here we can give information on the assignment, the motivation behind our inquiry, our general methodology, and brief findings. Sort of the abstract. 

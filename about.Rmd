@@ -1,5 +1,0 @@
----
-title: "Authorship and Contributions"
----
-
-# Here we can describe ourselves and our contribution to the work. Maybe we could include headshots or something to make it fun. 

@@ -1,7 +1,0 @@
----
-title: "Dashboard"
----
-
-# Dynamic Findings
-
-Here we can provide interactive maps and figures. 

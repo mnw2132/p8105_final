@@ -15,6 +15,8 @@ library(sf)
 library(purrr)
 library(knitr)
 library(readxl)
+library(gtsummary)
+library(gt)
 ``` 
 
 ```{r, message=FALSE}
@@ -296,3 +298,279 @@ weather_model <- lm(log_lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 
 broom::tidy(weather_model) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
 The logarithmic analysis found that the total number of ticks found and the B. burgdoferi percent had a positive, significant association with increased lyme disease rates. 
+<<<<<<< HEAD
+=======
+
+Some interesting findings from looking at the log of the weather variables include that months like  March 2019 ( β=−1.002, p<0.001) and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile, months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159, p=0.001)) had contrasting impacts, highlighting intra-annual variability in environmental or biological drivers.These months highlight that tick activity is present whenever the temperature is above freezing, is highly variable. 
+The low R^2 value demonstrates significant variability. Therefore further analysis with environmental, demographic and behavioral data would be beneficial. 
+
+# Kaleb Analytic Edits:
+
+```{r}
+# Boxplot of 'lyme_count' per 'year'
+
+data =
+  read_csv("Data Preparation/combined_data_kf.csv")
+```
+
+```{r}
+
+histogram_cases = 
+  data |>
+  ggplot(aes(x = lyme_count)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 1, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of all cases",
+    x = "Cases of Lyme Disease",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+
+# Boxplot of 'lyme_count' per 'year' with mean
+boxplots =
+  data |>
+  ggplot(aes(x = factor(year), y = lyme_count)) +
+  geom_boxplot() +
+  stat_summary(
+    fun = mean,
+    geom = "point",
+    shape = 20,
+    size = 3,
+    color = "red",
+    fill = "red"
+  ) +
+  labs(
+    title = "Distribution of Lyme Disease Cases by Year",
+    x = "Year",
+    y = "Lyme Disease Cases"
+  ) +
+  theme_minimal()
+
+histogram_cases
+boxplots
+
+# cases are right skewed
+
+data = 
+  data |> 
+  mutate(log_cases = log10(lyme_count))
+
+histogram_logcases = 
+  data |>
+  ggplot(aes(x = log_cases)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 0.5, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of all cases",
+    x = "Cases of Lyme Disease",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+histogram_logcases
+
+ggsave(
+  filename = "histogram_cases.png",
+  plot = histogram_cases,          
+  path = "Results"
+)
+
+ggsave(
+  filename = "boxplots_cases_year.png",
+  plot = boxplots,          
+  path = "Results"
+)
+
+ggsave(
+  filename = "histogram_log_cases.png", 
+  plot = histogram_logcases, 
+  path = "Results"
+)
+
+#log10 transformation makes outcome a bit better distributed. 
+```
+
+
+```{r}
+# Step 2: Histogram and density plot for average temperature
+
+histogram_temp = 
+  data |>
+  ggplot(aes(x = avg_temp)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 1, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of Average Temperature",
+    x = "Average Temperature",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+histogram_temp
+
+# temperature is normally distributed
+
+ggsave(
+  filename = "temperature_distribution.png",
+  plot = histogram_temp,          
+  path = "Results"
+)
+
+```
+
+
+```{r}
+# Step 3: Histogram and density plot for 'prev_badtick'
+
+dis_bad_tick_per = 
+  data |>
+  ggplot(aes(x = b_burgdorferi_percent)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.05, fill = "green", alpha = 0.7, color = "black") +
+  geom_density(alpha = 0.3, fill = "purple") +
+  labs(
+    title = "Distribution of prev_badtick",
+    x = "Prevalence of Bad Tick",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+dis_bad_tick_per
+
+ggsave(
+  filename = "tickwithbdistribution.png",
+  plot = dis_bad_tick_per,          
+  path = "Results"
+)
+
+# percentage of ticks sampled carrying lyme-causing bacteria is normally distributed
+
+```
+
+```{r}
+# Step 4: Line plot of total cases per year
+annual_cases <- data %>%
+  group_by(year) %>%
+  summarize(total_cases = sum(lyme_count, na.rm = TRUE))
+
+cases_per_year = 
+  annual_cases |> 
+  ggplot(aes(x = year, y = total_cases)) +
+  geom_point(color = "red", size = 2) +
+  geom_smooth() + 
+  labs(
+    title = "Total Case Count by Year",
+    x = "Year",
+    y = "Total Case Count"
+  ) +
+  theme_minimal()
+
+cases_per_year
+ggsave(
+  filename = "cases_per_year.png",
+  plot = cases_per_year,          
+  path = "Results"
+)
+
+
+```
+
+```{r}
+# Regression model of case_count on prev_badtick controlling for avg_temperature
+
+model <- lm(log_cases ~ b_burgdorferi_percent + avg_temp, data = data)
+summary(model)
+
+regression_table = 
+  tbl_regression(
+  model,
+  intercept = TRUE,
+  label = list(
+    b_burgdorferi_percent ~ "% Ticks Carry",
+    avg_temp ~ "Avg Temp"
+  )
+)
+
+regression_table
+
+gt_table = 
+  as_gt(regression_table)
+
+gtsave(gt_table, filename = "Results/regress.html")
+
+
+```
+
+```{r}
+# Step 6: Create a summary statistics table (Table 1) for each county
+table1 = 
+  data |> 
+  select(name, lyme_count, avg_temp, b_burgdorferi_percent) |> 
+  tbl_summary(
+    by = name,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} / {N} ({p}%)"
+    ),
+    digits = all_continuous() ~ 2
+  ) %>%
+  add_overall() %>%
+  bold_labels() 
+
+# Display the summary table
+table1
+
+library(dplyr)
+library(gt)
+
+# Calculate summary statistics for each county
+summary_stats <- data %>%
+  group_by(name) %>%
+  summarize(
+    years_with_data = n(),
+    lyme_count_mean = mean(lyme_count, na.rm = TRUE),
+    avg_temp_mean = mean(avg_temp, na.rm = TRUE),
+    avg_temp_sd = sd(avg_temp, na.rm = TRUE),
+    b_burgdorferi_percent_mean = mean(b_burgdorferi_percent, na.rm = TRUE),
+    b_burgdorferi_percent_sd = sd(b_burgdorferi_percent, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+# Create a gt table
+summary_table <- summary_stats %>%
+  gt(rowname_col = "name") %>%
+  fmt_number(
+    columns = vars(years_with_data, lyme_count_mean, avg_temp_mean, avg_temp_sd, b_burgdorferi_percent_mean, b_burgdorferi_percent_sd),
+    decimals = 2
+  ) %>%
+  cols_label(
+    years_with_data = "Non-Missing Years",
+    lyme_count_mean = "All Year Mean Lyme Cases",
+    avg_temp_mean = "Mean Temperature",
+    avg_temp_sd = "SD",
+    b_burgdorferi_percent_mean = "Mean B. burgdorferi % ",
+    b_burgdorferi_percent_sd = "SD"
+  ) %>%
+  tab_header(
+    title = "Summary Statistics by County"
+  )
+
+# Display the table
+summary_table
+
+gtsave(data = summary_table, filename = "Results/table.1.html")
+
+```
+
+
+>>>>>>> 8ee3b1ac1af6fd77520d8d1e84578967d4add811
