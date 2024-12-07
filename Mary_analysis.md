@@ -7,6 +7,25 @@ Cleaning and Description of Analytic dataset
 This document for cleaning and tidying the data.
 
 ``` r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+install.packages("remotes")
+```
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//Rtmp1wTwej/downloaded_packages
+
+``` r
+install.packages("broom.helpers")
+```
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//Rtmp1wTwej/downloaded_packages
+
+``` r
+remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -25,7 +44,7 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read
          lyme_count = "event_count",
          lyme_rate = "percent_rate"
          ) %>%  # renaming so we can have a common variable when merging 
-  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+  mutate( data = "lyme", NAME = ifelse(NAME == "Cattaragus", "Cattaraugus", NAME)) # created a new variable so double check that merging was accurate, also fixed misspelled Cattaraugus
 
 print(nineteen_twentyone_county_lyme)
 ```
@@ -84,7 +103,7 @@ ny_county =  st_read("./Data Preparation/Counties.shp")  # read in the county sh
 ```
 
     ## Reading layer `Counties' from data source 
-    ##   `/Users/kalebfrierson/Desktop/MPH/Year 2/Fall Semester 2024/Data Science I /Final/p8105_final/Data Preparation/Counties.shp' 
+    ##   `/Users/nickywilliams/Desktop/Data Science/p8105_final/Data Preparation/Counties.shp' 
     ##   using driver `ESRI Shapefile'
     ## Simple feature collection with 62 features and 17 fields
     ## Geometry type: MULTIPOLYGON
@@ -301,11 +320,130 @@ summary(tick_lyme_weather)
 # Mary’s Data Analysis
 
 ``` r
+# Correct the names for Cattaraugus and St. Lawrance in the dataset
+tick_lyme_weather <- tick_lyme_weather %>%
+  mutate(
+    name = case_when(
+      name == "Cattaragus" ~ "Cattaraugus",
+      name == "St Lawrance" ~ "St. Lawrance",
+      TRUE ~ name))
+
+# Verify the changes
+unique(tick_lyme_weather$name)
+```
+
+    ##  [1] "Albany"       "Chautauqua"   "Dutchess"     "Warren"       "Chemung"     
+    ##  [6] "Delaware"     "Tompkins"     "Oneida"       "Seneca"       "Onondaga"    
+    ## [11] "Franklin"     "Livingston"   "Wayne"        "Oswego"       "Allegany"    
+    ## [16] "Chenango"     "Orleans"      "St Lawrence"  "Monroe"       "Saratoga"    
+    ## [21] "Cortland"     "Essex"        "Sullivan"     "Cattaraugus"  "Rockland"    
+    ## [26] "Schenectady"  "Washington"   "Greene"       "Montgomery"   "Orange"      
+    ## [31] "Erie"         "Yates"        "Clinton"      "Steuben"      "Cayuga"      
+    ## [36] "Schoharie"    "Wyoming"      "Hamilton"     "Genesee"      "Rensselaer"  
+    ## [41] "Ulster"       "Suffolk"      "Ontario"      "Niagara"      "Columbia"    
+    ## [46] "Schuyler"     "Otsego"       "Jefferson"    "Westchester"  "Fulton"      
+    ## [51] "Broome"       "Herkimer"     "St. Lawrence" "Madison"      "Queens"      
+    ## [56] "Bronx"        "Putnam"       "Tioga"        "Kings"        "Lewis"       
+    ## [61] "New York"     "Nassau"       "Richmond"
+
+``` r
 #load necessary libraries
 library(broom)
 library(ggplot2)
 library(dplyr)
+library(knitr)
 ```
+
+### Table of all relevent data
+
+``` r
+# Summarize or find the mean for the data for each of the relevant topics
+summary_table = tick_lyme_weather %>%
+  group_by(name) %>%
+  summarize(
+    total_cases = sum(lyme_rate, na.rm = TRUE),            
+    total_lyme_count = sum(lyme_count, na.rm = TRUE),     
+    total_ticks_collected = sum(total_ticks_collected, na.rm = TRUE),  
+    mean_prevalence = mean(lyme_rate, na.rm = TRUE),    
+    mean_b_burgdorferi = mean(b_burgdorferi_percent, na.rm = TRUE), 
+    n_observations = n()) %>%
+  mutate(
+    prevalence_percent = mean_prevalence * 100,          
+    mean_b_burgdorferi_percent = mean_b_burgdorferi * 100)
+
+# Create the table
+summary_table %>%
+  select(name, total_cases, total_lyme_count, total_ticks_collected, prevalence_percent, mean_b_burgdorferi_percent, n_observations) %>%
+  knitr::kable(digits = 2, caption = "Summary of Variables by County")
+```
+
+| name | total_cases | total_lyme_count | total_ticks_collected | prevalence_percent | mean_b_burgdorferi_percent | n_observations |
+|:---|---:|---:|---:|---:|---:|---:|
+| Albany | 279.0 | 2595 | 973 | 9300 | 6236.67 | 3 |
+| Allegany | 126.9 | 177 | 954 | 4230 | 5533.33 | 3 |
+| Bronx | 1.8 | 78 | 0 | 180 | NaN | 1 |
+| Broome | 326.8 | 1906 | 31 | 16340 | 5705.00 | 2 |
+| Cattaraugus | 82.6 | 190 | 2106 | 4130 | 5443.33 | 3 |
+| Cayuga | 125.1 | 288 | 317 | 4170 | 5666.67 | 3 |
+| Chautauqua | 40.8 | 156 | 607 | 1360 | 5936.67 | 3 |
+| Chemung | 46.6 | 117 | 271 | 4660 | 5600.00 | 1 |
+| Chenango | 358.6 | 508 | 82 | 17930 | 6695.00 | 2 |
+| Clinton | 166.5 | 402 | 470 | 5550 | 6043.33 | 3 |
+| Columbia | 1340.4 | 2436 | 1754 | 44680 | 5660.00 | 3 |
+| Cortland | 152.9 | 217 | 51 | 15290 | 5290.00 | 1 |
+| Delaware | 541.8 | 726 | 373 | 18060 | 5556.67 | 3 |
+| Dutchess | 354.0 | 3135 | 692 | 11800 | 5836.67 | 3 |
+| Erie | 54.3 | 1515 | 360 | 1810 | 4666.67 | 3 |
+| Essex | 230.6 | 258 | 404 | 11530 | 5890.00 | 2 |
+| Franklin | 182.7 | 270 | 242 | 6090 | 4676.67 | 3 |
+| Fulton | 297.6 | 477 | 431 | 9920 | 5723.33 | 3 |
+| Genesee | 51.9 | 90 | 101 | 1730 | 5056.67 | 3 |
+| Greene | 1281.3 | 1836 | 758 | 42710 | 5893.33 | 3 |
+| Hamilton | 64.2 | 9 | 7 | 2140 | 2500.00 | 3 |
+| Herkimer | 54.5 | 100 | 97 | 5450 | 3800.00 | 1 |
+| Jefferson | 149.1 | 510 | 192 | 4970 | 7756.67 | 3 |
+| Kings | 11.6 | 906 | 0 | 1160 | NaN | 1 |
+| Lewis | 153.0 | 122 | 0 | 15300 | NaN | 1 |
+| Livingston | 77.6 | 146 | 266 | 3880 | 6000.00 | 2 |
+| Madison | 57.7 | 121 | 60 | 5770 | 5000.00 | 1 |
+| Monroe | 32.1 | 723 | 642 | 1070 | 5063.33 | 3 |
+| Montgomery | 177.6 | 264 | 602 | 5920 | 5480.00 | 3 |
+| Nassau | 9.4 | 387 | 0 | 940 | NaN | 1 |
+| New York | 33.6 | 1624 | 0 | 1680 | NaN | 2 |
+| Niagara | 3.2 | 20 | 73 | 160 | 4675.00 | 2 |
+| Oneida | 171.9 | 1185 | 444 | 5730 | 5266.67 | 3 |
+| Onondaga | 67.8 | 945 | 308 | 2260 | 4653.33 | 3 |
+| Ontario | 75.9 | 252 | 424 | 2530 | 6343.33 | 3 |
+| Orange | 225.3 | 2634 | 360 | 7510 | 4866.67 | 3 |
+| Orleans | 24.9 | 30 | 43 | 830 | 4113.33 | 3 |
+| Oswego | 240.3 | 849 | 454 | 8010 | 5650.00 | 3 |
+| Otsego | 520.5 | 939 | 897 | 17350 | 6176.67 | 3 |
+| Putnam | 237.6 | 703 | 0 | 23760 | NaN | 1 |
+| Queens | 4.9 | 336 | 0 | 490 | NaN | 1 |
+| Rensselaer | 764.4 | 3666 | 1206 | 25480 | 5626.67 | 3 |
+| Richmond | 10.8 | 156 | 0 | 1080 | NaN | 1 |
+| Rockland | 145.8 | 1443 | 331 | 4860 | 4600.00 | 3 |
+| Saratoga | 212.4 | 1482 | 1835 | 7080 | 6006.67 | 3 |
+| Schenectady | 291.9 | 1374 | 968 | 9730 | 5590.00 | 3 |
+| Schoharie | 509.1 | 471 | 571 | 16970 | 5473.33 | 3 |
+| Schuyler | 463.6 | 248 | 154 | 23180 | 6100.00 | 2 |
+| Seneca | 109.6 | 112 | 108 | 5480 | 5100.00 | 2 |
+| St Lawrence | 0.0 | 0 | 241 | NaN | 4500.00 | 2 |
+| St. Lawrence | 82.3 | 268 | 97 | 8230 | 4600.00 | 1 |
+| Steuben | 127.0 | 362 | 792 | 6350 | 6400.00 | 2 |
+| Suffolk | 84.6 | 3807 | 5267 | 2820 | 5076.67 | 3 |
+| Sullivan | 180.9 | 417 | 463 | 6030 | 5200.00 | 3 |
+| Tioga | 160.6 | 233 | 0 | 16060 | NaN | 1 |
+| Tompkins | 390.9 | 1215 | 266 | 13030 | 5236.67 | 3 |
+| Ulster | 364.5 | 1971 | 350 | 12150 | 5690.00 | 3 |
+| Warren | 455.4 | 885 | 342 | 15180 | 4936.67 | 3 |
+| Washington | 527.7 | 969 | 1022 | 17590 | 5496.67 | 3 |
+| Wayne | 44.2 | 120 | 72 | 4420 | 6000.00 | 1 |
+| Westchester | 50.4 | 1479 | 350 | 1680 | 4800.00 | 3 |
+| Wyoming | 48.2 | 58 | 138 | 2410 | 4135.00 | 2 |
+| Yates | 73.8 | 55 | 15 | 7380 | 2000.00 | 1 |
+
+Summary of Variables by County
 
 ### Relationship between tick density and average temperature per month
 
@@ -462,10 +600,6 @@ summary(tick_lyme_weather$pop2020)
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
     ##    5107   49532   92434  273104  234663 2736074       2
 
-Considering that all other variables but the intercept are weak, there
-does not appear to be an association between lyme rate and area
-variables (shape area, shape length, and calculated square miles).
-
 ### Trying the relationship between lyme_count and area variables, including human population density in 2020
 
 ``` r
@@ -481,9 +615,6 @@ broom::tidy(lyme_rate_vs_area_human) |> select(term, estimate, p.value) |>knitr:
 | shape_leng  |    0.000 |   0.763 |
 | pop2020     |    0.000 |   0.000 |
 
-Human population was found to be negatively associated(-4.14) and
-significantly association (p-value\<0.005) with lyme rate.
-
 ### Relationship between b_burgdorferi_percent and population variables
 
 ``` r
@@ -498,12 +629,6 @@ broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.val
 | lyme_count              |    0.004 |   0.302 |
 | tick_population_density |    0.056 |   0.025 |
 | total_ticks_collected   |   -0.002 |   0.651 |
-
-The findings from the table demonstrate that the lyme rate and tick
-population density are slightly positively and significantly associated
-with B. burgdorferi percent. However, this does not appear to be related
-to the number of ticks collected considering that the number did not
-have a significant impact on the B. burgdorferi percent.
 
 ### Logarithmic examination of lyme rate versus number of ticks collected and tick population density
 
@@ -533,7 +658,7 @@ ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_count)) +
     ## Warning: Removed 13 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 #Examination of log-linear regression 
@@ -616,7 +741,7 @@ broom::tidy(weather_model) |> select(term, estimate, p.value) |>knitr::kable(dig
 
 The logarithmic analysis found that the total number of ticks found and
 the B. burgdoferi percent had a positive, significant association with
-increased lyme disease rates.
+increased lyme disease rates. \<\<\<\<\<\<\< HEAD =======
 
 Some interesting findings from looking at the log of the weather
 variables include that months like March 2019 ( β=−1.002, p\<0.001) and
@@ -698,7 +823,7 @@ histogram_cases
     ## Warning: Removed 3 rows containing non-finite outside the scale range
     ## (`stat_bin()`).
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 boxplots
@@ -710,7 +835,7 @@ boxplots
     ## Warning: Removed 3 rows containing non-finite outside the scale range
     ## (`stat_summary()`).
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-20-2.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-22-2.png)<!-- -->
 
 ``` r
 # cases are right skewed
@@ -740,7 +865,7 @@ histogram_logcases
     ## Warning: Removed 3 rows containing non-finite outside the scale range
     ## (`stat_bin()`).
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-20-3.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-22-3.png)<!-- -->
 
 ``` r
 ggsave(
@@ -811,7 +936,7 @@ histogram_temp
     ## Warning: Removed 3 rows containing non-finite outside the scale range
     ## (`stat_bin()`).
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 # temperature is normally distributed
@@ -846,7 +971,7 @@ dis_bad_tick_per =
 dis_bad_tick_per
 ```
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ggsave(
@@ -928,7 +1053,7 @@ cases_per_year
     ## Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
     ## -Inf
 
-![](Mary_analysis_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](Mary_analysis_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ``` r
 ggsave(
@@ -986,7 +1111,6 @@ ggsave(
 
 ``` r
 # Regression model of case_count on prev_badtick controlling for avg_temperature
-
 model <- lm(log_cases ~ b_burgdorferi_percent + avg_temp, data = data)
 summary(model)
 ```
@@ -1026,20 +1150,20 @@ regression_table =
 regression_table
 ```
 
-<div id="urmvtctxcv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#urmvtctxcv table {
+<div id="mohgxhncbz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mohgxhncbz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#urmvtctxcv thead, #urmvtctxcv tbody, #urmvtctxcv tfoot, #urmvtctxcv tr, #urmvtctxcv td, #urmvtctxcv th {
+&#10;#mohgxhncbz thead, #mohgxhncbz tbody, #mohgxhncbz tfoot, #mohgxhncbz tr, #mohgxhncbz td, #mohgxhncbz th {
   border-style: none;
 }
-&#10;#urmvtctxcv p {
+&#10;#mohgxhncbz p {
   margin: 0;
   padding: 0;
 }
-&#10;#urmvtctxcv .gt_table {
+&#10;#mohgxhncbz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1064,11 +1188,11 @@ regression_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_caption {
+&#10;#mohgxhncbz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#urmvtctxcv .gt_title {
+&#10;#mohgxhncbz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1079,7 +1203,7 @@ regression_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#urmvtctxcv .gt_subtitle {
+&#10;#mohgxhncbz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1090,7 +1214,7 @@ regression_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#urmvtctxcv .gt_heading {
+&#10;#mohgxhncbz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1101,12 +1225,12 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_bottom_border {
+&#10;#mohgxhncbz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_col_headings {
+&#10;#mohgxhncbz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1120,7 +1244,7 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_col_heading {
+&#10;#mohgxhncbz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1139,7 +1263,7 @@ regression_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#urmvtctxcv .gt_column_spanner_outer {
+&#10;#mohgxhncbz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1150,13 +1274,13 @@ regression_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#urmvtctxcv .gt_column_spanner_outer:first-child {
+&#10;#mohgxhncbz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#urmvtctxcv .gt_column_spanner_outer:last-child {
+&#10;#mohgxhncbz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#urmvtctxcv .gt_column_spanner {
+&#10;#mohgxhncbz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1167,10 +1291,10 @@ regression_table
   display: inline-block;
   width: 100%;
 }
-&#10;#urmvtctxcv .gt_spanner_row {
+&#10;#mohgxhncbz .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#urmvtctxcv .gt_group_heading {
+&#10;#mohgxhncbz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1195,7 +1319,7 @@ regression_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#urmvtctxcv .gt_empty_group_heading {
+&#10;#mohgxhncbz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1209,13 +1333,13 @@ regression_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#urmvtctxcv .gt_from_md > :first-child {
+&#10;#mohgxhncbz .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#urmvtctxcv .gt_from_md > :last-child {
+&#10;#mohgxhncbz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#urmvtctxcv .gt_row {
+&#10;#mohgxhncbz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1233,7 +1357,7 @@ regression_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#urmvtctxcv .gt_stub {
+&#10;#mohgxhncbz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1245,7 +1369,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#urmvtctxcv .gt_stub_row_group {
+&#10;#mohgxhncbz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1258,13 +1382,13 @@ regression_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#urmvtctxcv .gt_row_group_first td {
+&#10;#mohgxhncbz .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#urmvtctxcv .gt_row_group_first th {
+&#10;#mohgxhncbz .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#urmvtctxcv .gt_summary_row {
+&#10;#mohgxhncbz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1273,14 +1397,14 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#urmvtctxcv .gt_first_summary_row {
+&#10;#mohgxhncbz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_first_summary_row.thick {
+&#10;#mohgxhncbz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#urmvtctxcv .gt_last_summary_row {
+&#10;#mohgxhncbz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1289,7 +1413,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_grand_summary_row {
+&#10;#mohgxhncbz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1298,7 +1422,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#urmvtctxcv .gt_first_grand_summary_row {
+&#10;#mohgxhncbz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1307,7 +1431,7 @@ regression_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_last_grand_summary_row_top {
+&#10;#mohgxhncbz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1316,10 +1440,10 @@ regression_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_striped {
+&#10;#mohgxhncbz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#urmvtctxcv .gt_table_body {
+&#10;#mohgxhncbz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1327,7 +1451,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_footnotes {
+&#10;#mohgxhncbz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1340,7 +1464,7 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_footnote {
+&#10;#mohgxhncbz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1348,7 +1472,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#urmvtctxcv .gt_sourcenotes {
+&#10;#mohgxhncbz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1361,64 +1485,64 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#urmvtctxcv .gt_sourcenote {
+&#10;#mohgxhncbz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#urmvtctxcv .gt_left {
+&#10;#mohgxhncbz .gt_left {
   text-align: left;
 }
-&#10;#urmvtctxcv .gt_center {
+&#10;#mohgxhncbz .gt_center {
   text-align: center;
 }
-&#10;#urmvtctxcv .gt_right {
+&#10;#mohgxhncbz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#urmvtctxcv .gt_font_normal {
+&#10;#mohgxhncbz .gt_font_normal {
   font-weight: normal;
 }
-&#10;#urmvtctxcv .gt_font_bold {
+&#10;#mohgxhncbz .gt_font_bold {
   font-weight: bold;
 }
-&#10;#urmvtctxcv .gt_font_italic {
+&#10;#mohgxhncbz .gt_font_italic {
   font-style: italic;
 }
-&#10;#urmvtctxcv .gt_super {
+&#10;#mohgxhncbz .gt_super {
   font-size: 65%;
 }
-&#10;#urmvtctxcv .gt_footnote_marks {
+&#10;#mohgxhncbz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#urmvtctxcv .gt_asterisk {
+&#10;#mohgxhncbz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#urmvtctxcv .gt_indent_1 {
+&#10;#mohgxhncbz .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#urmvtctxcv .gt_indent_2 {
+&#10;#mohgxhncbz .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#urmvtctxcv .gt_indent_3 {
+&#10;#mohgxhncbz .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#urmvtctxcv .gt_indent_4 {
+&#10;#mohgxhncbz .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#urmvtctxcv .gt_indent_5 {
+&#10;#mohgxhncbz .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#urmvtctxcv .katex-display {
+&#10;#mohgxhncbz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#urmvtctxcv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#mohgxhncbz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1480,20 +1604,20 @@ table1 =
 table1
 ```
 
-<div id="qrajwgntuw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qrajwgntuw table {
+<div id="ucpwlddulg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ucpwlddulg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#qrajwgntuw thead, #qrajwgntuw tbody, #qrajwgntuw tfoot, #qrajwgntuw tr, #qrajwgntuw td, #qrajwgntuw th {
+&#10;#ucpwlddulg thead, #ucpwlddulg tbody, #ucpwlddulg tfoot, #ucpwlddulg tr, #ucpwlddulg td, #ucpwlddulg th {
   border-style: none;
 }
-&#10;#qrajwgntuw p {
+&#10;#ucpwlddulg p {
   margin: 0;
   padding: 0;
 }
-&#10;#qrajwgntuw .gt_table {
+&#10;#ucpwlddulg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1518,11 +1642,11 @@ table1
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_caption {
+&#10;#ucpwlddulg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#qrajwgntuw .gt_title {
+&#10;#ucpwlddulg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1533,7 +1657,7 @@ table1
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#qrajwgntuw .gt_subtitle {
+&#10;#ucpwlddulg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1544,7 +1668,7 @@ table1
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#qrajwgntuw .gt_heading {
+&#10;#ucpwlddulg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1555,12 +1679,12 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_bottom_border {
+&#10;#ucpwlddulg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_col_headings {
+&#10;#ucpwlddulg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1574,7 +1698,7 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_col_heading {
+&#10;#ucpwlddulg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1593,7 +1717,7 @@ table1
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#qrajwgntuw .gt_column_spanner_outer {
+&#10;#ucpwlddulg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1604,13 +1728,13 @@ table1
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#qrajwgntuw .gt_column_spanner_outer:first-child {
+&#10;#ucpwlddulg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#qrajwgntuw .gt_column_spanner_outer:last-child {
+&#10;#ucpwlddulg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#qrajwgntuw .gt_column_spanner {
+&#10;#ucpwlddulg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1621,10 +1745,10 @@ table1
   display: inline-block;
   width: 100%;
 }
-&#10;#qrajwgntuw .gt_spanner_row {
+&#10;#ucpwlddulg .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#qrajwgntuw .gt_group_heading {
+&#10;#ucpwlddulg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1649,7 +1773,7 @@ table1
   vertical-align: middle;
   text-align: left;
 }
-&#10;#qrajwgntuw .gt_empty_group_heading {
+&#10;#ucpwlddulg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1663,13 +1787,13 @@ table1
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#qrajwgntuw .gt_from_md > :first-child {
+&#10;#ucpwlddulg .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#qrajwgntuw .gt_from_md > :last-child {
+&#10;#ucpwlddulg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#qrajwgntuw .gt_row {
+&#10;#ucpwlddulg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1687,7 +1811,7 @@ table1
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#qrajwgntuw .gt_stub {
+&#10;#ucpwlddulg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1699,7 +1823,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#qrajwgntuw .gt_stub_row_group {
+&#10;#ucpwlddulg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1712,13 +1836,13 @@ table1
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#qrajwgntuw .gt_row_group_first td {
+&#10;#ucpwlddulg .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#qrajwgntuw .gt_row_group_first th {
+&#10;#ucpwlddulg .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#qrajwgntuw .gt_summary_row {
+&#10;#ucpwlddulg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1727,14 +1851,14 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#qrajwgntuw .gt_first_summary_row {
+&#10;#ucpwlddulg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_first_summary_row.thick {
+&#10;#ucpwlddulg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#qrajwgntuw .gt_last_summary_row {
+&#10;#ucpwlddulg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1743,7 +1867,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_grand_summary_row {
+&#10;#ucpwlddulg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1752,7 +1876,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#qrajwgntuw .gt_first_grand_summary_row {
+&#10;#ucpwlddulg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1761,7 +1885,7 @@ table1
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_last_grand_summary_row_top {
+&#10;#ucpwlddulg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1770,10 +1894,10 @@ table1
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_striped {
+&#10;#ucpwlddulg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#qrajwgntuw .gt_table_body {
+&#10;#ucpwlddulg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1781,7 +1905,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_footnotes {
+&#10;#ucpwlddulg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1794,7 +1918,7 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_footnote {
+&#10;#ucpwlddulg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1802,7 +1926,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#qrajwgntuw .gt_sourcenotes {
+&#10;#ucpwlddulg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1815,64 +1939,64 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#qrajwgntuw .gt_sourcenote {
+&#10;#ucpwlddulg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#qrajwgntuw .gt_left {
+&#10;#ucpwlddulg .gt_left {
   text-align: left;
 }
-&#10;#qrajwgntuw .gt_center {
+&#10;#ucpwlddulg .gt_center {
   text-align: center;
 }
-&#10;#qrajwgntuw .gt_right {
+&#10;#ucpwlddulg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#qrajwgntuw .gt_font_normal {
+&#10;#ucpwlddulg .gt_font_normal {
   font-weight: normal;
 }
-&#10;#qrajwgntuw .gt_font_bold {
+&#10;#ucpwlddulg .gt_font_bold {
   font-weight: bold;
 }
-&#10;#qrajwgntuw .gt_font_italic {
+&#10;#ucpwlddulg .gt_font_italic {
   font-style: italic;
 }
-&#10;#qrajwgntuw .gt_super {
+&#10;#ucpwlddulg .gt_super {
   font-size: 65%;
 }
-&#10;#qrajwgntuw .gt_footnote_marks {
+&#10;#ucpwlddulg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#qrajwgntuw .gt_asterisk {
+&#10;#ucpwlddulg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#qrajwgntuw .gt_indent_1 {
+&#10;#ucpwlddulg .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#qrajwgntuw .gt_indent_2 {
+&#10;#ucpwlddulg .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#qrajwgntuw .gt_indent_3 {
+&#10;#ucpwlddulg .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#qrajwgntuw .gt_indent_4 {
+&#10;#ucpwlddulg .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#qrajwgntuw .gt_indent_5 {
+&#10;#ucpwlddulg .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#qrajwgntuw .katex-display {
+&#10;#ucpwlddulg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#qrajwgntuw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#ucpwlddulg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2334,20 +2458,20 @@ summary_table <- summary_stats %>%
 summary_table
 ```
 
-<div id="iknuihncce" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iknuihncce table {
+<div id="beausgtmnl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#beausgtmnl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#iknuihncce thead, #iknuihncce tbody, #iknuihncce tfoot, #iknuihncce tr, #iknuihncce td, #iknuihncce th {
+&#10;#beausgtmnl thead, #beausgtmnl tbody, #beausgtmnl tfoot, #beausgtmnl tr, #beausgtmnl td, #beausgtmnl th {
   border-style: none;
 }
-&#10;#iknuihncce p {
+&#10;#beausgtmnl p {
   margin: 0;
   padding: 0;
 }
-&#10;#iknuihncce .gt_table {
+&#10;#beausgtmnl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2372,11 +2496,11 @@ summary_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_caption {
+&#10;#beausgtmnl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#iknuihncce .gt_title {
+&#10;#beausgtmnl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2387,7 +2511,7 @@ summary_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#iknuihncce .gt_subtitle {
+&#10;#beausgtmnl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2398,7 +2522,7 @@ summary_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#iknuihncce .gt_heading {
+&#10;#beausgtmnl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2409,12 +2533,12 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_bottom_border {
+&#10;#beausgtmnl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_col_headings {
+&#10;#beausgtmnl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2428,7 +2552,7 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_col_heading {
+&#10;#beausgtmnl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2447,7 +2571,7 @@ summary_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#iknuihncce .gt_column_spanner_outer {
+&#10;#beausgtmnl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2458,13 +2582,13 @@ summary_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#iknuihncce .gt_column_spanner_outer:first-child {
+&#10;#beausgtmnl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#iknuihncce .gt_column_spanner_outer:last-child {
+&#10;#beausgtmnl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#iknuihncce .gt_column_spanner {
+&#10;#beausgtmnl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2475,10 +2599,10 @@ summary_table
   display: inline-block;
   width: 100%;
 }
-&#10;#iknuihncce .gt_spanner_row {
+&#10;#beausgtmnl .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#iknuihncce .gt_group_heading {
+&#10;#beausgtmnl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2503,7 +2627,7 @@ summary_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#iknuihncce .gt_empty_group_heading {
+&#10;#beausgtmnl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2517,13 +2641,13 @@ summary_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#iknuihncce .gt_from_md > :first-child {
+&#10;#beausgtmnl .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#iknuihncce .gt_from_md > :last-child {
+&#10;#beausgtmnl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#iknuihncce .gt_row {
+&#10;#beausgtmnl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2541,7 +2665,7 @@ summary_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#iknuihncce .gt_stub {
+&#10;#beausgtmnl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2553,7 +2677,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#iknuihncce .gt_stub_row_group {
+&#10;#beausgtmnl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2566,13 +2690,13 @@ summary_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#iknuihncce .gt_row_group_first td {
+&#10;#beausgtmnl .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#iknuihncce .gt_row_group_first th {
+&#10;#beausgtmnl .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#iknuihncce .gt_summary_row {
+&#10;#beausgtmnl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2581,14 +2705,14 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#iknuihncce .gt_first_summary_row {
+&#10;#beausgtmnl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_first_summary_row.thick {
+&#10;#beausgtmnl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#iknuihncce .gt_last_summary_row {
+&#10;#beausgtmnl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2597,7 +2721,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_grand_summary_row {
+&#10;#beausgtmnl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2606,7 +2730,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#iknuihncce .gt_first_grand_summary_row {
+&#10;#beausgtmnl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2615,7 +2739,7 @@ summary_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_last_grand_summary_row_top {
+&#10;#beausgtmnl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2624,10 +2748,10 @@ summary_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_striped {
+&#10;#beausgtmnl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#iknuihncce .gt_table_body {
+&#10;#beausgtmnl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2635,7 +2759,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_footnotes {
+&#10;#beausgtmnl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2648,7 +2772,7 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_footnote {
+&#10;#beausgtmnl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2656,7 +2780,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#iknuihncce .gt_sourcenotes {
+&#10;#beausgtmnl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2669,64 +2793,64 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#iknuihncce .gt_sourcenote {
+&#10;#beausgtmnl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#iknuihncce .gt_left {
+&#10;#beausgtmnl .gt_left {
   text-align: left;
 }
-&#10;#iknuihncce .gt_center {
+&#10;#beausgtmnl .gt_center {
   text-align: center;
 }
-&#10;#iknuihncce .gt_right {
+&#10;#beausgtmnl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#iknuihncce .gt_font_normal {
+&#10;#beausgtmnl .gt_font_normal {
   font-weight: normal;
 }
-&#10;#iknuihncce .gt_font_bold {
+&#10;#beausgtmnl .gt_font_bold {
   font-weight: bold;
 }
-&#10;#iknuihncce .gt_font_italic {
+&#10;#beausgtmnl .gt_font_italic {
   font-style: italic;
 }
-&#10;#iknuihncce .gt_super {
+&#10;#beausgtmnl .gt_super {
   font-size: 65%;
 }
-&#10;#iknuihncce .gt_footnote_marks {
+&#10;#beausgtmnl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#iknuihncce .gt_asterisk {
+&#10;#beausgtmnl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#iknuihncce .gt_indent_1 {
+&#10;#beausgtmnl .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#iknuihncce .gt_indent_2 {
+&#10;#beausgtmnl .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#iknuihncce .gt_indent_3 {
+&#10;#beausgtmnl .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#iknuihncce .gt_indent_4 {
+&#10;#beausgtmnl .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#iknuihncce .gt_indent_5 {
+&#10;#beausgtmnl .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#iknuihncce .katex-display {
+&#10;#beausgtmnl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#iknuihncce div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#beausgtmnl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3139,3 +3263,5 @@ summary_table
 ``` r
 gtsave(data = summary_table, filename = "Results/table.1.html")
 ```
+
+> > > > > > > 8ee3b1ac1af6fd77520d8d1e84578967d4add811

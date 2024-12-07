@@ -9,6 +9,11 @@ output: github_document
 This document for cleaning and tidying the data.
 
 ```{r, message=FALSE}
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+install.packages("remotes")
+install.packages("broom.helpers")
+remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -27,7 +32,7 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read
          lyme_count = "event_count",
          lyme_rate = "percent_rate"
          ) %>%  # renaming so we can have a common variable when merging 
-  mutate( data = "lyme", NAME = ifelse(NAME == "Cattaragus", "Cattaraugus", NAME)) # created a new variable so double check that merging was accurate, also fixed mispelled Cattaraugus
+  mutate( data = "lyme", NAME = ifelse(NAME == "Cattaragus", "Cattaraugus", NAME)) # created a new variable so double check that merging was accurate, also fixed misspelled Cattaraugus
 
 print(nineteen_twentyone_county_lyme)
 
@@ -181,7 +186,22 @@ print(ny_weather)
 
 summary(tick_lyme_weather)
 ```
+
 # Mary's Data Analysis
+```{r}
+# Correct the names for Cattaraugus and St. Lawrance in the dataset
+tick_lyme_weather <- tick_lyme_weather %>%
+  mutate(
+    name = case_when(
+      name == "Cattaragus" ~ "Cattaraugus",
+      name == "St Lawrance" ~ "St. Lawrance",
+      TRUE ~ name))
+
+# Verify the changes
+unique(tick_lyme_weather$name)
+
+```
+
 ```{r}
 #load necessary libraries
 library(broom)
@@ -487,7 +507,6 @@ ggsave(
 
 ```{r}
 # Regression model of case_count on prev_badtick controlling for avg_temperature
-
 model <- lm(log_cases ~ b_burgdorferi_percent + avg_temp, data = data)
 summary(model)
 
@@ -507,8 +526,6 @@ gt_table =
   as_gt(regression_table)
 
 gtsave(gt_table, filename = "Results/regress.html")
-
-
 ```
 
 ```{r}
