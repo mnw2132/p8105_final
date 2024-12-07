@@ -383,7 +383,7 @@ library(readxl)</code></pre>
          lyme_count = &quot;event_count&quot;,
          lyme_rate = &quot;percent_rate&quot;
          ) %&gt;%  # renaming so we can have a common variable when merging 
-  mutate( data = &quot;lyme&quot;) # created a new variable so double check that merging was accurate
+  mutate( data = &quot;lyme&quot;, NAME = ifelse(NAME == &quot;Cattaragus&quot;, &quot;Cattaraugus&quot;, NAME)) # created a new variable so double check that merging was accurate, also fixed mispelled Cattaraugus
 
 print(nineteen_twentyone_county_lyme)</code></pre>
 <pre><code>## # A tibble: 62 × 4
@@ -618,7 +618,630 @@ summary(tick_lyme_weather)</code></pre>
 <pre class="r"><code>#load necessary libraries
 library(broom)
 library(ggplot2)
-library(dplyr)</code></pre>
+library(dplyr)
+library(knitr)</code></pre>
+<div id="table-of-all-relevent-data" class="section level3">
+<h3>Table of all relevent data</h3>
+<pre class="r"><code># Summarize or find the mean for the data for each of the relevant topics
+summary_table = tick_lyme_weather %&gt;%
+  group_by(name) %&gt;%
+  summarize(
+    total_cases = sum(lyme_rate, na.rm = TRUE),            
+    total_lyme_count = sum(lyme_count, na.rm = TRUE),     
+    total_ticks_collected = sum(total_ticks_collected, na.rm = TRUE),  
+    mean_prevalence = mean(lyme_rate, na.rm = TRUE),    
+    mean_b_burgdorferi = mean(b_burgdorferi_percent, na.rm = TRUE), 
+    n_observations = n()) %&gt;%
+  mutate(
+    prevalence_percent = mean_prevalence * 100,          
+    mean_b_burgdorferi_percent = mean_b_burgdorferi * 100)
+
+# Create the table
+summary_table %&gt;%
+  select(name, total_cases, total_lyme_count, total_ticks_collected, prevalence_percent, mean_b_burgdorferi_percent, n_observations) %&gt;%
+  knitr::kable(digits = 2, caption = &quot;Summary of Variables by County&quot;)</code></pre>
+<table>
+<caption>Summary of Variables by County</caption>
+<colgroup>
+<col width="10%" />
+<col width="9%" />
+<col width="13%" />
+<col width="17%" />
+<col width="15%" />
+<col width="21%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="right">total_cases</th>
+<th align="right">total_lyme_count</th>
+<th align="right">total_ticks_collected</th>
+<th align="right">prevalence_percent</th>
+<th align="right">mean_b_burgdorferi_percent</th>
+<th align="right">n_observations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Albany</td>
+<td align="right">279.0</td>
+<td align="right">2595</td>
+<td align="right">973</td>
+<td align="right">9300</td>
+<td align="right">6236.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Allegany</td>
+<td align="right">126.9</td>
+<td align="right">177</td>
+<td align="right">954</td>
+<td align="right">4230</td>
+<td align="right">5533.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Bronx</td>
+<td align="right">1.8</td>
+<td align="right">78</td>
+<td align="right">0</td>
+<td align="right">180</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Broome</td>
+<td align="right">326.8</td>
+<td align="right">1906</td>
+<td align="right">31</td>
+<td align="right">16340</td>
+<td align="right">5705.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Cattaragus</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">779</td>
+<td align="right">NaN</td>
+<td align="right">5650.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Cattaraugus</td>
+<td align="right">82.6</td>
+<td align="right">190</td>
+<td align="right">1327</td>
+<td align="right">4130</td>
+<td align="right">5340.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Cayuga</td>
+<td align="right">125.1</td>
+<td align="right">288</td>
+<td align="right">317</td>
+<td align="right">4170</td>
+<td align="right">5666.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Chautauqua</td>
+<td align="right">40.8</td>
+<td align="right">156</td>
+<td align="right">607</td>
+<td align="right">1360</td>
+<td align="right">5936.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Chemung</td>
+<td align="right">46.6</td>
+<td align="right">117</td>
+<td align="right">271</td>
+<td align="right">4660</td>
+<td align="right">5600.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Chenango</td>
+<td align="right">358.6</td>
+<td align="right">508</td>
+<td align="right">82</td>
+<td align="right">17930</td>
+<td align="right">6695.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Clinton</td>
+<td align="right">166.5</td>
+<td align="right">402</td>
+<td align="right">470</td>
+<td align="right">5550</td>
+<td align="right">6043.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Columbia</td>
+<td align="right">1340.4</td>
+<td align="right">2436</td>
+<td align="right">1754</td>
+<td align="right">44680</td>
+<td align="right">5660.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Cortland</td>
+<td align="right">152.9</td>
+<td align="right">217</td>
+<td align="right">51</td>
+<td align="right">15290</td>
+<td align="right">5290.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">541.8</td>
+<td align="right">726</td>
+<td align="right">373</td>
+<td align="right">18060</td>
+<td align="right">5556.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Dutchess</td>
+<td align="right">354.0</td>
+<td align="right">3135</td>
+<td align="right">692</td>
+<td align="right">11800</td>
+<td align="right">5836.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Erie</td>
+<td align="right">54.3</td>
+<td align="right">1515</td>
+<td align="right">360</td>
+<td align="right">1810</td>
+<td align="right">4666.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Essex</td>
+<td align="right">230.6</td>
+<td align="right">258</td>
+<td align="right">404</td>
+<td align="right">11530</td>
+<td align="right">5890.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Franklin</td>
+<td align="right">182.7</td>
+<td align="right">270</td>
+<td align="right">242</td>
+<td align="right">6090</td>
+<td align="right">4676.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Fulton</td>
+<td align="right">297.6</td>
+<td align="right">477</td>
+<td align="right">431</td>
+<td align="right">9920</td>
+<td align="right">5723.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Genesee</td>
+<td align="right">51.9</td>
+<td align="right">90</td>
+<td align="right">101</td>
+<td align="right">1730</td>
+<td align="right">5056.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Greene</td>
+<td align="right">1281.3</td>
+<td align="right">1836</td>
+<td align="right">758</td>
+<td align="right">42710</td>
+<td align="right">5893.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Hamilton</td>
+<td align="right">64.2</td>
+<td align="right">9</td>
+<td align="right">7</td>
+<td align="right">2140</td>
+<td align="right">2500.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Herkimer</td>
+<td align="right">54.5</td>
+<td align="right">100</td>
+<td align="right">97</td>
+<td align="right">5450</td>
+<td align="right">3800.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Jefferson</td>
+<td align="right">149.1</td>
+<td align="right">510</td>
+<td align="right">192</td>
+<td align="right">4970</td>
+<td align="right">7756.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Kings</td>
+<td align="right">11.6</td>
+<td align="right">906</td>
+<td align="right">0</td>
+<td align="right">1160</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Lewis</td>
+<td align="right">153.0</td>
+<td align="right">122</td>
+<td align="right">0</td>
+<td align="right">15300</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Livingston</td>
+<td align="right">77.6</td>
+<td align="right">146</td>
+<td align="right">266</td>
+<td align="right">3880</td>
+<td align="right">6000.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Madison</td>
+<td align="right">57.7</td>
+<td align="right">121</td>
+<td align="right">60</td>
+<td align="right">5770</td>
+<td align="right">5000.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Monroe</td>
+<td align="right">32.1</td>
+<td align="right">723</td>
+<td align="right">642</td>
+<td align="right">1070</td>
+<td align="right">5063.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Montgomery</td>
+<td align="right">177.6</td>
+<td align="right">264</td>
+<td align="right">602</td>
+<td align="right">5920</td>
+<td align="right">5480.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Nassau</td>
+<td align="right">9.4</td>
+<td align="right">387</td>
+<td align="right">0</td>
+<td align="right">940</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">New York</td>
+<td align="right">33.6</td>
+<td align="right">1624</td>
+<td align="right">0</td>
+<td align="right">1680</td>
+<td align="right">NaN</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Niagara</td>
+<td align="right">3.2</td>
+<td align="right">20</td>
+<td align="right">73</td>
+<td align="right">160</td>
+<td align="right">4675.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Oneida</td>
+<td align="right">171.9</td>
+<td align="right">1185</td>
+<td align="right">444</td>
+<td align="right">5730</td>
+<td align="right">5266.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Onondaga</td>
+<td align="right">67.8</td>
+<td align="right">945</td>
+<td align="right">308</td>
+<td align="right">2260</td>
+<td align="right">4653.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Ontario</td>
+<td align="right">75.9</td>
+<td align="right">252</td>
+<td align="right">424</td>
+<td align="right">2530</td>
+<td align="right">6343.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Orange</td>
+<td align="right">225.3</td>
+<td align="right">2634</td>
+<td align="right">360</td>
+<td align="right">7510</td>
+<td align="right">4866.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Orleans</td>
+<td align="right">24.9</td>
+<td align="right">30</td>
+<td align="right">43</td>
+<td align="right">830</td>
+<td align="right">4113.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Oswego</td>
+<td align="right">240.3</td>
+<td align="right">849</td>
+<td align="right">454</td>
+<td align="right">8010</td>
+<td align="right">5650.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Otsego</td>
+<td align="right">520.5</td>
+<td align="right">939</td>
+<td align="right">897</td>
+<td align="right">17350</td>
+<td align="right">6176.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Putnam</td>
+<td align="right">237.6</td>
+<td align="right">703</td>
+<td align="right">0</td>
+<td align="right">23760</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Queens</td>
+<td align="right">4.9</td>
+<td align="right">336</td>
+<td align="right">0</td>
+<td align="right">490</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Rensselaer</td>
+<td align="right">764.4</td>
+<td align="right">3666</td>
+<td align="right">1206</td>
+<td align="right">25480</td>
+<td align="right">5626.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Richmond</td>
+<td align="right">10.8</td>
+<td align="right">156</td>
+<td align="right">0</td>
+<td align="right">1080</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Rockland</td>
+<td align="right">145.8</td>
+<td align="right">1443</td>
+<td align="right">331</td>
+<td align="right">4860</td>
+<td align="right">4600.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Saratoga</td>
+<td align="right">212.4</td>
+<td align="right">1482</td>
+<td align="right">1835</td>
+<td align="right">7080</td>
+<td align="right">6006.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Schenectady</td>
+<td align="right">291.9</td>
+<td align="right">1374</td>
+<td align="right">968</td>
+<td align="right">9730</td>
+<td align="right">5590.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Schoharie</td>
+<td align="right">509.1</td>
+<td align="right">471</td>
+<td align="right">571</td>
+<td align="right">16970</td>
+<td align="right">5473.33</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Schuyler</td>
+<td align="right">463.6</td>
+<td align="right">248</td>
+<td align="right">154</td>
+<td align="right">23180</td>
+<td align="right">6100.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Seneca</td>
+<td align="right">109.6</td>
+<td align="right">112</td>
+<td align="right">108</td>
+<td align="right">5480</td>
+<td align="right">5100.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">St Lawrence</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">241</td>
+<td align="right">NaN</td>
+<td align="right">4500.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">St. Lawrence</td>
+<td align="right">82.3</td>
+<td align="right">268</td>
+<td align="right">97</td>
+<td align="right">8230</td>
+<td align="right">4600.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Steuben</td>
+<td align="right">127.0</td>
+<td align="right">362</td>
+<td align="right">792</td>
+<td align="right">6350</td>
+<td align="right">6400.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Suffolk</td>
+<td align="right">84.6</td>
+<td align="right">3807</td>
+<td align="right">5267</td>
+<td align="right">2820</td>
+<td align="right">5076.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Sullivan</td>
+<td align="right">180.9</td>
+<td align="right">417</td>
+<td align="right">463</td>
+<td align="right">6030</td>
+<td align="right">5200.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Tioga</td>
+<td align="right">160.6</td>
+<td align="right">233</td>
+<td align="right">0</td>
+<td align="right">16060</td>
+<td align="right">NaN</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Tompkins</td>
+<td align="right">390.9</td>
+<td align="right">1215</td>
+<td align="right">266</td>
+<td align="right">13030</td>
+<td align="right">5236.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Ulster</td>
+<td align="right">364.5</td>
+<td align="right">1971</td>
+<td align="right">350</td>
+<td align="right">12150</td>
+<td align="right">5690.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Warren</td>
+<td align="right">455.4</td>
+<td align="right">885</td>
+<td align="right">342</td>
+<td align="right">15180</td>
+<td align="right">4936.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Washington</td>
+<td align="right">527.7</td>
+<td align="right">969</td>
+<td align="right">1022</td>
+<td align="right">17590</td>
+<td align="right">5496.67</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Wayne</td>
+<td align="right">44.2</td>
+<td align="right">120</td>
+<td align="right">72</td>
+<td align="right">4420</td>
+<td align="right">6000.00</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Westchester</td>
+<td align="right">50.4</td>
+<td align="right">1479</td>
+<td align="right">350</td>
+<td align="right">1680</td>
+<td align="right">4800.00</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Wyoming</td>
+<td align="right">48.2</td>
+<td align="right">58</td>
+<td align="right">138</td>
+<td align="right">2410</td>
+<td align="right">4135.00</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Yates</td>
+<td align="right">73.8</td>
+<td align="right">55</td>
+<td align="right">15</td>
+<td align="right">7380</td>
+<td align="right">2000.00</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div
 id="relationship-between-tick-density-and-average-temperature-per-month"
 class="section level3">
@@ -1122,9 +1745,6 @@ broom::tidy(lyme_rate_vs_area) |&gt; select(term, estimate, p.value) |&gt;knitr:
 <pre class="r"><code>summary(tick_lyme_weather$pop2020)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 ##    5107   49532   92434  273104  234663 2736074       2</code></pre>
-<p>Considering that all other variables but the intercept are weak,
-there does not appear to be an association between lyme rate and area
-variables (shape area, shape length, and calculated square miles).</p>
 </div>
 <div
 id="trying-the-relationship-between-lyme_count-and-area-variables-including-human-population-density-in-2020"
@@ -1165,8 +1785,6 @@ broom::tidy(lyme_rate_vs_area_human) |&gt; select(term, estimate, p.value) |&gt;
 </tr>
 </tbody>
 </table>
-<p>Human population was found to be negatively associated(-4.14) and
-significantly association (p-value&lt;0.005) with lyme rate.</p>
 </div>
 <div
 id="relationship-between-b_burgdorferi_percent-and-population-variables"
@@ -1207,11 +1825,6 @@ broom::tidy(b_burgdorferi_percent_vs_population) |&gt; select(term, estimate, p.
 </tr>
 </tbody>
 </table>
-<p>The findings from the table demonstrate that the lyme rate and tick
-population density are slightly positively and significantly associated
-with B. burgdorferi percent. However, this does not appear to be related
-to the number of ticks collected considering that the number did not
-have a significant impact on the B. burgdorferi percent.</p>
 </div>
 <div
 id="logarithmic-examination-of-lyme-rate-versus-number-of-ticks-collected-and-tick-population-density"
@@ -1238,7 +1851,7 @@ ggplot(tick_lyme_weather_log, aes(x = log_tick_density, y = log_lyme_count)) +
 ## (`stat_smooth()`).</code></pre>
 <pre><code>## Warning: Removed 13 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="Mary_analysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="Mary_analysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="r"><code>#Examination of log-linear regression 
 log_model &lt;- lm(log_lyme_count ~ log_total_ticks + log_tick_density + b_burgdorferi_percent, data = tick_lyme_weather_log)
 summary(log_model)</code></pre>
@@ -1470,16 +2083,6 @@ broom::tidy(weather_model) |&gt; select(term, estimate, p.value) |&gt;knitr::kab
 <p>The logarithmic analysis found that the total number of ticks found
 and the B. burgdoferi percent had a positive, significant association
 with increased lyme disease rates.</p>
-<p>Some interesting findings from looking at the log of the weather
-variables include that months like March 2019 ( β=−1.002, p&lt;0.001)
-and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile,
-months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159,
-p=0.001)) had contrasting impacts, highlighting intra-annual variability
-in environmental or biological drivers.These months highlight that tick
-activity is present whenever the temperature is above freezing, is
-highly variable. The low R^2 value demonstrates significant variability.
-Therefore further analysis with environmental, demographic and
-behavioral data would be beneficial.</p>
 </div>
 </div>
 

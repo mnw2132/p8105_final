@@ -25,7 +25,7 @@ nineteen_twentyone_county_lyme = read_csv("new_york_county_lyme.csv") %>%  #read
          lyme_count = "event_count",
          lyme_rate = "percent_rate"
          ) %>%  # renaming so we can have a common variable when merging 
-  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+  mutate( data = "lyme", NAME = ifelse(NAME == "Cattaragus", "Cattaraugus", NAME)) # created a new variable so double check that merging was accurate, also fixed mispelled Cattaraugus
 
 print(nineteen_twentyone_county_lyme)
 
@@ -185,6 +185,30 @@ summary(tick_lyme_weather)
 library(broom)
 library(ggplot2)
 library(dplyr)
+library(knitr)
+```
+
+### Table of all relevent data 
+```{r}
+# Summarize or find the mean for the data for each of the relevant topics
+summary_table = tick_lyme_weather %>%
+  group_by(name) %>%
+  summarize(
+    total_cases = sum(lyme_rate, na.rm = TRUE),            
+    total_lyme_count = sum(lyme_count, na.rm = TRUE),     
+    total_ticks_collected = sum(total_ticks_collected, na.rm = TRUE),  
+    mean_prevalence = mean(lyme_rate, na.rm = TRUE),    
+    mean_b_burgdorferi = mean(b_burgdorferi_percent, na.rm = TRUE), 
+    n_observations = n()) %>%
+  mutate(
+    prevalence_percent = mean_prevalence * 100,          
+    mean_b_burgdorferi_percent = mean_b_burgdorferi * 100)
+
+# Create the table
+summary_table %>%
+  select(name, total_cases, total_lyme_count, total_ticks_collected, prevalence_percent, mean_b_burgdorferi_percent, n_observations) %>%
+  knitr::kable(digits = 2, caption = "Summary of Variables by County")
+
 ```
 
 ### Relationship between tick density and average temperature per month 
@@ -222,7 +246,7 @@ broom::tidy(lyme_rate_vs_area) |> select(term, estimate, p.value) |>knitr::kable
 
 summary(tick_lyme_weather$pop2020)
 ```
-Considering that all other variables but the intercept are weak, there does not appear to be an association between lyme rate and area variables (shape area, shape length, and calculated square miles). 
+ 
 
 ### Trying the relationship between lyme_count and area variables, including human population density in 2020
 ```{r}
@@ -230,7 +254,7 @@ lyme_rate_vs_area_human <- lm(lyme_count ~ shape_area  + shape_leng  + pop2020, 
 
 broom::tidy(lyme_rate_vs_area_human) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
-Human population was found to be negatively associated(-4.14) and significantly association (p-value<0.005) with lyme rate. 
+
 
 ### Relationship between b_burgdorferi_percent and population variables
 ```{r}
@@ -238,7 +262,7 @@ b_burgdorferi_percent_vs_population <- lm(b_burgdorferi_percent ~ lyme_count + t
 
 broom::tidy(b_burgdorferi_percent_vs_population) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
-The findings from the table demonstrate that the lyme rate and tick population density are slightly positively and significantly associated with B. burgdorferi percent. However, this does not appear to be related to the number of ticks collected considering that the number did not have a significant impact on the B. burgdorferi percent.
+
 
 ### Logarithmic examination of lyme rate versus number of ticks collected and tick population density
 ```{r}
@@ -272,6 +296,3 @@ weather_model <- lm(log_lyme_count ~ jan_19 + feb_19 + mar_19 + apr_19 + may_19 
 broom::tidy(weather_model) |> select(term, estimate, p.value) |>knitr::kable(digits =3)
 ```
 The logarithmic analysis found that the total number of ticks found and the B. burgdoferi percent had a positive, significant association with increased lyme disease rates. 
-
-Some interesting findings from looking at the log of the weather variables include that months like  March 2019 ( β=−1.002, p<0.001) and October 2020 (β=1.325, p=0.006) showing strong effects. Meanwhile, months like June 2021 (β=0.848, p=0.001) and July 2021 (β=−1.159, p=0.001)) had contrasting impacts, highlighting intra-annual variability in environmental or biological drivers.These months highlight that tick activity is present whenever the temperature is above freezing, is highly variable. 
-The low R^2 value demonstrates significant variability. Therefore further analysis with environmental, demographic and behavioral data would be beneficial. 
