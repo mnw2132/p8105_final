@@ -9,10 +9,6 @@ output: github_document
 This document for cleaning and tidying the data.
 
 ```{r, message=FALSE}
-<<<<<<< HEAD
-=======
-
->>>>>>> f94e35805a57bfcd86b4a5800e54bdda2dbe7ff3
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -597,4 +593,4 @@ gtsave(data = summary_table, filename = "Results/table.1.html")
 ```
 
 
->>>>>>> 8ee3b1ac1af6fd77520d8d1e84578967d4add811
+
