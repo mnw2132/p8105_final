@@ -9,11 +9,7 @@ output: github_document
 This document for cleaning and tidying the data.
 
 ```{r, message=FALSE}
-options(repos = c(CRAN = "https://cloud.r-project.org"))
 
-install.packages("remotes")
-install.packages("broom.helpers")
-remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)

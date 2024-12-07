@@ -7,25 +7,6 @@ Cleaning and Description of Analytic dataset
 This document for cleaning and tidying the data.
 
 ``` r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-install.packages("remotes")
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//RtmpAW4Tld/downloaded_packages
-
-``` r
-install.packages("broom.helpers")
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/pj/vmjxwds93714mf9yw4qrzpkw0000gp/T//RtmpAW4Tld/downloaded_packages
-
-``` r
-remotes::install_github("ddsjoberg/gtsummary")
 library(tidyverse)
 library(rvest)
 library(sf)
@@ -103,7 +84,7 @@ ny_county =  st_read("./Data Preparation/Counties.shp")  # read in the county sh
 ```
 
     ## Reading layer `Counties' from data source 
-    ##   `/Users/nickywilliams/Desktop/Data Science/p8105_final/Data Preparation/Counties.shp' 
+    ##   `/Users/kalebfrierson/Desktop/MPH/Year 2/Fall Semester 2024/Data Science I /Final/p8105_final/Data Preparation/Counties.shp' 
     ##   using driver `ESRI Shapefile'
     ## Simple feature collection with 62 features and 17 fields
     ## Geometry type: MULTIPOLYGON
@@ -377,71 +358,71 @@ summary_table %>%
   knitr::kable(digits = 2, caption = "Summary of Variables by County")
 ```
 
-| name | total_cases | total_lyme_count | total_ticks_collected | prevalence_percent | mean_b_burgdorferi_percent | n_observations |
-|:---|---:|---:|---:|---:|---:|---:|
-| Albany | 279.0 | 2595 | 973 | 9300 | 6236.67 | 3 |
-| Allegany | 126.9 | 177 | 954 | 4230 | 5533.33 | 3 |
-| Bronx | 1.8 | 78 | 0 | 180 | NaN | 1 |
-| Broome | 326.8 | 1906 | 31 | 16340 | 5705.00 | 2 |
-| Cattaraugus | 82.6 | 190 | 2106 | 4130 | 5443.33 | 3 |
-| Cayuga | 125.1 | 288 | 317 | 4170 | 5666.67 | 3 |
-| Chautauqua | 40.8 | 156 | 607 | 1360 | 5936.67 | 3 |
-| Chemung | 46.6 | 117 | 271 | 4660 | 5600.00 | 1 |
-| Chenango | 358.6 | 508 | 82 | 17930 | 6695.00 | 2 |
-| Clinton | 166.5 | 402 | 470 | 5550 | 6043.33 | 3 |
-| Columbia | 1340.4 | 2436 | 1754 | 44680 | 5660.00 | 3 |
-| Cortland | 152.9 | 217 | 51 | 15290 | 5290.00 | 1 |
-| Delaware | 541.8 | 726 | 373 | 18060 | 5556.67 | 3 |
-| Dutchess | 354.0 | 3135 | 692 | 11800 | 5836.67 | 3 |
-| Erie | 54.3 | 1515 | 360 | 1810 | 4666.67 | 3 |
-| Essex | 230.6 | 258 | 404 | 11530 | 5890.00 | 2 |
-| Franklin | 182.7 | 270 | 242 | 6090 | 4676.67 | 3 |
-| Fulton | 297.6 | 477 | 431 | 9920 | 5723.33 | 3 |
-| Genesee | 51.9 | 90 | 101 | 1730 | 5056.67 | 3 |
-| Greene | 1281.3 | 1836 | 758 | 42710 | 5893.33 | 3 |
-| Hamilton | 64.2 | 9 | 7 | 2140 | 2500.00 | 3 |
-| Herkimer | 54.5 | 100 | 97 | 5450 | 3800.00 | 1 |
-| Jefferson | 149.1 | 510 | 192 | 4970 | 7756.67 | 3 |
-| Kings | 11.6 | 906 | 0 | 1160 | NaN | 1 |
-| Lewis | 153.0 | 122 | 0 | 15300 | NaN | 1 |
-| Livingston | 77.6 | 146 | 266 | 3880 | 6000.00 | 2 |
-| Madison | 57.7 | 121 | 60 | 5770 | 5000.00 | 1 |
-| Monroe | 32.1 | 723 | 642 | 1070 | 5063.33 | 3 |
-| Montgomery | 177.6 | 264 | 602 | 5920 | 5480.00 | 3 |
-| Nassau | 9.4 | 387 | 0 | 940 | NaN | 1 |
-| New York | 33.6 | 1624 | 0 | 1680 | NaN | 2 |
-| Niagara | 3.2 | 20 | 73 | 160 | 4675.00 | 2 |
-| Oneida | 171.9 | 1185 | 444 | 5730 | 5266.67 | 3 |
-| Onondaga | 67.8 | 945 | 308 | 2260 | 4653.33 | 3 |
-| Ontario | 75.9 | 252 | 424 | 2530 | 6343.33 | 3 |
-| Orange | 225.3 | 2634 | 360 | 7510 | 4866.67 | 3 |
-| Orleans | 24.9 | 30 | 43 | 830 | 4113.33 | 3 |
-| Oswego | 240.3 | 849 | 454 | 8010 | 5650.00 | 3 |
-| Otsego | 520.5 | 939 | 897 | 17350 | 6176.67 | 3 |
-| Putnam | 237.6 | 703 | 0 | 23760 | NaN | 1 |
-| Queens | 4.9 | 336 | 0 | 490 | NaN | 1 |
-| Rensselaer | 764.4 | 3666 | 1206 | 25480 | 5626.67 | 3 |
-| Richmond | 10.8 | 156 | 0 | 1080 | NaN | 1 |
-| Rockland | 145.8 | 1443 | 331 | 4860 | 4600.00 | 3 |
-| Saratoga | 212.4 | 1482 | 1835 | 7080 | 6006.67 | 3 |
-| Schenectady | 291.9 | 1374 | 968 | 9730 | 5590.00 | 3 |
-| Schoharie | 509.1 | 471 | 571 | 16970 | 5473.33 | 3 |
-| Schuyler | 463.6 | 248 | 154 | 23180 | 6100.00 | 2 |
-| Seneca | 109.6 | 112 | 108 | 5480 | 5100.00 | 2 |
-| St Lawrence | 0.0 | 0 | 241 | NaN | 4500.00 | 2 |
-| St. Lawrence | 82.3 | 268 | 97 | 8230 | 4600.00 | 1 |
-| Steuben | 127.0 | 362 | 792 | 6350 | 6400.00 | 2 |
-| Suffolk | 84.6 | 3807 | 5267 | 2820 | 5076.67 | 3 |
-| Sullivan | 180.9 | 417 | 463 | 6030 | 5200.00 | 3 |
-| Tioga | 160.6 | 233 | 0 | 16060 | NaN | 1 |
-| Tompkins | 390.9 | 1215 | 266 | 13030 | 5236.67 | 3 |
-| Ulster | 364.5 | 1971 | 350 | 12150 | 5690.00 | 3 |
-| Warren | 455.4 | 885 | 342 | 15180 | 4936.67 | 3 |
-| Washington | 527.7 | 969 | 1022 | 17590 | 5496.67 | 3 |
-| Wayne | 44.2 | 120 | 72 | 4420 | 6000.00 | 1 |
-| Westchester | 50.4 | 1479 | 350 | 1680 | 4800.00 | 3 |
-| Wyoming | 48.2 | 58 | 138 | 2410 | 4135.00 | 2 |
-| Yates | 73.8 | 55 | 15 | 7380 | 2000.00 | 1 |
+| name         | total_cases | total_lyme_count | total_ticks_collected | prevalence_percent | mean_b_burgdorferi_percent | n_observations |
+|:-------------|------------:|-----------------:|----------------------:|-------------------:|---------------------------:|---------------:|
+| Albany       |       279.0 |             2595 |                   973 |               9300 |                    6236.67 |              3 |
+| Allegany     |       126.9 |              177 |                   954 |               4230 |                    5533.33 |              3 |
+| Bronx        |         1.8 |               78 |                     0 |                180 |                        NaN |              1 |
+| Broome       |       326.8 |             1906 |                    31 |              16340 |                    5705.00 |              2 |
+| Cattaraugus  |        82.6 |              190 |                  2106 |               4130 |                    5443.33 |              3 |
+| Cayuga       |       125.1 |              288 |                   317 |               4170 |                    5666.67 |              3 |
+| Chautauqua   |        40.8 |              156 |                   607 |               1360 |                    5936.67 |              3 |
+| Chemung      |        46.6 |              117 |                   271 |               4660 |                    5600.00 |              1 |
+| Chenango     |       358.6 |              508 |                    82 |              17930 |                    6695.00 |              2 |
+| Clinton      |       166.5 |              402 |                   470 |               5550 |                    6043.33 |              3 |
+| Columbia     |      1340.4 |             2436 |                  1754 |              44680 |                    5660.00 |              3 |
+| Cortland     |       152.9 |              217 |                    51 |              15290 |                    5290.00 |              1 |
+| Delaware     |       541.8 |              726 |                   373 |              18060 |                    5556.67 |              3 |
+| Dutchess     |       354.0 |             3135 |                   692 |              11800 |                    5836.67 |              3 |
+| Erie         |        54.3 |             1515 |                   360 |               1810 |                    4666.67 |              3 |
+| Essex        |       230.6 |              258 |                   404 |              11530 |                    5890.00 |              2 |
+| Franklin     |       182.7 |              270 |                   242 |               6090 |                    4676.67 |              3 |
+| Fulton       |       297.6 |              477 |                   431 |               9920 |                    5723.33 |              3 |
+| Genesee      |        51.9 |               90 |                   101 |               1730 |                    5056.67 |              3 |
+| Greene       |      1281.3 |             1836 |                   758 |              42710 |                    5893.33 |              3 |
+| Hamilton     |        64.2 |                9 |                     7 |               2140 |                    2500.00 |              3 |
+| Herkimer     |        54.5 |              100 |                    97 |               5450 |                    3800.00 |              1 |
+| Jefferson    |       149.1 |              510 |                   192 |               4970 |                    7756.67 |              3 |
+| Kings        |        11.6 |              906 |                     0 |               1160 |                        NaN |              1 |
+| Lewis        |       153.0 |              122 |                     0 |              15300 |                        NaN |              1 |
+| Livingston   |        77.6 |              146 |                   266 |               3880 |                    6000.00 |              2 |
+| Madison      |        57.7 |              121 |                    60 |               5770 |                    5000.00 |              1 |
+| Monroe       |        32.1 |              723 |                   642 |               1070 |                    5063.33 |              3 |
+| Montgomery   |       177.6 |              264 |                   602 |               5920 |                    5480.00 |              3 |
+| Nassau       |         9.4 |              387 |                     0 |                940 |                        NaN |              1 |
+| New York     |        33.6 |             1624 |                     0 |               1680 |                        NaN |              2 |
+| Niagara      |         3.2 |               20 |                    73 |                160 |                    4675.00 |              2 |
+| Oneida       |       171.9 |             1185 |                   444 |               5730 |                    5266.67 |              3 |
+| Onondaga     |        67.8 |              945 |                   308 |               2260 |                    4653.33 |              3 |
+| Ontario      |        75.9 |              252 |                   424 |               2530 |                    6343.33 |              3 |
+| Orange       |       225.3 |             2634 |                   360 |               7510 |                    4866.67 |              3 |
+| Orleans      |        24.9 |               30 |                    43 |                830 |                    4113.33 |              3 |
+| Oswego       |       240.3 |              849 |                   454 |               8010 |                    5650.00 |              3 |
+| Otsego       |       520.5 |              939 |                   897 |              17350 |                    6176.67 |              3 |
+| Putnam       |       237.6 |              703 |                     0 |              23760 |                        NaN |              1 |
+| Queens       |         4.9 |              336 |                     0 |                490 |                        NaN |              1 |
+| Rensselaer   |       764.4 |             3666 |                  1206 |              25480 |                    5626.67 |              3 |
+| Richmond     |        10.8 |              156 |                     0 |               1080 |                        NaN |              1 |
+| Rockland     |       145.8 |             1443 |                   331 |               4860 |                    4600.00 |              3 |
+| Saratoga     |       212.4 |             1482 |                  1835 |               7080 |                    6006.67 |              3 |
+| Schenectady  |       291.9 |             1374 |                   968 |               9730 |                    5590.00 |              3 |
+| Schoharie    |       509.1 |              471 |                   571 |              16970 |                    5473.33 |              3 |
+| Schuyler     |       463.6 |              248 |                   154 |              23180 |                    6100.00 |              2 |
+| Seneca       |       109.6 |              112 |                   108 |               5480 |                    5100.00 |              2 |
+| St Lawrence  |         0.0 |                0 |                   241 |                NaN |                    4500.00 |              2 |
+| St. Lawrence |        82.3 |              268 |                    97 |               8230 |                    4600.00 |              1 |
+| Steuben      |       127.0 |              362 |                   792 |               6350 |                    6400.00 |              2 |
+| Suffolk      |        84.6 |             3807 |                  5267 |               2820 |                    5076.67 |              3 |
+| Sullivan     |       180.9 |              417 |                   463 |               6030 |                    5200.00 |              3 |
+| Tioga        |       160.6 |              233 |                     0 |              16060 |                        NaN |              1 |
+| Tompkins     |       390.9 |             1215 |                   266 |              13030 |                    5236.67 |              3 |
+| Ulster       |       364.5 |             1971 |                   350 |              12150 |                    5690.00 |              3 |
+| Warren       |       455.4 |              885 |                   342 |              15180 |                    4936.67 |              3 |
+| Washington   |       527.7 |              969 |                  1022 |              17590 |                    5496.67 |              3 |
+| Wayne        |        44.2 |              120 |                    72 |               4420 |                    6000.00 |              1 |
+| Westchester  |        50.4 |             1479 |                   350 |               1680 |                    4800.00 |              3 |
+| Wyoming      |        48.2 |               58 |                   138 |               2410 |                    4135.00 |              2 |
+| Yates        |        73.8 |               55 |                    15 |               7380 |                    2000.00 |              1 |
 
 Summary of Variables by County
 
@@ -1160,20 +1141,20 @@ regression_table =
 regression_table
 ```
 
-<div id="jpaoselcef" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jpaoselcef table {
+<div id="uyhtkfykpm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uyhtkfykpm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#jpaoselcef thead, #jpaoselcef tbody, #jpaoselcef tfoot, #jpaoselcef tr, #jpaoselcef td, #jpaoselcef th {
+&#10;#uyhtkfykpm thead, #uyhtkfykpm tbody, #uyhtkfykpm tfoot, #uyhtkfykpm tr, #uyhtkfykpm td, #uyhtkfykpm th {
   border-style: none;
 }
-&#10;#jpaoselcef p {
+&#10;#uyhtkfykpm p {
   margin: 0;
   padding: 0;
 }
-&#10;#jpaoselcef .gt_table {
+&#10;#uyhtkfykpm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1198,11 +1179,11 @@ regression_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_caption {
+&#10;#uyhtkfykpm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#jpaoselcef .gt_title {
+&#10;#uyhtkfykpm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1213,7 +1194,7 @@ regression_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#jpaoselcef .gt_subtitle {
+&#10;#uyhtkfykpm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1224,7 +1205,7 @@ regression_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#jpaoselcef .gt_heading {
+&#10;#uyhtkfykpm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1235,12 +1216,12 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_bottom_border {
+&#10;#uyhtkfykpm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_col_headings {
+&#10;#uyhtkfykpm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1254,7 +1235,7 @@ regression_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_col_heading {
+&#10;#uyhtkfykpm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1273,7 +1254,7 @@ regression_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer {
+&#10;#uyhtkfykpm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1284,13 +1265,13 @@ regression_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer:first-child {
+&#10;#uyhtkfykpm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#jpaoselcef .gt_column_spanner_outer:last-child {
+&#10;#uyhtkfykpm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#jpaoselcef .gt_column_spanner {
+&#10;#uyhtkfykpm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1301,10 +1282,10 @@ regression_table
   display: inline-block;
   width: 100%;
 }
-&#10;#jpaoselcef .gt_spanner_row {
+&#10;#uyhtkfykpm .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#jpaoselcef .gt_group_heading {
+&#10;#uyhtkfykpm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1329,7 +1310,7 @@ regression_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#jpaoselcef .gt_empty_group_heading {
+&#10;#uyhtkfykpm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1343,13 +1324,13 @@ regression_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#jpaoselcef .gt_from_md > :first-child {
+&#10;#uyhtkfykpm .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#jpaoselcef .gt_from_md > :last-child {
+&#10;#uyhtkfykpm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#jpaoselcef .gt_row {
+&#10;#uyhtkfykpm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1367,7 +1348,7 @@ regression_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#jpaoselcef .gt_stub {
+&#10;#uyhtkfykpm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1379,7 +1360,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_stub_row_group {
+&#10;#uyhtkfykpm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1392,13 +1373,13 @@ regression_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#jpaoselcef .gt_row_group_first td {
+&#10;#uyhtkfykpm .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_row_group_first th {
+&#10;#uyhtkfykpm .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_summary_row {
+&#10;#uyhtkfykpm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1407,14 +1388,14 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_first_summary_row {
+&#10;#uyhtkfykpm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_first_summary_row.thick {
+&#10;#uyhtkfykpm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#jpaoselcef .gt_last_summary_row {
+&#10;#uyhtkfykpm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1423,7 +1404,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_grand_summary_row {
+&#10;#uyhtkfykpm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1432,7 +1413,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_first_grand_summary_row {
+&#10;#uyhtkfykpm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1441,7 +1422,7 @@ regression_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_last_grand_summary_row_top {
+&#10;#uyhtkfykpm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1450,10 +1431,10 @@ regression_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_striped {
+&#10;#uyhtkfykpm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#jpaoselcef .gt_table_body {
+&#10;#uyhtkfykpm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1461,7 +1442,7 @@ regression_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_footnotes {
+&#10;#uyhtkfykpm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1474,7 +1455,7 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_footnote {
+&#10;#uyhtkfykpm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1482,7 +1463,7 @@ regression_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_sourcenotes {
+&#10;#uyhtkfykpm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1495,64 +1476,64 @@ regression_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#jpaoselcef .gt_sourcenote {
+&#10;#uyhtkfykpm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#jpaoselcef .gt_left {
+&#10;#uyhtkfykpm .gt_left {
   text-align: left;
 }
-&#10;#jpaoselcef .gt_center {
+&#10;#uyhtkfykpm .gt_center {
   text-align: center;
 }
-&#10;#jpaoselcef .gt_right {
+&#10;#uyhtkfykpm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#jpaoselcef .gt_font_normal {
+&#10;#uyhtkfykpm .gt_font_normal {
   font-weight: normal;
 }
-&#10;#jpaoselcef .gt_font_bold {
+&#10;#uyhtkfykpm .gt_font_bold {
   font-weight: bold;
 }
-&#10;#jpaoselcef .gt_font_italic {
+&#10;#uyhtkfykpm .gt_font_italic {
   font-style: italic;
 }
-&#10;#jpaoselcef .gt_super {
+&#10;#uyhtkfykpm .gt_super {
   font-size: 65%;
 }
-&#10;#jpaoselcef .gt_footnote_marks {
+&#10;#uyhtkfykpm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#jpaoselcef .gt_asterisk {
+&#10;#uyhtkfykpm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#jpaoselcef .gt_indent_1 {
+&#10;#uyhtkfykpm .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#jpaoselcef .gt_indent_2 {
+&#10;#uyhtkfykpm .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#jpaoselcef .gt_indent_3 {
+&#10;#uyhtkfykpm .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#jpaoselcef .gt_indent_4 {
+&#10;#uyhtkfykpm .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#jpaoselcef .gt_indent_5 {
+&#10;#uyhtkfykpm .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#jpaoselcef .katex-display {
+&#10;#uyhtkfykpm .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#jpaoselcef div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#uyhtkfykpm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1614,20 +1595,20 @@ table1 =
 table1
 ```
 
-<div id="rgylpqwqmn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rgylpqwqmn table {
+<div id="shebhyigsy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#shebhyigsy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#rgylpqwqmn thead, #rgylpqwqmn tbody, #rgylpqwqmn tfoot, #rgylpqwqmn tr, #rgylpqwqmn td, #rgylpqwqmn th {
+&#10;#shebhyigsy thead, #shebhyigsy tbody, #shebhyigsy tfoot, #shebhyigsy tr, #shebhyigsy td, #shebhyigsy th {
   border-style: none;
 }
-&#10;#rgylpqwqmn p {
+&#10;#shebhyigsy p {
   margin: 0;
   padding: 0;
 }
-&#10;#rgylpqwqmn .gt_table {
+&#10;#shebhyigsy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1652,11 +1633,11 @@ table1
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_caption {
+&#10;#shebhyigsy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#rgylpqwqmn .gt_title {
+&#10;#shebhyigsy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1667,7 +1648,7 @@ table1
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#rgylpqwqmn .gt_subtitle {
+&#10;#shebhyigsy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1678,7 +1659,7 @@ table1
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#rgylpqwqmn .gt_heading {
+&#10;#shebhyigsy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1689,12 +1670,12 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_bottom_border {
+&#10;#shebhyigsy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_col_headings {
+&#10;#shebhyigsy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1708,7 +1689,7 @@ table1
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_col_heading {
+&#10;#shebhyigsy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1727,7 +1708,7 @@ table1
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer {
+&#10;#shebhyigsy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1738,13 +1719,13 @@ table1
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer:first-child {
+&#10;#shebhyigsy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#rgylpqwqmn .gt_column_spanner_outer:last-child {
+&#10;#shebhyigsy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#rgylpqwqmn .gt_column_spanner {
+&#10;#shebhyigsy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1755,10 +1736,10 @@ table1
   display: inline-block;
   width: 100%;
 }
-&#10;#rgylpqwqmn .gt_spanner_row {
+&#10;#shebhyigsy .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#rgylpqwqmn .gt_group_heading {
+&#10;#shebhyigsy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1783,7 +1764,7 @@ table1
   vertical-align: middle;
   text-align: left;
 }
-&#10;#rgylpqwqmn .gt_empty_group_heading {
+&#10;#shebhyigsy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1797,13 +1778,13 @@ table1
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#rgylpqwqmn .gt_from_md > :first-child {
+&#10;#shebhyigsy .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#rgylpqwqmn .gt_from_md > :last-child {
+&#10;#shebhyigsy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#rgylpqwqmn .gt_row {
+&#10;#shebhyigsy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1821,7 +1802,7 @@ table1
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#rgylpqwqmn .gt_stub {
+&#10;#shebhyigsy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1833,7 +1814,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_stub_row_group {
+&#10;#shebhyigsy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1846,13 +1827,13 @@ table1
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#rgylpqwqmn .gt_row_group_first td {
+&#10;#shebhyigsy .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_row_group_first th {
+&#10;#shebhyigsy .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_summary_row {
+&#10;#shebhyigsy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1861,14 +1842,14 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_first_summary_row {
+&#10;#shebhyigsy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_first_summary_row.thick {
+&#10;#shebhyigsy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#rgylpqwqmn .gt_last_summary_row {
+&#10;#shebhyigsy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1877,7 +1858,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_grand_summary_row {
+&#10;#shebhyigsy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1886,7 +1867,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_first_grand_summary_row {
+&#10;#shebhyigsy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1895,7 +1876,7 @@ table1
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_last_grand_summary_row_top {
+&#10;#shebhyigsy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1904,10 +1885,10 @@ table1
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_striped {
+&#10;#shebhyigsy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#rgylpqwqmn .gt_table_body {
+&#10;#shebhyigsy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1915,7 +1896,7 @@ table1
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_footnotes {
+&#10;#shebhyigsy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1928,7 +1909,7 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_footnote {
+&#10;#shebhyigsy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1936,7 +1917,7 @@ table1
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_sourcenotes {
+&#10;#shebhyigsy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1949,64 +1930,64 @@ table1
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#rgylpqwqmn .gt_sourcenote {
+&#10;#shebhyigsy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#rgylpqwqmn .gt_left {
+&#10;#shebhyigsy .gt_left {
   text-align: left;
 }
-&#10;#rgylpqwqmn .gt_center {
+&#10;#shebhyigsy .gt_center {
   text-align: center;
 }
-&#10;#rgylpqwqmn .gt_right {
+&#10;#shebhyigsy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#rgylpqwqmn .gt_font_normal {
+&#10;#shebhyigsy .gt_font_normal {
   font-weight: normal;
 }
-&#10;#rgylpqwqmn .gt_font_bold {
+&#10;#shebhyigsy .gt_font_bold {
   font-weight: bold;
 }
-&#10;#rgylpqwqmn .gt_font_italic {
+&#10;#shebhyigsy .gt_font_italic {
   font-style: italic;
 }
-&#10;#rgylpqwqmn .gt_super {
+&#10;#shebhyigsy .gt_super {
   font-size: 65%;
 }
-&#10;#rgylpqwqmn .gt_footnote_marks {
+&#10;#shebhyigsy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#rgylpqwqmn .gt_asterisk {
+&#10;#shebhyigsy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#rgylpqwqmn .gt_indent_1 {
+&#10;#shebhyigsy .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#rgylpqwqmn .gt_indent_2 {
+&#10;#shebhyigsy .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#rgylpqwqmn .gt_indent_3 {
+&#10;#shebhyigsy .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#rgylpqwqmn .gt_indent_4 {
+&#10;#shebhyigsy .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#rgylpqwqmn .gt_indent_5 {
+&#10;#shebhyigsy .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#rgylpqwqmn .katex-display {
+&#10;#shebhyigsy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#rgylpqwqmn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#shebhyigsy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2461,20 +2442,20 @@ summary_table <- summary_stats %>%
 summary_table
 ```
 
-<div id="zruoezicnp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zruoezicnp table {
+<div id="bmkdppkdrq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bmkdppkdrq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#zruoezicnp thead, #zruoezicnp tbody, #zruoezicnp tfoot, #zruoezicnp tr, #zruoezicnp td, #zruoezicnp th {
+&#10;#bmkdppkdrq thead, #bmkdppkdrq tbody, #bmkdppkdrq tfoot, #bmkdppkdrq tr, #bmkdppkdrq td, #bmkdppkdrq th {
   border-style: none;
 }
-&#10;#zruoezicnp p {
+&#10;#bmkdppkdrq p {
   margin: 0;
   padding: 0;
 }
-&#10;#zruoezicnp .gt_table {
+&#10;#bmkdppkdrq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2499,11 +2480,11 @@ summary_table
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_caption {
+&#10;#bmkdppkdrq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#zruoezicnp .gt_title {
+&#10;#bmkdppkdrq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2514,7 +2495,7 @@ summary_table
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#zruoezicnp .gt_subtitle {
+&#10;#bmkdppkdrq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2525,7 +2506,7 @@ summary_table
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#zruoezicnp .gt_heading {
+&#10;#bmkdppkdrq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2536,12 +2517,12 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_bottom_border {
+&#10;#bmkdppkdrq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_col_headings {
+&#10;#bmkdppkdrq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2555,7 +2536,7 @@ summary_table
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_col_heading {
+&#10;#bmkdppkdrq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2574,7 +2555,7 @@ summary_table
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer {
+&#10;#bmkdppkdrq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2585,13 +2566,13 @@ summary_table
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer:first-child {
+&#10;#bmkdppkdrq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#zruoezicnp .gt_column_spanner_outer:last-child {
+&#10;#bmkdppkdrq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#zruoezicnp .gt_column_spanner {
+&#10;#bmkdppkdrq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2602,10 +2583,10 @@ summary_table
   display: inline-block;
   width: 100%;
 }
-&#10;#zruoezicnp .gt_spanner_row {
+&#10;#bmkdppkdrq .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#zruoezicnp .gt_group_heading {
+&#10;#bmkdppkdrq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2630,7 +2611,7 @@ summary_table
   vertical-align: middle;
   text-align: left;
 }
-&#10;#zruoezicnp .gt_empty_group_heading {
+&#10;#bmkdppkdrq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2644,13 +2625,13 @@ summary_table
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#zruoezicnp .gt_from_md > :first-child {
+&#10;#bmkdppkdrq .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#zruoezicnp .gt_from_md > :last-child {
+&#10;#bmkdppkdrq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#zruoezicnp .gt_row {
+&#10;#bmkdppkdrq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2668,7 +2649,7 @@ summary_table
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#zruoezicnp .gt_stub {
+&#10;#bmkdppkdrq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2680,7 +2661,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_stub_row_group {
+&#10;#bmkdppkdrq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2693,13 +2674,13 @@ summary_table
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#zruoezicnp .gt_row_group_first td {
+&#10;#bmkdppkdrq .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_row_group_first th {
+&#10;#bmkdppkdrq .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_summary_row {
+&#10;#bmkdppkdrq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2708,14 +2689,14 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_first_summary_row {
+&#10;#bmkdppkdrq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_first_summary_row.thick {
+&#10;#bmkdppkdrq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#zruoezicnp .gt_last_summary_row {
+&#10;#bmkdppkdrq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2724,7 +2705,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_grand_summary_row {
+&#10;#bmkdppkdrq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2733,7 +2714,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_first_grand_summary_row {
+&#10;#bmkdppkdrq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2742,7 +2723,7 @@ summary_table
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_last_grand_summary_row_top {
+&#10;#bmkdppkdrq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2751,10 +2732,10 @@ summary_table
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_striped {
+&#10;#bmkdppkdrq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#zruoezicnp .gt_table_body {
+&#10;#bmkdppkdrq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2762,7 +2743,7 @@ summary_table
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_footnotes {
+&#10;#bmkdppkdrq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2775,7 +2756,7 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_footnote {
+&#10;#bmkdppkdrq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2783,7 +2764,7 @@ summary_table
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_sourcenotes {
+&#10;#bmkdppkdrq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2796,64 +2777,64 @@ summary_table
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zruoezicnp .gt_sourcenote {
+&#10;#bmkdppkdrq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zruoezicnp .gt_left {
+&#10;#bmkdppkdrq .gt_left {
   text-align: left;
 }
-&#10;#zruoezicnp .gt_center {
+&#10;#bmkdppkdrq .gt_center {
   text-align: center;
 }
-&#10;#zruoezicnp .gt_right {
+&#10;#bmkdppkdrq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#zruoezicnp .gt_font_normal {
+&#10;#bmkdppkdrq .gt_font_normal {
   font-weight: normal;
 }
-&#10;#zruoezicnp .gt_font_bold {
+&#10;#bmkdppkdrq .gt_font_bold {
   font-weight: bold;
 }
-&#10;#zruoezicnp .gt_font_italic {
+&#10;#bmkdppkdrq .gt_font_italic {
   font-style: italic;
 }
-&#10;#zruoezicnp .gt_super {
+&#10;#bmkdppkdrq .gt_super {
   font-size: 65%;
 }
-&#10;#zruoezicnp .gt_footnote_marks {
+&#10;#bmkdppkdrq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#zruoezicnp .gt_asterisk {
+&#10;#bmkdppkdrq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#zruoezicnp .gt_indent_1 {
+&#10;#bmkdppkdrq .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#zruoezicnp .gt_indent_2 {
+&#10;#bmkdppkdrq .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#zruoezicnp .gt_indent_3 {
+&#10;#bmkdppkdrq .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#zruoezicnp .gt_indent_4 {
+&#10;#bmkdppkdrq .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#zruoezicnp .gt_indent_5 {
+&#10;#bmkdppkdrq .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#zruoezicnp .katex-display {
+&#10;#bmkdppkdrq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#zruoezicnp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#bmkdppkdrq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
