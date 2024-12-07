@@ -1,7 +1,6 @@
 Analytic Dataset
 ================
 Sarahy Martinez
-2024-11-16
 
 This document for cleaning and tidying the data.
 
@@ -82,7 +81,7 @@ ny_county =  st_read("./Counties.shp")  # read in the county shapefile
 ```
 
     ## Reading layer `Counties' from data source 
-    ##   `C:\Users\sarah\OneDrive\Documents\Data Science\p8105_final\Data Preparation\Counties.shp' 
+    ##   `/Users/kalebfrierson/Desktop/MPH/Year 2/Fall Semester 2024/Data Science I /Final/p8105_final/Data Preparation/Counties.shp' 
     ##   using driver `ESRI Shapefile'
     ## Simple feature collection with 62 features and 17 fields
     ## Geometry type: MULTIPOLYGON
@@ -112,16 +111,16 @@ print(ny_county)
     ## 9     Chenango   CHEN  974107     36017 080000     Central   51768   51401
     ## 10     Clinton   CLIN  974108     36019 090000        East   85969   79894
     ##    POP2010 POP2020 DOS_LL DOSLL_DATE NYC CALC_SQ_MI    DATEMOD Shape_Leng
-    ## 1   304204  314848   <NA> -001-11-30   N  532.79178 2017-11-10  166077.83
-    ## 2    48946   46456   <NA> -001-11-30   N 1035.20913 2019-04-26  210499.34
-    ## 3  1385108 1472654   <NA> -001-11-30   Y   57.47215 2019-10-04   57253.86
-    ## 4   200600  198683   <NA> -001-11-30   N  715.28747 2019-04-26  227933.33
-    ## 5    80317   77042   <NA> -001-11-30   N 1324.30922 2019-04-26  276084.51
-    ## 6    80026   76248   <NA> -001-11-30   N  881.82350 2018-07-18  334039.80
-    ## 7   134905  127657   <NA> -001-11-30   N 1507.79455 2019-04-26  247508.47
-    ## 8    88830   84148   <NA> -001-11-30   N  410.95932 2019-04-26  146916.78
-    ## 9    50477   47220   <NA> -001-11-30   N  897.81864 2018-10-03  226955.16
-    ## 10   82128   79843   <NA> -001-11-30   N 1116.81373 2018-12-07  235243.35
+    ## 1   304204  314848   <NA>       <NA>   N  532.79178 2017-11-10  166077.83
+    ## 2    48946   46456   <NA>       <NA>   N 1035.20913 2019-04-26  210499.34
+    ## 3  1385108 1472654   <NA>       <NA>   Y   57.47215 2019-10-04   57253.86
+    ## 4   200600  198683   <NA>       <NA>   N  715.28747 2019-04-26  227933.33
+    ## 5    80317   77042   <NA>       <NA>   N 1324.30922 2019-04-26  276084.51
+    ## 6    80026   76248   <NA>       <NA>   N  881.82350 2018-07-18  334039.80
+    ## 7   134905  127657   <NA>       <NA>   N 1507.79455 2019-04-26  247508.47
+    ## 8    88830   84148   <NA>       <NA>   N  410.95932 2019-04-26  146916.78
+    ## 9    50477   47220   <NA>       <NA>   N  897.81864 2018-10-03  226955.16
+    ## 10   82128   79843   <NA>       <NA>   N 1116.81373 2018-12-07  235243.35
     ##    Shape_Area                       geometry
     ## 1  1379924372 MULTIPOLYGON (((605729 4737...
     ## 2  2681179340 MULTIPOLYGON (((229573.9 47...
@@ -244,6 +243,8 @@ tick_lyme_weather = NY_lyme_tick_county  %>% # now merging the entire dataset wi
 
 ``` r
 combined_years_avg_temp = bind_rows(nineteen, twenty, twenty_one)
+
+write_csv(combined_years_avg_temp, "combined_data_kf.csv")
 ```
 
 # Saved Final Dataset
@@ -258,9 +259,10 @@ tidied = read_csv("final_data.csv")
     ## Rows: 148 Columns: 74
     ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: ","
-    ## chr  (9): name, county_centroid, abbrev, swis, nysp_zone, dosll_date, nyc, d...
-    ## dbl (64): year, total_ticks_collected, tick_population_density, ticks_tested...
-    ## lgl  (1): dos_ll
+    ## chr   (7): name, county_centroid, abbrev, swis, nysp_zone, nyc, geometry
+    ## dbl  (64): year, total_ticks_collected, tick_population_density, ticks_teste...
+    ## lgl   (2): dos_ll, dosll_date
+    ## date  (1): datemod
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.

@@ -6,7 +6,8 @@ output: html_document
 runtine: shiny
 ---
 
-This document for visualizing the cleaned/tidied data set.The beginning of this code is a repeat of the tidied data from Data Preparation. This was performed again since there was an issue in the geometry  of the final_data.csv. So we will be working with a data set called tick_lyme_weather with proper geometry attributes needed to make maps.
+Here we visualize using the cleaned/tidied data set.The beginning of this code is a repeat of the tidied data from Data Preparation. This was performed again since there was an issue in the geometry  of the final_data.csv. So we will be working with a data set called tick_lyme_weather with proper geometry attributes needed to make maps.
+
 ```{r, message=FALSE}
 #Load the necessary libraries 
 library(tidyverse)
@@ -132,6 +133,10 @@ ny_data$year <- ifelse(ny_data$year <= 22, ny_data$year + 2000, ny_data$year + 1
 
 # Check unique years to ensure proper extraction
 unique(ny_data$year)
+
+```
+
+```{r}
 
 # Define a function to generate the map for a specific year
 generate_map <- function(selected_year) {

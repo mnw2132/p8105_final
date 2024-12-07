@@ -1,0 +1,206 @@
+---
+title: "Analysis for Publish"
+output: html_document
+---
+
+Herein we perform regression analysis, exploring whether the percent of ticks carrying the bacteria which causes Lyme disease effects the case count. Additionally, we include average temperature in our model. 
+
+# Library Calling
+
+```{r libraries}
+library(tidyverse)        
+library(dplyr)            
+library(ggplot2)         
+library(gt)               
+library(gtsummary)        
+library(readr)  
+```
+
+# Housekeeping
+
+```{r}
+# Boxplot of 'lyme_count' per 'year'
+
+data = read_csv("combined_data_kf.csv")
+
+# Fix mispells of Cattaraugus and St. Lawrance
+data <- data %>%
+  mutate(
+    name = case_when(
+      name == "Cattaragus" ~ "Cattaraugus",
+      name == "St Lawrance" ~ "St. Lawrance",
+      TRUE ~ name))
+```
+
+# Checking Assumptions
+
+```{r}
+
+histogram_cases = 
+  data |>
+  ggplot(aes(x = lyme_count)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 1, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of all cases",
+    x = "Cases of Lyme Disease",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+
+# Boxplot of 'lyme_count' per 'year' with mean
+boxplots =
+  data |>
+  ggplot(aes(x = factor(year), y = lyme_count)) +
+  geom_boxplot() +
+  stat_summary(
+    fun = mean,
+    geom = "point",
+    shape = 20,
+    size = 3,
+    color = "red",
+    fill = "red"
+  ) +
+  labs(
+    title = "Distribution of Lyme Disease Cases by Year",
+    x = "Year",
+    y = "Lyme Disease Cases"
+  ) +
+  theme_minimal()
+
+histogram_cases
+boxplots
+
+# cases are right skewed
+
+data = 
+  data |> 
+  mutate(log_cases = log10(lyme_count))
+
+histogram_logcases = 
+  data |>
+  ggplot(aes(x = log_cases)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 0.5, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of all cases",
+    x = "Cases of Lyme Disease",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+histogram_logcases
+
+ggsave(
+  filename = "histogram_cases.png",
+  plot = histogram_cases,          
+  path = "."
+)
+
+ggsave(
+  filename = "boxplots_cases_year.png",
+  plot = boxplots,          
+  path = "."
+)
+
+ggsave(
+  filename = "histogram_log_cases.png", 
+  plot = histogram_logcases, 
+  path = "."
+)
+
+#log10 transformation makes outcome a bit better distributed. 
+```
+
+
+```{r}
+# Step 2: Histogram and density plot for average temperature
+
+histogram_temp = 
+  data |>
+  ggplot(aes(x = avg_temp)) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 1, 
+                 fill = "blue",
+                 alpha = 0.7, 
+                 color = "black") +
+  labs(
+    title = "Distribution of Average Temperature",
+    x = "Average Temperature",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+histogram_temp
+
+# temperature is normally distributed
+
+ggsave(
+  filename = "temperature_distribution.png",
+  plot = histogram_temp,          
+  path = "."
+)
+
+```
+
+
+```{r}
+# Step 3: Histogram and density plot for 'prev_badtick'
+
+dis_bad_tick_per = 
+  data |>
+  ggplot(aes(x = b_burgdorferi_percent)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.05, fill = "green", alpha = 0.7, color = "black") +
+  geom_density(alpha = 0.3, fill = "purple") +
+  labs(
+    title = "Distribution of prev_badtick",
+    x = "Prevalence of Bad Tick",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+dis_bad_tick_per
+
+ggsave(
+  filename = "tickwithbdistribution.png",
+  plot = dis_bad_tick_per,          
+  path = "."
+)
+
+# percentage of ticks sampled carrying lyme-causing bacteria is normally distributed
+
+```
+
+# The Model
+
+```{r}
+# Regression model of case_count on prev_badtick controlling for avg_temperature
+model <- lm(log_cases ~ b_burgdorferi_percent + avg_temp, data = data)
+summary(model)
+
+regression_table = 
+  tbl_regression(
+  model,
+  intercept = TRUE,
+  label = list(
+    b_burgdorferi_percent ~ "% Ticks Carry",
+    avg_temp ~ "Avg Temp"
+  )
+)
+
+regression_table
+
+gt_table = 
+  as_gt(regression_table)
+
+gtsave(gt_table, filename = "regress.html")
+```
+
+

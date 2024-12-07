@@ -1,7 +1,6 @@
 ---
 title: "Analytic Dataset"
 author: "Sarahy Martinez"
-date: "2024-11-16"
 output: github_document
 ---
 

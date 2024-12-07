@@ -9,6 +9,10 @@ output: github_document
 This document for cleaning and tidying the data.
 
 ```{r, message=FALSE}
+<<<<<<< HEAD
+=======
+
+>>>>>>> f94e35805a57bfcd86b4a5800e54bdda2dbe7ff3
 library(tidyverse)
 library(rvest)
 library(sf)

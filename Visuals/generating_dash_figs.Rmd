@@ -1,0 +1,172 @@
+---
+title: "generating maps for the dashboard"
+author: "Kaleb J. Frierson"
+date: "2024-12-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(rvest)
+library(sf)
+library(purrr)
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(leaflet)
+library(tigris)
+options(tigris_use_cache = TRUE)
+``` 
+
+```{r, message=FALSE, include =FALSE}
+#Read in lyme dataset and select necessary variables
+nineteen_twentyone_county_lyme = read_csv(" new_york_county_lyme.csv") %>%  #read in the NYC lyme data
+  janitor::clean_names() %>%  #clean the names 
+  select(county_name, event_count,percent_rate ) %>%  # select variables of interest 
+  rename(NAME = "county_name", 
+         lyme_count = "event_count",
+         lyme_rate = "percent_rate"
+         ) %>%  # renaming so we can have a common variable when merging 
+  mutate( data = "lyme") # created a new variable so double check that merging was accurate
+
+print(nineteen_twentyone_county_lyme)
+
+```
+
+```{r, message=FALSE, include = FALSE}
+#Read in tick data set and remove unnecessary variables 
+tick_surveillance = read_csv("./Deer_Tick_Surveillance__Adults__Oct_to_Dec__excluding_Powassan_virus__Beginning_2008_20241116.csv") %>% 
+  janitor::clean_names() %>% # clean the names so they follow normal form 
+  filter(year %in% 2019:2021 ) %>%  # filtering from the years of interest that are based from the lyme disease data 
+  rename(NAME = "county") %>% # renaming for common identifier
+  rename(ticks_tested = "total_tested") %>% 
+  select(-total_sites_visited, -school_districts_2016_shp, -local_waterfront_revitalization_program_lwrp_communities, -new_york_zip_codes, -counties, -nys_senate_districts, -a_phagocytophilum_percent, -b_microti_percent, -b_miyamotoi_percent) %>%  # selecting and removing variables of interest , 
+mutate(data = "ticks")  # adding a variable to identify merging 
+
+print(tick_surveillance)
+```
+
+```{r, message=FALSE, include = FALSE}
+#Read in shp file for NY counties to use for heatmap and county level data
+ny_county =  st_read("Counties.shp")  
+```
+
+```{r, message=FALSE, include = FALSE}
+# Merging the tick and lyme data set  
+NY_lyme_tick = full_join(tick_surveillance, nineteen_twentyone_county_lyme, by = "NAME") %>% 
+  select(-data.x, -data.y)
+
+# Merging the shape file with this combined file
+NY_lyme_tick_county = NY_lyme_tick %>%
+  left_join(ny_county, by = "NAME") %>% 
+  janitor::clean_names() 
+```
+
+```{r, include = FALSE}
+#Merging and reading in average temperature csv with data from Jan19 to Dec22
+ny_temp = read_csv("./avg_temp_county.csv", skip =1) %>% 
+  janitor::clean_names() %>% 
+  select(county:dec_22) %>% 
+mutate(county = str_replace_all(county, "(?i) county$", "")) %>% #Mutated to remove the suffix county so that the data can be merged and have common identifier
+  rename(name = "county") %>%  #Renaming to have common identifier 
+  drop_na(name) #There are two rows with entirely no data they are dropped 
+
+tick_lyme_weather = NY_lyme_tick_county  %>% #Merging the entire data set with avg weather 
+  left_join(ny_temp, by = "name") %>% 
+  janitor::clean_names() 
+```
+
+```{r, include = FALSE}
+#Create an avg temp column that takes the averages of all the months temperature values by county 
+tick_lyme_weather <- tick_lyme_weather %>%
+  mutate(avg_temp = rowMeans(select(., jan_19:dec_22), na.rm = TRUE))
+```
+
+```{r, include = FALSE}
+#Create avg lyme rate column
+tick_lyme_weather_summary <- tick_lyme_weather %>%
+  group_by(name, geometry) %>%
+  summarise(
+    avg_lyme_rate = mean(lyme_rate, na.rm = TRUE),
+    avg_temp = mean(avg_temp, na.rm = TRUE),
+    .groups = "drop"  #Remove the grouping structure since we don't need it in the final result
+  )
+```
+
+```{r, include = FALSE}
+#Gather county specific geo spatial data and combine with tick, lyme, and weather data
+ny_counties <- counties(state = "NY", class = "sf")
+
+data_long <- tick_lyme_weather %>%
+  pivot_longer(
+    cols = starts_with("jan_") | starts_with("feb_") | starts_with("mar_") | 
+           starts_with("apr_") | starts_with("may_") | starts_with("jun_") | 
+           starts_with("jul_") | starts_with("aug_") | starts_with("sep_") | 
+           starts_with("oct_") | starts_with("nov_") | starts_with("dec_"),
+    names_to = "month_year", 
+    values_to = "temperature"
+  ) %>%
+  mutate(
+    year = as.numeric(substr(month_year, nchar(month_year) - 1, nchar(month_year))),
+    month = substr(month_year, 1, 3)
+  )
+```
+
+
+```{r, include = FALSE}
+# Reproject ny_counties to WGS84
+ny_counties <- st_transform(ny_counties, crs = 4326)  # EPSG code 4326 corresponds to WGS84
+
+# Merge Lyme disease and temperature data with geospatial data
+ny_data <- ny_counties %>%
+  left_join(data_long, by = c("NAME" = "name"))  # Adjust column name for county matching
+# Extract the year from 'month_year' and convert it to a 2-digit year
+ny_data$year <- as.numeric(sub(".*_(\\d{2})$", "\\1", ny_data$month_year))  # Extract 2-digit year
+
+# Correct the year conversion for 2-digit years (manual adjustment for 20)
+ny_data$year <- ifelse(ny_data$year <= 22, ny_data$year + 2000, ny_data$year + 1900)
+
+# Check unique years to ensure proper extraction
+unique(ny_data$year)
+
+```
+
+```{r, include = FALSE}
+
+generate_and_save_map <- function(selected_year, file_name) {
+  filtered_data <- ny_data %>% filter(year == selected_year)
+  leaflet_map <- leaflet(data = filtered_data) %>%
+    addTiles() %>%
+    addPolygons(
+      fillColor = ~colorNumeric("YlOrRd", lyme_count)(lyme_count),
+      fillOpacity = 0.7,
+      color = "black",
+      weight = 1,
+      popup = ~paste(
+        "County: ", NAME, "<br>",
+        "Year: ", year, "<br>",
+        "Lyme Count: ", lyme_count, "<br>",
+        "Ticks Tested: ", ticks_tested
+      )
+    ) %>%
+    addLegend(
+      position = "topright",
+      pal = colorNumeric("YlOrRd", filtered_data$lyme_count),
+      values = filtered_data$lyme_count,
+      title = "Lyme Count"
+    )
+  htmlwidgets::saveWidget(leaflet_map, file_name)
+}
+
+```
+
+
+```{r}
+generate_and_save_map(2019, "lyme_map_2019.html")
+generate_and_save_map(2020, "lyme_map_2020.html")
+generate_and_save_map(2021, "lyme_map_2021.html")
+```
+
+
